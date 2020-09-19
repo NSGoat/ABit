@@ -4,19 +4,16 @@ struct AudioPlayerView: View {
 
     @ObservedObject var audioFilePlayer: AudioFilePlayer
 
-    @State var showPicker = false
-
-    @State var mute = false
+    @State var showDocumentPicker = false
 
     @State var url: URL?
-
-    let weightFont = Font.title.weight(.semibold)
 
     var body: some View {
         return HStack {
             muteButton
             Spacer()
             documentPickerButton
+                .padding(.horizontal)
             Spacer()
             playButton
             stopButton
@@ -25,7 +22,7 @@ struct AudioPlayerView: View {
 
     var documentPickerButton: some View {
         Button {
-            self.showPicker.toggle()
+            self.showDocumentPicker.toggle()
         } label: {
             if let fileName = url?.lastPathComponent {
                 Text(fileName)
@@ -33,7 +30,7 @@ struct AudioPlayerView: View {
                 Image(systemName: "folder")
             }
         }
-        .sheet(isPresented: self.$showPicker) {
+        .sheet(isPresented: self.$showDocumentPicker) {
             AudioDocumentPicker(url: $url)
         }
     }
@@ -56,11 +53,11 @@ struct AudioPlayerView: View {
 
     var muteButton: some View {
         Button(action: {
-            audioFilePlayer.muted = !audioFilePlayer.muted
+            audioFilePlayer.muted.toggle()
         }) {
             Text(audioFilePlayer.name.uppercased())
                 .font(.title)
-                .fontWeight(audioFilePlayer.muted ? .regular : .bold)
+                .fontWeight(audioFilePlayer.muted ? .ultraLight : .bold)
         }
 
     }

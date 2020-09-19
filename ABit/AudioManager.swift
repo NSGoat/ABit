@@ -13,15 +13,10 @@ final class AudioManager: ObservableObject {
     }
 
     let engine = AudioKit.AudioEngine()
-    var mixer: Mixer = Mixer()
+    let mixer: Mixer = Mixer()
     var audioFilePlayers = [Channel: AudioFilePlayer]()
 
     init() {
-        audioFilePlayers = [.a : AudioFilePlayer(name: Channel.a.rawValue),
-                            .b : AudioFilePlayer(name: Channel.b.rawValue)]
-
-        let mixerNodes = audioFilePlayers.values.map { $0.audioPlayer }
-        mixer = AudioKit.Mixer(mixerNodes)
         engine.output = mixer
 
         try? engine.start()

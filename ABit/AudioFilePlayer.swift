@@ -50,7 +50,7 @@ final class AudioFilePlayer: ObservableObject {
             audioPlayer.stop()
         }
 
-        audioPlayer.scheduleFile(audioFile, at: AVAudioTime(hostTime: 3000))
+        audioPlayer.scheduleFile(audioFile, at: nil)
         audioPlayer.play()
     }
 
