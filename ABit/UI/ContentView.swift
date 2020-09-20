@@ -6,7 +6,6 @@ struct ContentView: View {
     var body: some View {
         VStack(spacing: 16) {
             Spacer()
-            saveLoadButton
             AudioPlayerView(audioFilePlayer: audioManager.audioFilePlayer(channel: .a))
                 .accentColor(.green)
                 .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
@@ -39,21 +38,6 @@ struct ContentView: View {
                     .foregroundColor(channel == .b ? color : .secondary)
             }
         })
-    }
-
-    var saveLoadButton: some View {
-        HStack {
-            Button(action: {
-                audioManager.saveLoadedFiles()
-            }, label: {
-                Text("Save")
-            })
-            Button(action: {
-                audioManager.loadedSavedFiles()
-            }, label: {
-                Text("Load")
-            })
-        }
     }
 
     func channelColor(_ channel: AudioManager.Channel) -> Color {
