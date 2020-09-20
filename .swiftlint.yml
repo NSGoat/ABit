@@ -1,0 +1,7 @@
+force_cast: warning
+
+identifier_name:
+    min_length: 1
+
+type_name:
+    allowed_symbols: [_]

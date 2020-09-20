@@ -1,7 +1,3 @@
-//  Created by Ed Rutter on 19/09/2020.
-
-import UIKit
-
 import AudioKit
 import AVFoundation
 

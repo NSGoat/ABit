@@ -3,14 +3,16 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		640AD42E2516278400415B7E /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 640AD42D2516278400415B7E /* AudioKit */; };
 		640AD4302516289C00415B7E /* AudioFilePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640AD42F2516289C00415B7E /* AudioFilePlayer.swift */; };
 		640AD4322516295100415B7E /* AudioDocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640AD4312516295100415B7E /* AudioDocumentPicker.swift */; };
-		64CD0DB52516233A00363F75 /* ABitApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64CD0DB42516233A00363F75 /* ABitApp.swift */; };
+		642723092516B6310052D5E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642723082516B6310052D5E6 /* AppDelegate.swift */; };
+		6427238B2516BCE60052D5E6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6427238A2516BCE60052D5E6 /* SceneDelegate.swift */; };
+		64AB978F2517EA240011D98B /* CaseIterable+Iteration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AB978E2517EA240011D98B /* CaseIterable+Iteration.swift */; };
 		64CD0DB72516233A00363F75 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64CD0DB62516233A00363F75 /* ContentView.swift */; };
 		64CD0DB92516233C00363F75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64CD0DB82516233C00363F75 /* Assets.xcassets */; };
 		64CD0DBC2516233C00363F75 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64CD0DBB2516233C00363F75 /* Preview Assets.xcassets */; };
@@ -40,8 +42,10 @@
 /* Begin PBXFileReference section */
 		640AD42F2516289C00415B7E /* AudioFilePlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioFilePlayer.swift; sourceTree = "<group>"; };
 		640AD4312516295100415B7E /* AudioDocumentPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioDocumentPicker.swift; sourceTree = "<group>"; };
+		642723082516B6310052D5E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		6427238A2516BCE60052D5E6 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		64AB978E2517EA240011D98B /* CaseIterable+Iteration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CaseIterable+Iteration.swift"; sourceTree = "<group>"; };
 		64CD0DB12516233A00363F75 /* ABit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ABit.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		64CD0DB42516233A00363F75 /* ABitApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABitApp.swift; sourceTree = "<group>"; };
 		64CD0DB62516233A00363F75 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		64CD0DB82516233C00363F75 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		64CD0DBB2516233C00363F75 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -54,6 +58,8 @@
 		64CD0DD32516233C00363F75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		64D8DF9825166AE8000D0653 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		64D8DF9A25166F60000D0653 /* AudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
+		64D8DF9C25169A17000D0653 /* ABit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ABit.entitlements; sourceTree = "<group>"; };
+		64D8DFA42516A280000D0653 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,9 +88,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		64AB978D2517E9F50011D98B /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				64AB978E2517EA240011D98B /* CaseIterable+Iteration.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		64CD0DA82516233A00363F75 = {
 			isa = PBXGroup;
 			children = (
+				64D8DFA42516A280000D0653 /* .swiftlint.yml */,
 				64CD0DB32516233A00363F75 /* ABit */,
 				64CD0DC52516233C00363F75 /* ABitTests */,
 				64CD0DD02516233C00363F75 /* ABitUITests */,
@@ -105,15 +120,11 @@
 		64CD0DB32516233A00363F75 /* ABit */ = {
 			isa = PBXGroup;
 			children = (
-				64CD0DB42516233A00363F75 /* ABitApp.swift */,
-				64CD0DB62516233A00363F75 /* ContentView.swift */,
-				64D8DF9A25166F60000D0653 /* AudioPlayerView.swift */,
-				640AD4312516295100415B7E /* AudioDocumentPicker.swift */,
-				640AD42F2516289C00415B7E /* AudioFilePlayer.swift */,
-				64D8DF9825166AE8000D0653 /* AudioManager.swift */,
-				64CD0DB82516233C00363F75 /* Assets.xcassets */,
-				64CD0DBD2516233C00363F75 /* Info.plist */,
-				64CD0DBA2516233C00363F75 /* Preview Content */,
+				64D8DFA52516A2AA000D0653 /* App */,
+				64D8DF9E25169A7B000D0653 /* Audio */,
+				64D8DF9D25169A6F000D0653 /* UI */,
+				64AB978D2517E9F50011D98B /* Utilities */,
+				64D8DFA62516A2C6000D0653 /* Resources */,
 			);
 			path = ABit;
 			sourceTree = "<group>";
@@ -144,6 +155,45 @@
 			path = ABitUITests;
 			sourceTree = "<group>";
 		};
+		64D8DF9D25169A6F000D0653 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				64CD0DB62516233A00363F75 /* ContentView.swift */,
+				64D8DF9A25166F60000D0653 /* AudioPlayerView.swift */,
+				640AD4312516295100415B7E /* AudioDocumentPicker.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		64D8DF9E25169A7B000D0653 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				64D8DF9825166AE8000D0653 /* AudioManager.swift */,
+				640AD42F2516289C00415B7E /* AudioFilePlayer.swift */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+		64D8DFA52516A2AA000D0653 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				642723082516B6310052D5E6 /* AppDelegate.swift */,
+				6427238A2516BCE60052D5E6 /* SceneDelegate.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		64D8DFA62516A2C6000D0653 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				64CD0DB82516233C00363F75 /* Assets.xcassets */,
+				64D8DF9C25169A17000D0653 /* ABit.entitlements */,
+				64CD0DBD2516233C00363F75 /* Info.plist */,
+				64CD0DBA2516233C00363F75 /* Preview Content */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -154,6 +204,7 @@
 				64CD0DAD2516233A00363F75 /* Sources */,
 				64CD0DAE2516233A00363F75 /* Frameworks */,
 				64CD0DAF2516233A00363F75 /* Resources */,
+				64D8DF9F25169ED5000D0653 /* Run SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -226,7 +277,7 @@
 				};
 			};
 			buildConfigurationList = 64CD0DAC2516233A00363F75 /* Build configuration list for PBXProject "ABit" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 12.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -274,6 +325,27 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		64D8DF9F25169ED5000D0653 /* Run SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Run SwiftLint";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		64CD0DAD2516233A00363F75 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -282,9 +354,11 @@
 				64D8DF9B25166F60000D0653 /* AudioPlayerView.swift in Sources */,
 				64D8DF9925166AE8000D0653 /* AudioManager.swift in Sources */,
 				64CD0DB72516233A00363F75 /* ContentView.swift in Sources */,
-				64CD0DB52516233A00363F75 /* ABitApp.swift in Sources */,
+				642723092516B6310052D5E6 /* AppDelegate.swift in Sources */,
 				640AD4302516289C00415B7E /* AudioFilePlayer.swift in Sources */,
+				64AB978F2517EA240011D98B /* CaseIterable+Iteration.swift in Sources */,
 				640AD4322516295100415B7E /* AudioDocumentPicker.swift in Sources */,
+				6427238B2516BCE60052D5E6 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -441,11 +515,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ABit/Resources/ABit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"ABit/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"ABit/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = X8G7MMTMU8;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = ABit/Info.plist;
+				INFOPLIST_FILE = ABit/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -453,6 +528,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.RutterStudios.ABit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -463,11 +539,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ABit/Resources/ABit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "\"ABit/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"ABit/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = X8G7MMTMU8;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = ABit/Info.plist;
+				INFOPLIST_FILE = ABit/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -475,6 +552,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.RutterStudios.ABit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

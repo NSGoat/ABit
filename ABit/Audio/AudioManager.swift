@@ -1,20 +1,27 @@
-//  Created by Ed Rutter on 19/09/2020.
-
-import UIKit
-
 import AudioKit
-import AVFoundation
+import Combine
+import Foundation
 
 final class AudioManager: ObservableObject {
 
-    enum Channel: String {
+    enum Channel: String, CaseIterable {
         case a = "A"
         case b = "B"
+
+        mutating func selectNext() {
+            self = self.next()
+        }
     }
 
     let engine = AudioKit.AudioEngine()
     let mixer: Mixer = Mixer()
     var audioFilePlayers = [Channel: AudioFilePlayer]()
+
+    @Published var selectedChannel: Channel = .a {
+        didSet {
+            solo(channel: selectedChannel)
+        }
+    }
 
     init() {
         engine.output = mixer
@@ -25,7 +32,6 @@ final class AudioManager: ObservableObject {
     func audioFilePlayer(channel: Channel) -> AudioFilePlayer {
         if let audioFilePlayer = audioFilePlayers[channel] {
             return audioFilePlayer
-            
         } else {
             let audioFilePlayer = AudioFilePlayer(name: channel.rawValue)
             audioFilePlayers[channel] = audioFilePlayer
@@ -33,4 +39,11 @@ final class AudioManager: ObservableObject {
             return audioFilePlayer
         }
     }
+
+    func solo(channel: Channel) {
+        audioFilePlayers.forEach { (playerChannel, player) in
+            player.muted = playerChannel != channel
+        }
+    }
+}
 }

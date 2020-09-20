@@ -21,15 +21,15 @@ struct AudioPlayerView: View {
     }
 
     var documentPickerButton: some View {
-        Button {
+        Button(action: {
             self.showDocumentPicker.toggle()
-        } label: {
+        }, label: {
             if let fileName = url?.lastPathComponent {
                 Text(fileName)
             } else {
                 Image(systemName: "folder")
             }
-        }
+        })
         .sheet(isPresented: self.$showDocumentPicker) {
             AudioDocumentPicker(url: $url)
         }
@@ -38,28 +38,27 @@ struct AudioPlayerView: View {
     var playButton: Button<Image> {
         Button(action: {
             audioFilePlayer.playAudioFile(url: url)
-        }) {
+        }, label: {
             Image(systemName: "play")
-        }
+        })
     }
 
     var stopButton: Button<Image> {
         Button(action: {
             audioFilePlayer.stop()
-        }) {
+        }, label: {
             Image(systemName: "stop")
-        }
+        })
     }
 
     var muteButton: some View {
         Button(action: {
             audioFilePlayer.muted.toggle()
-        }) {
+        }, label: {
             Text(audioFilePlayer.name.uppercased())
                 .font(.title)
                 .fontWeight(audioFilePlayer.muted ? .ultraLight : .bold)
-        }
-
+        })
     }
 }
 
