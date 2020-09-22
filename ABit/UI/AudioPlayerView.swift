@@ -8,13 +8,26 @@ struct AudioPlayerView: View {
 
     @State var url: URL?
 
+    @ObservedObject var slider: RangeSlider
+
+    init(audioFilePlayer: AudioFilePlayer) {
+        self.audioFilePlayer = audioFilePlayer
+
+        slider = RangeSlider(lowValue: audioFilePlayer.playback.startPosition,
+                             highValue: audioFilePlayer.playback.endPosition ?? 1)
+    }
+
     var body: some View {
-        return HStack(spacing: 16) {
-            documentPickerButton
-                .padding(.horizontal)
-            Spacer()
-            playButton
-            stopButton
+        VStack(spacing: 24) {
+            HStack(spacing: 16) {
+                documentPickerButton
+                    .padding(.horizontal)
+                Spacer()
+                playButton
+                stopButton
+                loopButton
+            }
+            RangeSliderView(slider: slider)
         }
     }
 
@@ -40,7 +53,10 @@ struct AudioPlayerView: View {
 
     var playButton: Button<Image> {
         Button(action: {
-            audioFilePlayer.playAudioFile(url: url)
+            let playbackSettings = PlaybackSettings(startPosition: slider.lowHandle.currentValue,
+                                                    endPosition: slider.highHandle.currentValue,
+                                                    loop: audioFilePlayer.playback.loop)
+            audioFilePlayer.playAudioFile(url: url, settings: playbackSettings)
         }, label: {
             Image(systemName: "play")
         })
@@ -51,6 +67,15 @@ struct AudioPlayerView: View {
             audioFilePlayer.stop()
         }, label: {
             Image(systemName: "stop")
+        })
+    }
+
+    var loopButton: some View {
+        Button(action: {
+            audioFilePlayer.playback.loop.toggle()
+        }, label: {
+            Image(systemName: "repeat")
+                .font(.system(size: 16, weight: audioFilePlayer.playback.loop ? .bold : .ultraLight))
         })
     }
 

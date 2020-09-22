@@ -7,10 +7,10 @@ struct ContentView: View {
         VStack(spacing: 16) {
             Spacer()
             AudioPlayerView(audioFilePlayer: audioManager.audioFilePlayer(channel: .a))
-                .accentColor(.green)
+                .accentColor(channelColor(.a))
                 .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
             AudioPlayerView(audioFilePlayer: audioManager.audioFilePlayer(channel: .b))
-                .accentColor(.orange)
+                .accentColor(channelColor(.b))
                 .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
             channelSwitchButton
         }
@@ -40,12 +40,12 @@ struct ContentView: View {
         })
     }
 
-    func channelColor(_ channel: AudioManager.Channel) -> Color {
+    func channelColor(_ channel: AudioChannel) -> Color {
         switch channel {
         case .a:
-            return .green
+            return Color(red: 0, green: 172/255, blue: 84/255)
         case .b:
-            return .orange
+            return Color(red: 253/255, green: 141/255, blue: 15/255)
         }
     }
 }

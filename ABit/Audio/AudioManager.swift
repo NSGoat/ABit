@@ -1,35 +1,42 @@
 import AudioKit
+import AVFoundation
 import Combine
 import Foundation
 
-final class AudioManager: ObservableObject {
+enum AudioChannel: String, CaseIterable {
+    case a = "A"
+    case b = "B"
 
-    enum Channel: String, CaseIterable {
-        case a = "A"
-        case b = "B"
-
-        mutating func selectNext() {
-            self = self.next()
-        }
+    mutating func selectNext() {
+        self = self.next()
     }
+}
+
+final class AudioManager: ObservableObject {
 
     let engine = AudioKit.AudioEngine()
     let mixer: Mixer = Mixer()
-    var audioFilePlayers = [Channel: AudioFilePlayer]()
+    var audioFilePlayers = [AudioChannel: AudioFilePlayer]()
 
-    @Published var selectedChannel: Channel = .a {
+    @Published var selectedChannel: AudioChannel = .a {
         didSet {
             solo(channel: selectedChannel)
         }
     }
 
     init() {
+        try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+
+        _ = audioFilePlayer(channel: .a)
+        _ = audioFilePlayer(channel: .b)
+        selectedChannel = .a
+
         engine.output = mixer
 
         try? engine.start()
     }
 
-    func audioFilePlayer(channel: Channel) -> AudioFilePlayer {
+    func audioFilePlayer(channel: AudioChannel) -> AudioFilePlayer {
         if let audioFilePlayer = audioFilePlayers[channel] {
             return audioFilePlayer
         } else {
@@ -40,7 +47,7 @@ final class AudioManager: ObservableObject {
         }
     }
 
-    func solo(channel: Channel) {
+    func solo(channel: AudioChannel) {
         audioFilePlayers.forEach { (playerChannel, player) in
             player.muted = playerChannel != channel
         }

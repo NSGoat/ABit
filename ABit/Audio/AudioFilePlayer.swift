@@ -1,11 +1,25 @@
 import AudioKit
 import AVFoundation
 
+class PlaybackSettings {
+    @Published var startPosition: Double = 0
+    @Published var endPosition: Double?
+    @Published var loop: Bool = false
+
+    init(startPosition: Double,
+         endPosition: Double?,
+         loop: Bool) {
+        self.startPosition = startPosition
+        self.endPosition = endPosition
+        self.loop = loop
+    }
+}
+
 final class AudioFilePlayer: ObservableObject {
 
     @Published var loadedFileUrl: URL?
 
-    @Published var muted: Bool {
+    @Published var muted: Bool = false {
         didSet {
             audioPlayer.mixerNode.volume = muted ? 0 : 1
         }
@@ -13,41 +27,79 @@ final class AudioFilePlayer: ObservableObject {
 
     let audioPlayer: AudioPlayer = AudioPlayer()
     var name: String
-    var audioFile: AVAudioFile?
+
+    var file: AVAudioFile?
+    @Published var playback =  PlaybackSettings(startPosition: 0, endPosition: nil, loop: false)
 
     init(name: String) {
         self.name = name
-        self.muted = false
     }
 
-    func playAudioFile(url: URL?) {
-        guard let url = url else {
+    func playAudioFile(url: URL?, settings playbackSettings: PlaybackSettings) {
+
+        playback = playbackSettings
+
+        guard
+            let audioFile = loadAudioFile(url: url)
+        else {
+            file = nil
             loadedFileUrl = nil
             return
         }
-        loadAudioFile(url: url)
-        play()
+
+        playAudioFile(audioFile: audioFile,
+                      startPosition: playback.startPosition,
+                      endPosition: playback.endPosition,
+                      loop: playback.loop)
     }
 
-    func loadAudioFile(url: URL) {
+    private func playAudioFile(audioFile: AVAudioFile,
+                               startPosition: Double,
+                               endPosition: Double? = nil,
+                               loop: Bool = false) {
+
+        var startTime = audioFile.duration * startPosition
+        var endTime = audioFile.duration * (endPosition ?? 1)
+
+        if startTime > endTime {
+            let swap = startTime
+            startTime = endTime
+            endTime = swap
+        }
+
+        let sampleRate = audioFile.fileFormat.sampleRate
+        let duration = endTime - startTime
+
+        let startFrame = AVAudioFramePosition(sampleRate * startTime)
+        let frameCount = AVAudioFrameCount(sampleRate * duration)
+
+        audioPlayer.playerNode.scheduleSegment(audioFile,
+                                               startingFrame: startFrame,
+                                               frameCount: frameCount,
+                                               at: nil,
+                                               completionCallbackType: .dataPlayedBack) { [weak self] _ in
+            if loop {
+                self?.playAudioFile(audioFile: audioFile,
+                                    startPosition: startPosition,
+                                    endPosition: endPosition,
+                                    loop: loop)
+            }
+        }
+        audioPlayer.play()
+    }
+
+    @discardableResult func loadAudioFile(url: URL?) -> AVAudioFile? {
+        guard let url = url else { return nil }
+
         do {
-            audioFile = try AVAudioFile(forReading: url)
+            file = try AVAudioFile(forReading: url)
             loadedFileUrl = url
+            return file
 
         } catch {
             print(error)
+            return nil
         }
-    }
-
-    func play() {
-        guard let audioFile = audioFile else { return }
-
-        if audioPlayer.isPlaying {
-            audioPlayer.stop()
-        }
-
-        audioPlayer.scheduleFile(audioFile, at: nil)
-        audioPlayer.play()
     }
 
     func pause() {
