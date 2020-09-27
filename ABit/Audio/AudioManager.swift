@@ -14,8 +14,8 @@ enum AudioChannel: String, CaseIterable {
 
 final class AudioManager: ObservableObject {
 
-    let engine = AudioKit.AudioEngine()
-    let mixer: Mixer = Mixer()
+    let engine = AKManager.engine
+    let mixer: AKMixer = AKMixer()
     var audioFilePlayers = [AudioChannel: AudioFilePlayer]()
 
     @Published var selectedChannel: AudioChannel = .a {
@@ -25,26 +25,29 @@ final class AudioManager: ObservableObject {
     }
 
     init() {
+        AKManager.output = mixer
+        try? AKManager.start()
         try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
 
-        _ = audioFilePlayer(channel: .a)
-        _ = audioFilePlayer(channel: .b)
+        configureNewAudioFilerPlayer(channel: .a)
+        configureNewAudioFilerPlayer(channel: .b)
         selectedChannel = .a
+    }
 
-        engine.output = mixer
-
-        try? engine.start()
+    deinit {
+        try? AKManager.stop()
     }
 
     func audioFilePlayer(channel: AudioChannel) -> AudioFilePlayer {
-        if let audioFilePlayer = audioFilePlayers[channel] {
-            return audioFilePlayer
-        } else {
-            let audioFilePlayer = AudioFilePlayer(name: channel.rawValue)
-            audioFilePlayers[channel] = audioFilePlayer
-            mixer.addInput(audioFilePlayer.audioPlayer)
-            return audioFilePlayer
-        }
+        return audioFilePlayers[channel] ?? configureNewAudioFilerPlayer(channel: channel)
+    }
+
+    @discardableResult
+    private func configureNewAudioFilerPlayer(channel: AudioChannel) -> AudioFilePlayer {
+        let audioFilePlayer = AudioFilePlayer(name: channel.rawValue)
+        audioFilePlayers[channel] = audioFilePlayer
+        mixer.connect(input: audioFilePlayer.audioPlayer)
+        return audioFilePlayer
     }
 
     func solo(channel: AudioChannel) {

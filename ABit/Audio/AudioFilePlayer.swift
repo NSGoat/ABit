@@ -17,22 +17,38 @@ class PlaybackSettings {
 
 final class AudioFilePlayer: ObservableObject {
 
-    @Published var loadedFileUrl: URL?
+    var loadedFileUrl: URL?
 
-    @Published var muted: Bool = false {
+    @Published var loop: Bool = false {
         didSet {
-            audioPlayer.mixerNode.volume = muted ? 0 : 1
+            audioPlayer?.looping = loop
         }
     }
 
-    let audioPlayer: AudioPlayer = AudioPlayer()
+    @Published var muted: Bool = false {
+        didSet {
+            audioPlayer?.volume = muted ? 0 : 1
+        }
+    }
+
+    var audioPlayer: AKAudioPlayer?
+
     var name: String
 
-    var file: AVAudioFile?
+    var file: AKAudioFile?
     @Published var playback =  PlaybackSettings(startPosition: 0, endPosition: nil, loop: false)
 
     init(name: String) {
         self.name = name
+        if let audioFile = try? AKAudioFile(createFileFromFloats: [[]]) {
+            self.audioPlayer = try? AKAudioPlayer(file: audioFile)
+        }
+
+        let observation = self.audioPlayer?.observe(\AKAudioPlayer.looping, changeHandler: { [weak self] (player, change) in
+            if let value = change.newValue, change.newValue != change.oldValue {
+                self?.loop = value
+            }
+        })
     }
 
     func playAudioFile(url: URL?, settings playbackSettings: PlaybackSettings) {
@@ -67,32 +83,21 @@ final class AudioFilePlayer: ObservableObject {
             endTime = swap
         }
 
-        let sampleRate = audioFile.fileFormat.sampleRate
-        let duration = endTime - startTime
+        if let file = file {
+            try? audioPlayer?.replace(file: file)
+            audioPlayer?.looping = loop
 
-        let startFrame = AVAudioFramePosition(sampleRate * startTime)
-        let frameCount = AVAudioFrameCount(sampleRate * duration)
-
-        audioPlayer.playerNode.scheduleSegment(audioFile,
-                                               startingFrame: startFrame,
-                                               frameCount: frameCount,
-                                               at: nil,
-                                               completionCallbackType: .dataPlayedBack) { [weak self] _ in
-            if loop {
-                self?.playAudioFile(audioFile: audioFile,
-                                    startPosition: startPosition,
-                                    endPosition: endPosition,
-                                    loop: loop)
+            DispatchQueue.main.async { [weak self] in
+                self?.audioPlayer?.play(from: startTime, to: endTime)
             }
         }
-        audioPlayer.play()
     }
 
-    @discardableResult func loadAudioFile(url: URL?) -> AVAudioFile? {
+    @discardableResult func loadAudioFile(url: URL?) -> AKAudioFile? {
         guard let url = url else { return nil }
 
         do {
-            file = try AVAudioFile(forReading: url)
+            file = try AKAudioFile(forReading: url)
             loadedFileUrl = url
             return file
 
@@ -103,15 +108,10 @@ final class AudioFilePlayer: ObservableObject {
     }
 
     func pause() {
-        audioPlayer.pause()
+        audioPlayer?.pause()
     }
 
     func stop() {
-        audioPlayer.stop()
-    }
-
-    var gain: Float {
-        get { audioPlayer.mixerNode.outputVolume }
-        set { audioPlayer.mixerNode.outputVolume = newValue }
+        audioPlayer?.stop()
     }
 }

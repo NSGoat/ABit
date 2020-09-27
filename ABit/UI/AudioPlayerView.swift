@@ -72,7 +72,7 @@ struct AudioPlayerView: View {
 
     var loopButton: some View {
         Button(action: {
-            audioFilePlayer.playback.loop.toggle()
+            audioFilePlayer.loop.toggle()
         }, label: {
             Image(systemName: "repeat")
                 .font(.system(size: 16, weight: audioFilePlayer.playback.loop ? .bold : .ultraLight))
