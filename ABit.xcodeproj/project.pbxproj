@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		640AD42E2516278400415B7E /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 640AD42D2516278400415B7E /* AudioKit */; };
 		640AD4302516289C00415B7E /* AudioFilePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640AD42F2516289C00415B7E /* AudioFilePlayer.swift */; };
 		640AD4322516295100415B7E /* AudioDocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640AD4312516295100415B7E /* AudioDocumentPicker.swift */; };
 		642723092516B6310052D5E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642723082516B6310052D5E6 /* AppDelegate.swift */; };
@@ -23,6 +22,7 @@
 		64CD0DD22516233C00363F75 /* ABitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64CD0DD12516233C00363F75 /* ABitUITests.swift */; };
 		64D8DF9925166AE8000D0653 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D8DF9825166AE8000D0653 /* AudioManager.swift */; };
 		64D8DF9B25166F60000D0653 /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D8DF9A25166F60000D0653 /* AudioPlayerView.swift */; };
+		75D7744532259C43A77F48DC /* Pods_ABit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29B36A20132C264C605775E /* Pods_ABit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +66,9 @@
 		64D8DF9A25166F60000D0653 /* AudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
 		64D8DF9C25169A17000D0653 /* ABit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ABit.entitlements; sourceTree = "<group>"; };
 		64D8DFA42516A280000D0653 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		6A88A380D7A78F0F9450ADB9 /* Pods-ABit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ABit.debug.xcconfig"; path = "Target Support Files/Pods-ABit/Pods-ABit.debug.xcconfig"; sourceTree = "<group>"; };
+		C3FD3247E7315A7BB5F12AA3 /* Pods-ABit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ABit.release.xcconfig"; path = "Target Support Files/Pods-ABit/Pods-ABit.release.xcconfig"; sourceTree = "<group>"; };
+		D29B36A20132C264C605775E /* Pods_ABit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ABit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,7 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				640AD42E2516278400415B7E /* AudioKit in Frameworks */,
+				75D7744532259C43A77F48DC /* Pods_ABit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,7 +118,6 @@
 			isa = PBXGroup;
 			children = (
 				64AB978E2517EA240011D98B /* CaseIterable+Iteration.swift */,
-				64AB97E6251A94830011D98B /* Dictionary+Map.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -137,6 +139,8 @@
 				64CD0DC52516233C00363F75 /* ABitTests */,
 				64CD0DD02516233C00363F75 /* ABitUITests */,
 				64CD0DB22516233A00363F75 /* Products */,
+				FA3D9C8BC58F3C41CA07F961 /* Pods */,
+				CCE904BC030D268AC8842F34 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -228,6 +232,23 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		CCE904BC030D268AC8842F34 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D29B36A20132C264C605775E /* Pods_ABit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		FA3D9C8BC58F3C41CA07F961 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				6A88A380D7A78F0F9450ADB9 /* Pods-ABit.debug.xcconfig */,
+				C3FD3247E7315A7BB5F12AA3 /* Pods-ABit.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -235,6 +256,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 64CD0DD62516233C00363F75 /* Build configuration list for PBXNativeTarget "ABit" */;
 			buildPhases = (
+				F6613D024536577CA33AC73E /* [CP] Check Pods Manifest.lock */,
 				64CD0DAD2516233A00363F75 /* Sources */,
 				64CD0DAE2516233A00363F75 /* Frameworks */,
 				64CD0DAF2516233A00363F75 /* Resources */,
@@ -246,7 +268,6 @@
 			);
 			name = ABit;
 			packageProductDependencies = (
-				640AD42D2516278400415B7E /* AudioKit */,
 			);
 			productName = ABit;
 			productReference = 64CD0DB12516233A00363F75 /* ABit.app */;
@@ -320,7 +341,6 @@
 			);
 			mainGroup = 64CD0DA82516233A00363F75;
 			packageReferences = (
-				640AD42C2516278400415B7E /* XCRemoteSwiftPackageReference "AudioKit" */,
 			);
 			productRefGroup = 64CD0DB22516233A00363F75 /* Products */;
 			projectDirPath = "";
@@ -377,6 +397,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+		F6613D024536577CA33AC73E /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-ABit-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -549,6 +591,7 @@
 		};
 		64CD0DD72516233C00363F75 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6A88A380D7A78F0F9450ADB9 /* Pods-ABit.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -574,6 +617,7 @@
 		};
 		64CD0DD82516233C00363F75 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C3FD3247E7315A7BB5F12AA3 /* Pods-ABit.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -721,25 +765,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		640AD42C2516278400415B7E /* XCRemoteSwiftPackageReference "AudioKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/AudioKit/AudioKit";
-			requirement = {
-				branch = "v5-develop";
-				kind = branch;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		640AD42D2516278400415B7E /* AudioKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 640AD42C2516278400415B7E /* XCRemoteSwiftPackageReference "AudioKit" */;
-			productName = AudioKit;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 64CD0DA92516233A00363F75 /* Project object */;
 }
