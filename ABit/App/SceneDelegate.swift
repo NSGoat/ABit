@@ -3,8 +3,9 @@ import SwiftUI
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
+    @Inject var audioManager: AudioManager
+
     var window: UIWindow?
-    var audioManager = AudioManager()
 
     func scene(_ scene: UIScene,
                willConnectTo session: UISceneSession,

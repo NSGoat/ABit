@@ -2,24 +2,30 @@ import SwiftUI
 import UIKit
 import UniformTypeIdentifiers
 
-struct AudioDocumentPicker: UIViewControllerRepresentable {
+protocol AudioFilePickerDelegate {
+    func audioFilePicker(_ picker: AudioFilePicker, didPickAudioFileAt url: URL)
+}
 
-    @Binding var url: URL?
+struct AudioFilePicker: UIViewControllerRepresentable {
+
+    var delegate: AudioFilePickerDelegate?
 
     class Coordinator: NSObject, UIDocumentPickerDelegate {
 
-        var parent: AudioDocumentPicker
+        var parent: AudioFilePicker
 
-        init(parent: AudioDocumentPicker) {
+        init(parent: AudioFilePicker) {
             self.parent = parent
         }
 
         func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
-            parent.url = urls.first
+            guard let url = urls.first else { return }
+
+            parent.delegate?.audioFilePicker(parent, didPickAudioFileAt: url)
         }
 
         func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
-            parent.url = url
+            parent.delegate?.audioFilePicker(parent, didPickAudioFileAt: url)
         }
     }
 

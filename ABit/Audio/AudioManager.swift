@@ -12,7 +12,9 @@ enum AudioChannel: String, CaseIterable {
     }
 }
 
-final class AudioManager: ObservableObject {
+final class AudioManager: ObservableObject, Injectable {
+
+    static let shared = AudioManager()
 
     let engine = AKManager.engine
     let mixer: AKMixer = AKMixer()
@@ -52,7 +54,7 @@ final class AudioManager: ObservableObject {
 
     func solo(channel: AudioChannel) {
         audioFilePlayers.forEach { (playerChannel, player) in
-            player.muted = playerChannel != channel
+            player.mute = playerChannel != channel
         }
     }
 }
