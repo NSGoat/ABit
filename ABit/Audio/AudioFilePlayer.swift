@@ -37,16 +37,22 @@ final class AudioFilePlayer: ObservableObject {
 
     var name: String
 
-    var file: AKAudioFile? {
+    @Published var audioFile: AKAudioFile? {
         didSet {
-            playTimeRange = playTimeRange(fileDuration: file?.duration, playRange: playPositionRange)
+            playTimeRange = playTimeRange(fileDuration: audioFile?.duration, playRange: playPositionRange)
         }
     }
 
     @Published var playTimeRange: ClosedRange<Double>?
     @Published var playPositionRange = 0.0...1.0 {
         didSet {
-            playTimeRange = playTimeRange(fileDuration: file?.duration, playRange: playPositionRange)
+            playTimeRange = playTimeRange(fileDuration: audioFile?.duration, playRange: playPositionRange)
+            if playheadPosition == nil {
+                playheadPosition = playPositionRange.lowerBound
+            }
+            if playheadTime == nil {
+                playheadTime = playTimeRange?.lowerBound
+            }
         }
     }
 
@@ -64,12 +70,12 @@ final class AudioFilePlayer: ObservableObject {
     deinit {
         stopPlayheadUpdates()
         stop()
-        file = nil
+        audioFile = nil
         loadedFileUrl = nil
     }
 
     func play() {
-        if let file = file, let range = playTimeRange {
+        if let file = audioFile, let range = playTimeRange {
 
             if audioPlayer?.audioFile.url != file.url {
                 try? audioPlayer?.replace(file: file)
@@ -89,11 +95,11 @@ final class AudioFilePlayer: ObservableObject {
         guard let url = url else { return nil }
 
         do {
-            file = try AKAudioFile(forReading: url)
+            audioFile = try AKAudioFile(forReading: url)
             loadedFileUrl = url
             playerState = .stopped
 
-            return file
+            return audioFile
 
         } catch {
             print(error)
@@ -138,7 +144,7 @@ final class AudioFilePlayer: ObservableObject {
             if let playhead = self.audioPlayer?.playhead {
                 self.playheadTime = playhead
 
-                if let duration = self.file?.duration {
+                if let duration = self.audioFile?.duration {
                     self.playheadPosition = playhead/duration
                 }
             }

@@ -6,10 +6,10 @@ struct ContentView: View {
     var body: some View {
         VStack(spacing: 16) {
             Spacer()
-            AudioPlayerView(audioFilePlayer: audioManager.audioFilePlayer(channel: .a))
+            AudioPlayerView(audioFilePlayer: audioManager.audioFilePlayer(channel: .a), accentColor: channelColor(.a))
                 .accentColor(channelColor(.a))
                 .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-            AudioPlayerView(audioFilePlayer: audioManager.audioFilePlayer(channel: .b))
+            AudioPlayerView(audioFilePlayer: audioManager.audioFilePlayer(channel: .b), accentColor: channelColor(.b))
                 .accentColor(channelColor(.b))
                 .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
             channelSwitchButton
