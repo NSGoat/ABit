@@ -7,10 +7,10 @@ public struct VerticalRangeSliderStyle<Track: View, LowerThumb: View, UpperThumb
 
     let lowerThumbSize: CGSize
     let upperThumbSize: CGSize
-    
+
     let lowerThumbInteractiveSize: CGSize
     let upperThumbInteractiveSize: CGSize
-    
+
     private let options: RangeSliderOptions
 
     public func makeBody(configuration: Self.Configuration) -> some View {
@@ -26,7 +26,7 @@ public struct VerticalRangeSliderStyle<Track: View, LowerThumb: View, UpperThumb
                         upperTrailingOffset: self.upperThumbSize.height / 2
                     ))
                     .accentColor(.accentColor)
-                
+
                 ZStack {
                     self.lowerThumb
                         .frame(width: self.lowerThumbSize.width, height: self.lowerThumbSize.height)
@@ -54,7 +54,7 @@ public struct VerticalRangeSliderStyle<Track: View, LowerThumb: View, UpperThumb
                                     trailingOffset: self.lowerThumbSize.height / 2
                                 ))
                             }
-                            
+
                             let computedLowerBound = valueFrom(
                                 distance: geometry.size.height - (gestureValue.location.y - (configuration.dragOffset.wrappedValue ?? 0)),
                                 availableDistance: geometry.size.height - self.upperThumbSize.height,
@@ -63,7 +63,7 @@ public struct VerticalRangeSliderStyle<Track: View, LowerThumb: View, UpperThumb
                                 leadingOffset: self.lowerThumbSize.height / 2,
                                 trailingOffset: self.lowerThumbSize.height / 2
                             )
-                            
+
                             if self.options.contains(.forceAdjacentValue) {
                                 let computedUpperBound = max(computedLowerBound, configuration.range.wrappedValue.upperBound)
                                 configuration.range.wrappedValue = computedLowerBound...computedUpperBound
@@ -71,7 +71,7 @@ public struct VerticalRangeSliderStyle<Track: View, LowerThumb: View, UpperThumb
                                 let computedLowerBound = min(computedLowerBound, configuration.range.wrappedValue.upperBound)
                                 configuration.range.wrappedValue = computedLowerBound...configuration.range.wrappedValue.upperBound
                             }
-                            
+
                             configuration.onEditingChanged(true)
                         }
                         .onEnded { _ in
@@ -107,7 +107,7 @@ public struct VerticalRangeSliderStyle<Track: View, LowerThumb: View, UpperThumb
                                     trailingOffset: self.upperThumbSize.height / 2
                                 ))
                             }
-                            
+
                             let computedUpperBound = valueFrom(
                                 distance: geometry.size.height - (gestureValue.location.y - (configuration.dragOffset.wrappedValue ?? 0)),
                                 availableDistance: geometry.size.height,
@@ -116,7 +116,7 @@ public struct VerticalRangeSliderStyle<Track: View, LowerThumb: View, UpperThumb
                                 leadingOffset: self.lowerThumbSize.height + self.upperThumbSize.height / 2,
                                 trailingOffset: self.upperThumbSize.height / 2
                             )
-                            
+
                             if self.options.contains(.forceAdjacentValue) {
                                 let computedLowerBound = min(computedUpperBound, configuration.range.wrappedValue.lowerBound)
                                 configuration.range.wrappedValue = computedLowerBound...computedUpperBound
@@ -124,7 +124,7 @@ public struct VerticalRangeSliderStyle<Track: View, LowerThumb: View, UpperThumb
                                 let computedUpperBound = max(computedUpperBound, configuration.range.wrappedValue.lowerBound)
                                 configuration.range.wrappedValue = configuration.range.wrappedValue.lowerBound...computedUpperBound
                             }
-                            
+
                             configuration.onEditingChanged(true)
                         }
                         .onEnded { _ in
@@ -132,13 +132,12 @@ public struct VerticalRangeSliderStyle<Track: View, LowerThumb: View, UpperThumb
                             configuration.onEditingChanged(false)
                         }
                 )
-            
             }
             .frame(width: geometry.size.width)
         }
         .frame(minWidth: max(self.lowerThumbInteractiveSize.width, self.upperThumbInteractiveSize.width))
     }
-    
+
     public init(track: Track,
                 lowerThumb: LowerThumb,
                 upperThumb: UpperThumb,

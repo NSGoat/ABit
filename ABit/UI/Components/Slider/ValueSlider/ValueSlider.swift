@@ -24,7 +24,7 @@ extension ValueSlider {
                    in bounds: ClosedRange<V> = 0.0...1.0,
                    step: V.Stride = 0.001,
                    onEditingChanged: @escaping (Bool) -> Void = { _ in }) where V : BinaryFloatingPoint, V.Stride : BinaryFloatingPoint {
-        
+    
         self.init(
             ValueSliderStyleConfiguration(
                 value: Binding(get: { CGFloat(value.wrappedValue) }, set: { value.wrappedValue = V($0) }),

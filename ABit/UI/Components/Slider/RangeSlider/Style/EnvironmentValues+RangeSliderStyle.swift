@@ -19,7 +19,7 @@ struct RangeSliderStyleKey: EnvironmentKey {
 
 public extension View {
     /// Sets the style for `RangeSlider` within the environment of `self`.
-    @inlinable func rangeSliderStyle<S>(_ style: S) -> some View where S : RangeSliderStyle {
+    @inlinable func rangeSliderStyle<S>(_ style: S) -> some View where S: RangeSliderStyle {
         self.environment(\.rangeSliderStyle, AnyRangeSliderStyle(style))
     }
 }

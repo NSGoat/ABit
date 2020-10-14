@@ -18,7 +18,7 @@ public struct RectangularPointSliderStyle<Track: View, Thumb: View>: PointSlider
                 yStep: configuration.yStep
             ))
             .accentColor(.accentColor)
-        
+
         return GeometryReader { geometry in
             ZStack {
                 if self.options.contains(.interactiveTrack) {
@@ -33,7 +33,7 @@ public struct RectangularPointSliderStyle<Track: View, Thumb: View>: PointSlider
                                     leadingOffset: self.thumbSize.width / 2,
                                     trailingOffset: self.thumbSize.width / 2
                                 )
-                                
+
                                 let computedValueY = configuration.yBounds.upperBound - valueFrom(
                                     distance: gestureValue.location.y,
                                     availableDistance: geometry.size.height,
@@ -42,7 +42,7 @@ public struct RectangularPointSliderStyle<Track: View, Thumb: View>: PointSlider
                                     leadingOffset: self.thumbSize.height / 2,
                                     trailingOffset: self.thumbSize.height / 2
                                 )
-                                
+
                                 configuration.x.wrappedValue = computedValueX
                                 configuration.y.wrappedValue = computedValueY
                                 configuration.onEditingChanged(true)
@@ -54,7 +54,7 @@ public struct RectangularPointSliderStyle<Track: View, Thumb: View>: PointSlider
                 } else {
                     track
                 }
-                
+
                 ZStack {
                     self.thumb
                         .frame(width: self.thumbSize.width, height: self.thumbSize.height)
@@ -88,7 +88,7 @@ public struct RectangularPointSliderStyle<Track: View, Thumb: View>: PointSlider
                                     leadingOffset: self.thumbSize.width / 2,
                                     trailingOffset: self.thumbSize.width / 2
                                 )
-                                
+
                                 let dragOffsetY = gestureValue.startLocation.y - (geometry.size.height - distanceFrom(
                                     value:  configuration.y.wrappedValue,
                                     availableDistance: geometry.size.height,
@@ -96,10 +96,10 @@ public struct RectangularPointSliderStyle<Track: View, Thumb: View>: PointSlider
                                     leadingOffset: self.thumbSize.height / 2,
                                     trailingOffset: self.thumbSize.height / 2
                                 ))
-                                
+
                                 configuration.dragOffset.wrappedValue = CGPoint(x: gragOffsetX, y: dragOffsetY)
                             }
-                            
+
                             let computedValueX = valueFrom(
                                 distance: gestureValue.location.x - (configuration.dragOffset.wrappedValue?.x ?? 0),
                                 availableDistance: geometry.size.width,
@@ -108,7 +108,7 @@ public struct RectangularPointSliderStyle<Track: View, Thumb: View>: PointSlider
                                 leadingOffset: self.thumbSize.width / 2,
                                 trailingOffset: self.thumbSize.width / 2
                             )
-                            
+
                             let computedValueY = valueFrom(
                                 distance: geometry.size.height - (gestureValue.location.y - (configuration.dragOffset.wrappedValue?.y ?? 0)),
                                 availableDistance: geometry.size.height,
@@ -117,7 +117,7 @@ public struct RectangularPointSliderStyle<Track: View, Thumb: View>: PointSlider
                                 leadingOffset: self.thumbSize.height / 2,
                                 trailingOffset: self.thumbSize.height / 2
                             )
-                            
+
                             configuration.x.wrappedValue = computedValueX
                             configuration.y.wrappedValue = computedValueY
                             configuration.onEditingChanged(true)
@@ -127,13 +127,12 @@ public struct RectangularPointSliderStyle<Track: View, Thumb: View>: PointSlider
                             configuration.onEditingChanged(false)
                         }
                 )
-                
             }
             .frame(width: geometry.size.width, height: geometry.size.height)
         }
         .frame(minWidth: self.thumbInteractiveSize.width, minHeight: self.thumbInteractiveSize.height)
     }
-    
+
     public init(track: Track,
                 thumb: Thumb,
                 thumbSize: CGSize = CGSize(width: 27, height: 27),

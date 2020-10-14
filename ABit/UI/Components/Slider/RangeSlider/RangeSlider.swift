@@ -3,12 +3,12 @@ import SwiftUI
 public struct RangeSlider: View {
     @Environment(\.rangeSliderStyle) private var style
     @State private var dragOffset: CGFloat?
-    
+
     private var configuration: RangeSliderStyleConfiguration
-    
+
     public var body: some View {
         self.style.makeBody(configuration:
-            self.configuration.with(dragOffset: self.$dragOffset)
+                                self.configuration.with(dragOffset: self.$dragOffset)
         )
     }
 }
@@ -23,8 +23,8 @@ extension RangeSlider {
     public init<V>(range: Binding<ClosedRange<V>>,
                    in bounds: ClosedRange<V> = 0.0...1.0,
                    step: V.Stride = 0.001,
-                   onEditingChanged: @escaping (Bool) -> Void = { _ in }) where V : BinaryFloatingPoint, V.Stride : BinaryFloatingPoint {
-        
+                   onEditingChanged: @escaping (Bool) -> Void = { _ in }) where V: BinaryFloatingPoint, V.Stride: BinaryFloatingPoint {
+
         self.init(
             RangeSliderStyleConfiguration(
                 range: Binding(
@@ -44,8 +44,8 @@ extension RangeSlider {
     public init<V>(range: Binding<ClosedRange<V>>,
                    in bounds: ClosedRange<V> = 0...1,
                    step: V.Stride = 1,
-                   onEditingChanged: @escaping (Bool) -> Void = { _ in }) where V : BinaryInteger, V.Stride : BinaryInteger {
-        
+                   onEditingChanged: @escaping (Bool) -> Void = { _ in }) where V: BinaryInteger, V.Stride: BinaryInteger {
+
         self.init(
             RangeSliderStyleConfiguration(
                 range: Binding(

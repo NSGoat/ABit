@@ -16,7 +16,7 @@ public struct VerticalValueSliderStyle<Track: View, Thumb: View>: ValueSliderSty
                 trailingOffset: self.thumbSize.height / 2)
             )
             .accentColor(.accentColor)
-        
+
         return GeometryReader { geometry in
             ZStack {
                 if self.options.contains(.interactiveTrack) {
@@ -41,7 +41,7 @@ public struct VerticalValueSliderStyle<Track: View, Thumb: View>: ValueSliderSty
                 } else {
                     track
                 }
-                
+
                 ZStack {
                     self.thumb
                         .frame(width: self.thumbSize.width, height: self.thumbSize.height)
@@ -69,7 +69,7 @@ public struct VerticalValueSliderStyle<Track: View, Thumb: View>: ValueSliderSty
                                     trailingOffset: self.thumbSize.height / 2
                                 ))
                             }
-                            
+
                             let computedValue = valueFrom(
                                 distance: geometry.size.height - (gestureValue.location.y - (configuration.dragOffset.wrappedValue ?? 0)),
                                 availableDistance: geometry.size.height,
@@ -78,7 +78,7 @@ public struct VerticalValueSliderStyle<Track: View, Thumb: View>: ValueSliderSty
                                 leadingOffset: self.thumbSize.height / 2,
                                 trailingOffset: self.thumbSize.height / 2
                             )
-                            
+
                             configuration.value.wrappedValue = computedValue
                             configuration.onEditingChanged(true)
                         }

@@ -7,10 +7,10 @@ public struct HorizontalRangeSliderStyle<Track: View, LowerThumb: View, UpperThu
 
     let lowerThumbSize: CGSize
     let upperThumbSize: CGSize
-    
+
     let lowerThumbInteractiveSize: CGSize
     let upperThumbInteractiveSize: CGSize
-    
+
     private let options: RangeSliderOptions
 
     public func makeBody(configuration: Self.Configuration) -> some View {
@@ -25,7 +25,7 @@ public struct HorizontalRangeSliderStyle<Track: View, LowerThumb: View, UpperThu
                         upperLeadingOffset: self.lowerThumbSize.width + self.upperThumbSize.width / 2,
                         upperTrailingOffset: self.upperThumbSize.width / 2
                     ))
-            
+
                 ZStack {
                     self.lowerThumb
                         .frame(width: self.lowerThumbSize.width, height: self.lowerThumbSize.height)
@@ -53,7 +53,7 @@ public struct HorizontalRangeSliderStyle<Track: View, LowerThumb: View, UpperThu
                                     trailingOffset: self.lowerThumbSize.width / 2
                                 )
                             }
-                            
+
                             let computedLowerBound = valueFrom(
                                 distance: gestureValue.location.x - (configuration.dragOffset.wrappedValue ?? 0),
                                 availableDistance: geometry.size.width - self.upperThumbSize.width,
@@ -62,7 +62,7 @@ public struct HorizontalRangeSliderStyle<Track: View, LowerThumb: View, UpperThu
                                 leadingOffset: self.lowerThumbSize.width / 2,
                                 trailingOffset: self.lowerThumbSize.width / 2
                             )
-                            
+
                             if self.options.contains(.forceAdjacentValue) {
                                 let computedUpperBound = max(computedLowerBound, configuration.range.wrappedValue.upperBound)
                                 configuration.range.wrappedValue = computedLowerBound...computedUpperBound
@@ -78,7 +78,7 @@ public struct HorizontalRangeSliderStyle<Track: View, LowerThumb: View, UpperThu
                             configuration.onEditingChanged(false)
                         }
                 )
-                
+
                 ZStack {
                     self.upperThumb
                         .frame(width: self.upperThumbSize.width, height: self.upperThumbSize.height)
@@ -106,7 +106,7 @@ public struct HorizontalRangeSliderStyle<Track: View, LowerThumb: View, UpperThu
                                     trailingOffset: self.upperThumbSize.width / 2
                                 )
                             }
-                            
+
                             let computedUpperBound = valueFrom(
                                 distance: gestureValue.location.x - (configuration.dragOffset.wrappedValue ?? 0),
                                 availableDistance: geometry.size.width,
@@ -115,7 +115,7 @@ public struct HorizontalRangeSliderStyle<Track: View, LowerThumb: View, UpperThu
                                 leadingOffset: self.lowerThumbSize.width + self.upperThumbSize.width / 2,
                                 trailingOffset: self.upperThumbSize.width / 2
                             )
-                            
+
                             if self.options.contains(.forceAdjacentValue) {
                                 let computedLowerBound = min(computedUpperBound, configuration.range.wrappedValue.lowerBound)
                                 configuration.range.wrappedValue = computedLowerBound...computedUpperBound
@@ -137,7 +137,7 @@ public struct HorizontalRangeSliderStyle<Track: View, LowerThumb: View, UpperThu
         }
         .frame(minHeight: max(self.lowerThumbInteractiveSize.height, self.upperThumbInteractiveSize.height))
     }
-    
+
     public init(track: Track,
                 lowerThumb: LowerThumb,
                 upperThumb: UpperThumb,

@@ -2,14 +2,14 @@ import SwiftUI
 
 public struct RangeTrackConfiguration {
     public static let defaultConfiguration = RangeTrackConfiguration()
-    
+
     public let bounds: ClosedRange<CGFloat>
-    
+
     public let lowerLeadingOffset: CGFloat
     public let lowerTrailingOffset: CGFloat
     public let upperLeadingOffset: CGFloat
     public let upperTrailingOffset: CGFloat
-    
+
     public init(bounds: ClosedRange<CGFloat> = 0.0...1.0, lowerLeadingOffset: CGFloat = 0, lowerTrailingOffset: CGFloat = 0, upperLeadingOffset: CGFloat = 0, upperTrailingOffset: CGFloat = 0) {
         self.bounds = bounds
         self.lowerLeadingOffset = lowerLeadingOffset

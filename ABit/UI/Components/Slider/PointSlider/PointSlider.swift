@@ -3,7 +3,7 @@ import SwiftUI
 public struct PointSlider: View {
     @Environment(\.pointSliderStyle) private var style
     @State private var dragOffset: CGPoint? = nil
-    
+
     private var configuration: PointSliderStyleConfiguration
     
     public var body: some View {
@@ -26,7 +26,7 @@ extension PointSlider {
                    yBounds: ClosedRange<V> = 0.0...1.0,
                    yStep: V.Stride = 0.001,
                    onEditingChanged: @escaping (Bool) -> Void = { _ in }) where V : BinaryFloatingPoint, V.Stride : BinaryFloatingPoint {
-        
+
         self.init(
             PointSliderStyleConfiguration(
                 x: Binding(get: { CGFloat(x.wrappedValue) }, set: { x.wrappedValue = V($0) }),
@@ -49,7 +49,7 @@ extension PointSlider {
                    yBounds: ClosedRange<V> = 0...1,
                    yStep: V.Stride = 1,
                    onEditingChanged: @escaping (Bool) -> Void = { _ in }) where V : BinaryInteger, V.Stride : BinaryInteger {
-        
+
         self.init(
             PointSliderStyleConfiguration(
                 x: Binding(get: { CGFloat(x.wrappedValue) }, set: { x.wrappedValue = V($0) }),

@@ -16,7 +16,7 @@ public struct HorizontalValueSliderStyle<Track: View, Thumb: View>: ValueSliderS
                 trailingOffset: self.thumbSize.width / 2)
             )
             .accentColor(.accentColor)
-        
+
         return GeometryReader { geometry in
             ZStack {
                 if self.options.contains(.interactiveTrack) {
@@ -41,7 +41,7 @@ public struct HorizontalValueSliderStyle<Track: View, Thumb: View>: ValueSliderS
                 } else {
                     track
                 }
-                
+
                 ZStack {
                     self.thumb
                         .frame(width: self.thumbSize.width, height: self.thumbSize.height)
@@ -92,7 +92,7 @@ public struct HorizontalValueSliderStyle<Track: View, Thumb: View>: ValueSliderS
         }
         .frame(minHeight: self.thumbInteractiveSize.height)
     }
-    
+
     public init(track: Track,
                 thumb: Thumb,
                 thumbSize: CGSize = CGSize(width: 27, height: 27),

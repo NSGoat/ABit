@@ -9,7 +9,7 @@ public extension EnvironmentValues {
             self[TrackPointXKey.self] = newValue
         }
     }
-    
+
     var trackPointY: CGFloat {
         get {
             return self[TrackPointYKey.self]

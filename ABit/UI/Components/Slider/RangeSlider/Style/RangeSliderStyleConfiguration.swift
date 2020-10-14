@@ -6,7 +6,7 @@ public struct RangeSliderStyleConfiguration {
     public let step: CGFloat
     public let onEditingChanged: (Bool) -> Void
     public var dragOffset: Binding<CGFloat?>
-    
+
     func with(dragOffset: Binding<CGFloat?>) -> Self {
         var mutSelf = self
         mutSelf.dragOffset = dragOffset
