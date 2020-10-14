@@ -1,10 +1,13 @@
 import Foundation
 
+extension AudioManager: Injectable { }
+extension Logger: Injectable { }
+
 class DependencyManager {
-    private let audioManager = AudioManager()
 
     init() {
         let resolver = Resolver.shared
-        resolver.add(audioManager)
+        resolver.add(Logger.shared)
+        resolver.add(AudioManager.shared)
     }
 }

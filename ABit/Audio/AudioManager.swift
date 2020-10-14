@@ -12,7 +12,7 @@ enum AudioChannel: String, CaseIterable {
     }
 }
 
-final class AudioManager: ObservableObject, Injectable {
+final class AudioManager: ObservableObject {
 
     static let shared = AudioManager()
 
