@@ -1,0 +1,90 @@
+import AudioKit
+import UIKit
+
+class WaveformViewController: UIViewController {
+
+    @Inject var renderer: AudioFileGraphicsRenderer
+
+    var audioFile: AKAudioFile?
+
+    var color: UIColor
+
+    var imageView = UIImageView()
+    var progressView = UIView()
+
+    init(audioFile: AKAudioFile? = nil, color: UIColor) {
+
+        self.audioFile = audioFile
+        self.color = color
+
+        super.init(nibName: nil, bundle: nil)
+
+        imageView.contentMode = .scaleToFill
+        imageView.backgroundColor = .clear
+        progressView.backgroundColor = color
+        progressView.isHidden = true
+        view.layer.cornerRadius = 4
+
+        for subview in [imageView, progressView] {
+            view.addSubview(subview)
+            subview.translatesAutoresizingMaskIntoConstraints = false
+            subview.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+            subview.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+            subview.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            subview.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        }
+
+        if let audioFile = audioFile {
+            updateAudioFile(audioFile)
+        }
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    func startLoadingAnimation() {
+        progressView.alpha = 0.0
+        progressView.isHidden = false
+
+        UIView.animate(withDuration: 0.5, delay: 0, options: [.autoreverse, .curveEaseInOut, .repeat], animations: {
+            self.progressView.alpha = 0.1
+        }, completion: { _ in
+            self.progressView.alpha = 0.0
+        })
+    }
+
+    func stopLoadingAnimation() {
+        progressView.layer.removeAllAnimations()
+        progressView.alpha = 0.0
+        progressView.isHidden = true
+    }
+
+    func updateAudioFile(_ newAudioFile: AKAudioFile?) {
+        guard
+            let newAudioFile = newAudioFile
+        else {
+            audioFile = nil
+            return
+        }
+        guard audioFile != newAudioFile else { return }
+
+        audioFile = newAudioFile
+        imageView.image = nil
+        imageView.isHidden = true
+
+        startLoadingAnimation()
+
+//        let maxDimension = max(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height)
+//        let size = CGSize(width: maxDimension, height: 150)
+        let size = view.bounds.size
+        renderer.renderWaveformImage(audioFile: newAudioFile, size: size, color: color) { image in
+            DispatchQueue.main.async {
+                self.imageView.image = image
+                self.imageView.isHidden = false
+                self.stopLoadingAnimation()
+            }
+        }
+    }
+}
+

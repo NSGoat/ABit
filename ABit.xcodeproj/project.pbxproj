@@ -58,6 +58,10 @@
 		645D664D2537655F00BD6DDA /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645D664C2537655F00BD6DDA /* Logger.swift */; };
 		6490B988252E5830002727BE /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6490B987252E5830002727BE /* WaveformView.swift */; };
 		6490B9A9253056E5002727BE /* AudioFileGraphicsRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6490B9A8253056E5002727BE /* AudioFileGraphicsRenderer.swift */; };
+		649354252539C37200A58453 /* Collection+LastIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649354242539C37200A58453 /* Collection+LastIndex.swift */; };
+		6493542A2539C3B300A58453 /* Size+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649354292539C3B300A58453 /* Size+Hashable.swift */; };
+		6493542F253B3C8700A58453 /* Hasher+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6493542E253B3C8700A58453 /* Hasher+Combine.swift */; };
+		64935434253B56BB00A58453 /* WaveformViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64935433253B56BB00A58453 /* WaveformViewController.swift */; };
 		64AB978F2517EA240011D98B /* CaseIterable+Iteration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AB978E2517EA240011D98B /* CaseIterable+Iteration.swift */; };
 		64AB97D3251A934F0011D98B /* UnitInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AB97D2251A934F0011D98B /* UnitInterval.swift */; };
 		64CD0DB72516233A00363F75 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64CD0DB62516233A00363F75 /* ContentView.swift */; };
@@ -139,6 +143,10 @@
 		645D664C2537655F00BD6DDA /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		6490B987252E5830002727BE /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
 		6490B9A8253056E5002727BE /* AudioFileGraphicsRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileGraphicsRenderer.swift; sourceTree = "<group>"; };
+		649354242539C37200A58453 /* Collection+LastIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+LastIndex.swift"; sourceTree = "<group>"; };
+		649354292539C3B300A58453 /* Size+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Size+Hashable.swift"; sourceTree = "<group>"; };
+		6493542E253B3C8700A58453 /* Hasher+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Hasher+Combine.swift"; sourceTree = "<group>"; };
+		64935433253B56BB00A58453 /* WaveformViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformViewController.swift; sourceTree = "<group>"; };
 		64AB978E2517EA240011D98B /* CaseIterable+Iteration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CaseIterable+Iteration.swift"; sourceTree = "<group>"; };
 		64AB97D2251A934F0011D98B /* UnitInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitInterval.swift; sourceTree = "<group>"; };
 		64CD0DB12516233A00363F75 /* ABit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ABit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -412,6 +420,15 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
+		6493543B253B581100A58453 /* Waveform */ = {
+			isa = PBXGroup;
+			children = (
+				6490B987252E5830002727BE /* WaveformView.swift */,
+				64935433253B56BB00A58453 /* WaveformViewController.swift */,
+			);
+			path = Waveform;
+			sourceTree = "<group>";
+		};
 		64AB978D2517E9F50011D98B /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -434,6 +451,9 @@
 			isa = PBXGroup;
 			children = (
 				64AB978E2517EA240011D98B /* CaseIterable+Iteration.swift */,
+				6493542E253B3C8700A58453 /* Hasher+Combine.swift */,
+				649354242539C37200A58453 /* Collection+LastIndex.swift */,
+				649354292539C3B300A58453 /* Size+Hashable.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -442,6 +462,7 @@
 			isa = PBXGroup;
 			children = (
 				645015ED252CE0BB003B00B7 /* Slider */,
+				6493543B253B581100A58453 /* Waveform */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -513,7 +534,6 @@
 				64CD0DB62516233A00363F75 /* ContentView.swift */,
 				64D8DF9A25166F60000D0653 /* AudioPlayerView.swift */,
 				640AD4312516295100415B7E /* AudioFilePicker.swift */,
-				6490B987252E5830002727BE /* WaveformView.swift */,
 				64AB97F4251AAE780011D98B /* Components */,
 			);
 			path = UI;
@@ -757,6 +777,7 @@
 				6450163C252CE0BB003B00B7 /* PointSliderStyle.swift in Sources */,
 				6450164A252CE0BB003B00B7 /* HorizontalValueSliderStyle.swift in Sources */,
 				6450163B252CE0BB003B00B7 /* AnyPointSliderStyle.swift in Sources */,
+				6493542F253B3C8700A58453 /* Hasher+Combine.swift in Sources */,
 				6450164D252CE0BB003B00B7 /* HorizontalValueTrack.swift in Sources */,
 				64D8DF9925166AE8000D0653 /* AudioManager.swift in Sources */,
 				64CD0DB72516233A00363F75 /* ContentView.swift in Sources */,
@@ -768,6 +789,7 @@
 				64501639252CE0BB003B00B7 /* PointSliderStyleConfiguration.swift in Sources */,
 				64501632252CE0BB003B00B7 /* RangeSliderStyle.swift in Sources */,
 				6450153F252A5549003B00B7 /* Inject.swift in Sources */,
+				6493542A2539C3B300A58453 /* Size+Hashable.swift in Sources */,
 				6450163F252CE0BB003B00B7 /* PointSlider.swift in Sources */,
 				64501655252CE0BB003B00B7 /* DefaultHorizontalValueView.swift in Sources */,
 				64501653252CE0BB003B00B7 /* DefaultVerticalValueView.swift in Sources */,
@@ -799,7 +821,9 @@
 				6427238B2516BCE60052D5E6 /* SceneDelegate.swift in Sources */,
 				64501645252CE0BB003B00B7 /* ValueSlider.swift in Sources */,
 				6450164F252CE0BB003B00B7 /* ValueTrackConfiguration.swift in Sources */,
+				649354252539C37200A58453 /* Collection+LastIndex.swift in Sources */,
 				64AB97D3251A934F0011D98B /* UnitInterval.swift in Sources */,
+				64935434253B56BB00A58453 /* WaveformViewController.swift in Sources */,
 				64501640252CE0BB003B00B7 /* RangeTrackConfiguration.swift in Sources */,
 				64501638252CE0BB003B00B7 /* VerticalRangeSliderStyle.swift in Sources */,
 			);

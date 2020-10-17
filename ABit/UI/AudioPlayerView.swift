@@ -8,10 +8,12 @@ struct AudioPlayerView: View {
     @State var showDocumentPicker = false
 
     var waveformColor: Color
+    var waveformView: WaveformView?
 
     init(audioFilePlayer: AudioFilePlayer, accentColor: Color) {
         self.audioFilePlayer = audioFilePlayer
         self.waveformColor = accentColor
+        self.waveformView = WaveformView(color: accentColor)
     }
 
     var body: some View {
@@ -100,52 +102,51 @@ struct AudioPlayerView: View {
 
     func playerInfoView(playTimeRange: ClosedRange<Double>?) -> some View {
         VStack {
-            if let file = audioFilePlayer.audioFile {
-                HStack {
-                    if let playheadTime = $audioFilePlayer.playheadTime.wrappedValue {
-                        let minutes = playheadTime/60
-                        let seconds = playheadTime.truncatingRemainder(dividingBy: 60)
-                        let playTimeString = String(format: "%2.0f:%2.3f", minutes, seconds)
+            HStack {
+                if let playheadTime = $audioFilePlayer.playheadTime.wrappedValue {
+                    let minutes = playheadTime/60
+                    let seconds = playheadTime.truncatingRemainder(dividingBy: 60)
+                    let playTimeString = String(format: "%2.0f:%2.3f", minutes, seconds)
 
-                        Text(playTimeString)
+                    Text(playTimeString)
+                        .font(.system(.body, design: .monospaced))
+                        .fontWeight(.bold)
+                        .foregroundColor(.accentColor)
+                }
+                Spacer()
+                if let playTimeRange = playTimeRange {
+                    let startMinutes = playTimeRange.lowerBound/60
+                    let startSeconds = playTimeRange.lowerBound.truncatingRemainder(dividingBy: 60)
+                    let startString = String(format: "%2.0f:%2.1f", startMinutes, startSeconds)
+
+                    let endMinutes = playTimeRange.upperBound/60
+                    let endSeconds = playTimeRange.upperBound.truncatingRemainder(dividingBy: 60)
+                    let endString = String(format: "%2.0f:%2.1fs", endMinutes, endSeconds)
+
+                    HStack(spacing: 4) {
+                        Image(systemName: "repeat").font(.system(size: 12, weight: .light))
+                        Text("\(startString) -\(endString)")
                             .font(.system(.body, design: .monospaced))
-                            .fontWeight(.bold)
-                            .foregroundColor(.accentColor)
-                    }
-                    Spacer()
-                    if let playTimeRange = playTimeRange {
-                        let startMinutes = playTimeRange.lowerBound/60
-                        let startSeconds = playTimeRange.lowerBound.truncatingRemainder(dividingBy: 60)
-                        let startString = String(format: "%2.0f:%2.1f", startMinutes, startSeconds)
-
-                        let endMinutes = playTimeRange.upperBound/60
-                        let endSeconds = playTimeRange.upperBound.truncatingRemainder(dividingBy: 60)
-                        let endString = String(format: "%2.0f:%2.1fs", endMinutes, endSeconds)
-
-                        HStack(spacing: 4) {
-                            Image(systemName: "repeat").font(.system(size: 12, weight: .light))
-                            Text("\(startString) -\(endString)")
-                                .font(.system(.body, design: .monospaced))
-                                .fontWeight(.light)
-                        }.foregroundColor(.accentColor)
-                    }
+                            .fontWeight(.light)
+                    }.foregroundColor(.accentColor)
                 }
-                ZStack {
-                    WaveformView(audioFile: file, color: waveformColor)
-                        .accentColor(waveformColor)
-                        .disabled(true)
-                    loopRangeSlider
-                }
-                .frame(height: 150)
-                .scaledToFill()
             }
+            ZStack {
+                waveformView
+                    .accentColor(waveformColor)
+                    .disabled(true)
+                loopRangeSlider
+            }
+            .frame(height: 150)
+            .scaledToFill()
         }
     }
 }
 
 extension AudioPlayerView: AudioFilePickerDelegate {
     func audioFilePicker(_ picker: AudioFilePicker, didPickAudioFileAt url: URL) {
-        audioFilePlayer.loadAudioFile(url: url)
+        let loadedFile = audioFilePlayer.loadAudioFile(url: url)
+        waveformView?.updateAudioFile(audioFile: loadedFile)
     }
 }
 
