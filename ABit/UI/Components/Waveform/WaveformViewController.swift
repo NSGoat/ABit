@@ -12,18 +12,17 @@ class WaveformViewController: UIViewController {
     var imageView = UIImageView()
     var progressView = UIView()
 
-    init(audioFile: AKAudioFile? = nil, color: UIColor) {
-
-        self.audioFile = audioFile
+    init(color: UIColor) {
         self.color = color
 
         super.init(nibName: nil, bundle: nil)
 
+        imageView.isHidden = true
         imageView.contentMode = .scaleToFill
         imageView.backgroundColor = .clear
-        progressView.backgroundColor = color
         progressView.isHidden = true
-        view.layer.cornerRadius = 4
+        progressView.backgroundColor = color
+        progressView.layer.cornerRadius = 6
 
         for subview in [imageView, progressView] {
             view.addSubview(subview)

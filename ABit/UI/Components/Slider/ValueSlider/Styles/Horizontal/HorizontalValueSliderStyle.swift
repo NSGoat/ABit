@@ -130,7 +130,9 @@ extension HorizontalValueSliderStyle where Thumb == DefaultThumb {
 }
 
 extension HorizontalValueSliderStyle where Thumb == DefaultThumb, Track == DefaultHorizontalValueTrack {
-    public init(thumbSize: CGSize = CGSize(width: 27, height: 27), thumbInteractiveSize: CGSize = CGSize(width: 44, height: 44), options: ValueSliderOptions = .defaultOptions) {
+    public init(thumbSize: CGSize = CGSize(width: 27, height: 27),
+                thumbInteractiveSize: CGSize = CGSize(width: 44, height: 44),
+                options: ValueSliderOptions = .defaultOptions) {
         self.track = DefaultHorizontalValueTrack()
         self.thumb = DefaultThumb()
         self.thumbSize = thumbSize

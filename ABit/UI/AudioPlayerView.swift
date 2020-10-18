@@ -10,6 +10,9 @@ struct AudioPlayerView: View {
     var waveformColor: Color
     var waveformView: WaveformView?
 
+    private let sliderThumbWidth: CGFloat = 4
+    private let waveformHeight: CGFloat = 120
+
     init(audioFilePlayer: AudioFilePlayer, accentColor: Color) {
         self.audioFilePlayer = audioFilePlayer
         self.waveformColor = accentColor
@@ -90,55 +93,68 @@ struct AudioPlayerView: View {
     var loopRangeSlider: some View {
         RangeSlider(range: $audioFilePlayer.playPositionRange)
             .rangeSliderStyle(
-                HorizontalRangeSliderStyle(track: Capsule().foregroundColor(.accentColor).frame(height: 8),
+                HorizontalRangeSliderStyle(track: Capsule().foregroundColor(.accentColor).opacity(0.2).frame(height: 0.5),
                                            lowerThumb: Capsule().foregroundColor(.primary),
                                            upperThumb: Capsule().foregroundColor(.primary),
-                                           lowerThumbSize: CGSize(width: 4, height: 150),
-                                           upperThumbSize: CGSize(width: 4, height: 150),
+                                           lowerThumbSize: CGSize(width: sliderThumbWidth, height: waveformHeight),
+                                           upperThumbSize: CGSize(width: sliderThumbWidth, height: waveformHeight),
                                            options: .forceAdjacentValue
                 )
-            ).frame(height: 32)
+            )
     }
 
     func playerInfoView(playTimeRange: ClosedRange<Double>?) -> some View {
         VStack {
             HStack {
-                if let playheadTime = $audioFilePlayer.playheadTime.wrappedValue {
-                    let minutes = playheadTime/60
-                    let seconds = playheadTime.truncatingRemainder(dividingBy: 60)
-                    let playTimeString = String(format: "%2.0f:%2.3f", minutes, seconds)
-
-                    Text(playTimeString)
-                        .font(.system(.body, design: .monospaced))
-                        .fontWeight(.bold)
-                        .foregroundColor(.accentColor)
-                }
+                playTimeText
                 Spacer()
-                if let playTimeRange = playTimeRange {
-                    let startMinutes = playTimeRange.lowerBound/60
-                    let startSeconds = playTimeRange.lowerBound.truncatingRemainder(dividingBy: 60)
-                    let startString = String(format: "%2.0f:%2.1f", startMinutes, startSeconds)
-
-                    let endMinutes = playTimeRange.upperBound/60
-                    let endSeconds = playTimeRange.upperBound.truncatingRemainder(dividingBy: 60)
-                    let endString = String(format: "%2.0f:%2.1fs", endMinutes, endSeconds)
-
-                    HStack(spacing: 4) {
-                        Image(systemName: "repeat").font(.system(size: 12, weight: .light))
-                        Text("\(startString) -\(endString)")
-                            .font(.system(.body, design: .monospaced))
-                            .fontWeight(.light)
-                    }.foregroundColor(.accentColor)
-                }
+                loopTimeRangeText
             }
             ZStack {
                 waveformView
                     .accentColor(waveformColor)
                     .disabled(true)
+                    .padding(.horizontal, sliderThumbWidth)
                 loopRangeSlider
             }
-            .frame(height: 150)
+            .frame(height: waveformHeight)
             .scaledToFill()
+        }
+    }
+
+    var playTimeText: some View {
+        if let playheadTime = $audioFilePlayer.playheadTime.wrappedValue {
+            let minutes = playheadTime/60
+            let seconds = playheadTime.truncatingRemainder(dividingBy: 60)
+            let playTimeString = String(format: "%2.0f:%2.3f", minutes, seconds)
+
+            return AnyView(Text(playTimeString)
+                .font(.system(.body, design: .monospaced))
+                .fontWeight(.bold)
+                .foregroundColor(.accentColor))
+        } else {
+            return AnyView(EmptyView())
+        }
+    }
+
+    var loopTimeRangeText: some View {
+        if let playTimeRange = $audioFilePlayer.playTimeRange.wrappedValue {
+            let startMinutes = playTimeRange.lowerBound/60
+            let startSeconds = playTimeRange.lowerBound.truncatingRemainder(dividingBy: 60)
+            let startString = String(format: "%2.0f:%2.1f", startMinutes, startSeconds)
+
+            let endMinutes = playTimeRange.upperBound/60
+            let endSeconds = playTimeRange.upperBound.truncatingRemainder(dividingBy: 60)
+            let endString = String(format: "%2.0f:%2.1fs", endMinutes, endSeconds)
+
+            return AnyView(HStack(spacing: 4) {
+                Image(systemName: "repeat").font(.system(size: 12, weight: .light))
+                Text("\(startString) -\(endString)")
+                    .font(.system(.body, design: .monospaced))
+                    .fontWeight(.light)
+            }.foregroundColor(.accentColor))
+        } else {
+            return AnyView(EmptyView())
         }
     }
 }
