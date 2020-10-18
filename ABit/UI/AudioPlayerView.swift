@@ -116,6 +116,7 @@ struct AudioPlayerView: View {
                     .disabled(true)
                     .padding(.horizontal, sliderThumbWidth)
                 loopRangeSlider
+                playheadView
             }
             .frame(height: waveformHeight)
             .scaledToFill()
@@ -153,6 +154,17 @@ struct AudioPlayerView: View {
                     .font(.system(.body, design: .monospaced))
                     .fontWeight(.light)
             }.foregroundColor(.accentColor))
+        } else {
+            return AnyView(EmptyView())
+        }
+    }
+
+    var playheadView: some View {
+        if let playheadPositionBinding = Binding($audioFilePlayer.playheadPosition) {
+            // TODO: Use ValueSlider with custom thumb and thumbsize
+            return AnyView(Slider(value: playheadPositionBinding)
+                            .disabled(true)
+                            .accentColor(.clear))
         } else {
             return AnyView(EmptyView())
         }
