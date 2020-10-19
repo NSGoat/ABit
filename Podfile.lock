@@ -1,21 +1,21 @@
 PODS:
-  - AudioKit (4.11.2):
-    - AudioKit/Core (= 4.11.2)
-    - AudioKit/UI (= 4.11.2)
-  - AudioKit/Core (4.11.2)
-  - AudioKit/UI (4.11.2):
+  - AudioKit (4.11.3):
+    - AudioKit/Core (= 4.11.3)
+    - AudioKit/UI (= 4.11.3)
+  - AudioKit/Core (4.11.3)
+  - AudioKit/UI (4.11.3):
     - AudioKit/Core
 
 DEPENDENCIES:
-  - AudioKit (~> 4.11.1)
+  - AudioKit (from `../../libraries/AudioKit`)
 
-SPEC REPOS:
-  trunk:
-    - AudioKit
+EXTERNAL SOURCES:
+  AudioKit:
+    :path: "../../libraries/AudioKit"
 
 SPEC CHECKSUMS:
-  AudioKit: 57cc61d708f085763a031e5c3f87adae21dc4b59
+  AudioKit: f02357cb860003629ab475ba52c458413060e87d
 
-PODFILE CHECKSUM: b12da58cbcb0721b1c010966ff189e6a7dddfcd8
+PODFILE CHECKSUM: b0a07fc8a2fbe82dade4cac26ebac08b42728889
 
 COCOAPODS: 1.10.0.rc.1

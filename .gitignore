@@ -2,6 +2,8 @@ xcuserdata/
 
 .build/
 
+Pods/*
+
 *.xcodeproj/*
 !*.xcodeproj/project.pbxproj
 !*.xcodeproj/xcshareddata/
