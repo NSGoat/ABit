@@ -12,48 +12,6 @@
 		642723092516B6310052D5E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642723082516B6310052D5E6 /* AppDelegate.swift */; };
 		6427238B2516BCE60052D5E6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6427238A2516BCE60052D5E6 /* SceneDelegate.swift */; };
 		6450153F252A5549003B00B7 /* Inject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6450153E252A5549003B00B7 /* Inject.swift */; };
-		6450162E252CE0BB003B00B7 /* PointTrackConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645015EF252CE0BB003B00B7 /* PointTrackConfiguration.swift */; };
-		6450162F252CE0BB003B00B7 /* EnvironmentValues+PointTrackConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645015F0252CE0BB003B00B7 /* EnvironmentValues+PointTrackConfiguration.swift */; };
-		64501630252CE0BB003B00B7 /* EnvironmentValues+TrackPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645015F1252CE0BB003B00B7 /* EnvironmentValues+TrackPoint.swift */; };
-		64501631252CE0BB003B00B7 /* RangeSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645015F3252CE0BB003B00B7 /* RangeSlider.swift */; };
-		64501632252CE0BB003B00B7 /* RangeSliderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645015F5252CE0BB003B00B7 /* RangeSliderStyle.swift */; };
-		64501633252CE0BB003B00B7 /* RangeSliderStyleConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645015F6252CE0BB003B00B7 /* RangeSliderStyleConfiguration.swift */; };
-		64501634252CE0BB003B00B7 /* AnyRangeSliderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645015F7252CE0BB003B00B7 /* AnyRangeSliderStyle.swift */; };
-		64501635252CE0BB003B00B7 /* EnvironmentValues+RangeSliderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645015F8252CE0BB003B00B7 /* EnvironmentValues+RangeSliderStyle.swift */; };
-		64501636252CE0BB003B00B7 /* HorizontalRangeSliderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645015FB252CE0BB003B00B7 /* HorizontalRangeSliderStyle.swift */; };
-		64501637252CE0BB003B00B7 /* RangeSliderOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645015FC252CE0BB003B00B7 /* RangeSliderOptions.swift */; };
-		64501638252CE0BB003B00B7 /* VerticalRangeSliderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645015FE252CE0BB003B00B7 /* VerticalRangeSliderStyle.swift */; };
-		64501639252CE0BB003B00B7 /* PointSliderStyleConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64501601252CE0BB003B00B7 /* PointSliderStyleConfiguration.swift */; };
-		6450163A252CE0BB003B00B7 /* EnvironmentValues+PointSliderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64501602252CE0BB003B00B7 /* EnvironmentValues+PointSliderStyle.swift */; };
-		6450163B252CE0BB003B00B7 /* AnyPointSliderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64501603252CE0BB003B00B7 /* AnyPointSliderStyle.swift */; };
-		6450163C252CE0BB003B00B7 /* PointSliderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64501604252CE0BB003B00B7 /* PointSliderStyle.swift */; };
-		6450163D252CE0BB003B00B7 /* RectangularPointSliderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64501607252CE0BB003B00B7 /* RectangularPointSliderStyle.swift */; };
-		6450163E252CE0BB003B00B7 /* PointSliderOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64501608252CE0BB003B00B7 /* PointSliderOptions.swift */; };
-		6450163F252CE0BB003B00B7 /* PointSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64501609252CE0BB003B00B7 /* PointSlider.swift */; };
-		64501640252CE0BB003B00B7 /* RangeTrackConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6450160B252CE0BB003B00B7 /* RangeTrackConfiguration.swift */; };
-		64501641252CE0BB003B00B7 /* HorizontalRangeTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6450160D252CE0BB003B00B7 /* HorizontalRangeTrack.swift */; };
-		64501642252CE0BB003B00B7 /* EnvironmentValues+TrackRange.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6450160E252CE0BB003B00B7 /* EnvironmentValues+TrackRange.swift */; };
-		64501643252CE0BB003B00B7 /* EnvironmentValues+RangeTrackConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6450160F252CE0BB003B00B7 /* EnvironmentValues+RangeTrackConfiguration.swift */; };
-		64501644252CE0BB003B00B7 /* VerticalRangeTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64501611252CE0BB003B00B7 /* VerticalRangeTrack.swift */; };
-		64501645252CE0BB003B00B7 /* ValueSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64501613252CE0BB003B00B7 /* ValueSlider.swift */; };
-		64501646252CE0BB003B00B7 /* ValueSliderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64501615252CE0BB003B00B7 /* ValueSliderStyle.swift */; };
-		64501647252CE0BB003B00B7 /* EnvironmentValues+ValueSliderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64501616252CE0BB003B00B7 /* EnvironmentValues+ValueSliderStyle.swift */; };
-		64501648252CE0BB003B00B7 /* ValueSliderStyleConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64501617252CE0BB003B00B7 /* ValueSliderStyleConfiguration.swift */; };
-		64501649252CE0BB003B00B7 /* AnyValueSliderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64501618252CE0BB003B00B7 /* AnyValueSliderStyle.swift */; };
-		6450164A252CE0BB003B00B7 /* HorizontalValueSliderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6450161B252CE0BB003B00B7 /* HorizontalValueSliderStyle.swift */; };
-		6450164B252CE0BB003B00B7 /* ValueSliderOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6450161C252CE0BB003B00B7 /* ValueSliderOptions.swift */; };
-		6450164C252CE0BB003B00B7 /* VerticalValueSliderStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6450161E252CE0BB003B00B7 /* VerticalValueSliderStyle.swift */; };
-		6450164D252CE0BB003B00B7 /* HorizontalValueTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64501621252CE0BB003B00B7 /* HorizontalValueTrack.swift */; };
-		6450164E252CE0BB003B00B7 /* EnviromnentValues+ValueTrackConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64501622252CE0BB003B00B7 /* EnviromnentValues+ValueTrackConfiguration.swift */; };
-		6450164F252CE0BB003B00B7 /* ValueTrackConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64501623252CE0BB003B00B7 /* ValueTrackConfiguration.swift */; };
-		64501650252CE0BB003B00B7 /* EnvironmentValues+TrackValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64501624252CE0BB003B00B7 /* EnvironmentValues+TrackValue.swift */; };
-		64501651252CE0BB003B00B7 /* VerticalValueTrack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64501626252CE0BB003B00B7 /* VerticalValueTrack.swift */; };
-		64501652252CE0BB003B00B7 /* LinearValueMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64501628252CE0BB003B00B7 /* LinearValueMath.swift */; };
-		64501653252CE0BB003B00B7 /* DefaultVerticalValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64501629252CE0BB003B00B7 /* DefaultVerticalValueView.swift */; };
-		64501654252CE0BB003B00B7 /* LinearRangeMath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6450162A252CE0BB003B00B7 /* LinearRangeMath.swift */; };
-		64501655252CE0BB003B00B7 /* DefaultHorizontalValueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6450162B252CE0BB003B00B7 /* DefaultHorizontalValueView.swift */; };
-		64501656252CE0BB003B00B7 /* DefaultThumb.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6450162C252CE0BB003B00B7 /* DefaultThumb.swift */; };
-		64501657252CE0BB003B00B7 /* AccentColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6450162D252CE0BB003B00B7 /* AccentColor.swift */; };
 		64501665252D1E0E003B00B7 /* DependencyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64501664252D1E0D003B00B7 /* DependencyManager.swift */; };
 		645D664D2537655F00BD6DDA /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645D664C2537655F00BD6DDA /* Logger.swift */; };
 		6490B988252E5830002727BE /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6490B987252E5830002727BE /* WaveformView.swift */; };
@@ -62,6 +20,7 @@
 		6493542A2539C3B300A58453 /* Size+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649354292539C3B300A58453 /* Size+Hashable.swift */; };
 		6493542F253B3C8700A58453 /* Hasher+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6493542E253B3C8700A58453 /* Hasher+Combine.swift */; };
 		64935434253B56BB00A58453 /* WaveformViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64935433253B56BB00A58453 /* WaveformViewController.swift */; };
+		64935444253CB93000A58453 /* Sliders in Frameworks */ = {isa = PBXBuildFile; productRef = 64935443253CB93000A58453 /* Sliders */; };
 		64AB978F2517EA240011D98B /* CaseIterable+Iteration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AB978E2517EA240011D98B /* CaseIterable+Iteration.swift */; };
 		64AB97D3251A934F0011D98B /* UnitInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AB97D2251A934F0011D98B /* UnitInterval.swift */; };
 		64CD0DB72516233A00363F75 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64CD0DB62516233A00363F75 /* ContentView.swift */; };
@@ -97,48 +56,6 @@
 		642723082516B6310052D5E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6427238A2516BCE60052D5E6 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		6450153E252A5549003B00B7 /* Inject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Inject.swift; sourceTree = "<group>"; };
-		645015EF252CE0BB003B00B7 /* PointTrackConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointTrackConfiguration.swift; sourceTree = "<group>"; };
-		645015F0252CE0BB003B00B7 /* EnvironmentValues+PointTrackConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+PointTrackConfiguration.swift"; sourceTree = "<group>"; };
-		645015F1252CE0BB003B00B7 /* EnvironmentValues+TrackPoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+TrackPoint.swift"; sourceTree = "<group>"; };
-		645015F3252CE0BB003B00B7 /* RangeSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSlider.swift; sourceTree = "<group>"; };
-		645015F5252CE0BB003B00B7 /* RangeSliderStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSliderStyle.swift; sourceTree = "<group>"; };
-		645015F6252CE0BB003B00B7 /* RangeSliderStyleConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSliderStyleConfiguration.swift; sourceTree = "<group>"; };
-		645015F7252CE0BB003B00B7 /* AnyRangeSliderStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyRangeSliderStyle.swift; sourceTree = "<group>"; };
-		645015F8252CE0BB003B00B7 /* EnvironmentValues+RangeSliderStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+RangeSliderStyle.swift"; sourceTree = "<group>"; };
-		645015FB252CE0BB003B00B7 /* HorizontalRangeSliderStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizontalRangeSliderStyle.swift; sourceTree = "<group>"; };
-		645015FC252CE0BB003B00B7 /* RangeSliderOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeSliderOptions.swift; sourceTree = "<group>"; };
-		645015FE252CE0BB003B00B7 /* VerticalRangeSliderStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerticalRangeSliderStyle.swift; sourceTree = "<group>"; };
-		64501601252CE0BB003B00B7 /* PointSliderStyleConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointSliderStyleConfiguration.swift; sourceTree = "<group>"; };
-		64501602252CE0BB003B00B7 /* EnvironmentValues+PointSliderStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+PointSliderStyle.swift"; sourceTree = "<group>"; };
-		64501603252CE0BB003B00B7 /* AnyPointSliderStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyPointSliderStyle.swift; sourceTree = "<group>"; };
-		64501604252CE0BB003B00B7 /* PointSliderStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointSliderStyle.swift; sourceTree = "<group>"; };
-		64501607252CE0BB003B00B7 /* RectangularPointSliderStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RectangularPointSliderStyle.swift; sourceTree = "<group>"; };
-		64501608252CE0BB003B00B7 /* PointSliderOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointSliderOptions.swift; sourceTree = "<group>"; };
-		64501609252CE0BB003B00B7 /* PointSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PointSlider.swift; sourceTree = "<group>"; };
-		6450160B252CE0BB003B00B7 /* RangeTrackConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RangeTrackConfiguration.swift; sourceTree = "<group>"; };
-		6450160D252CE0BB003B00B7 /* HorizontalRangeTrack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizontalRangeTrack.swift; sourceTree = "<group>"; };
-		6450160E252CE0BB003B00B7 /* EnvironmentValues+TrackRange.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+TrackRange.swift"; sourceTree = "<group>"; };
-		6450160F252CE0BB003B00B7 /* EnvironmentValues+RangeTrackConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+RangeTrackConfiguration.swift"; sourceTree = "<group>"; };
-		64501611252CE0BB003B00B7 /* VerticalRangeTrack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerticalRangeTrack.swift; sourceTree = "<group>"; };
-		64501613252CE0BB003B00B7 /* ValueSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueSlider.swift; sourceTree = "<group>"; };
-		64501615252CE0BB003B00B7 /* ValueSliderStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueSliderStyle.swift; sourceTree = "<group>"; };
-		64501616252CE0BB003B00B7 /* EnvironmentValues+ValueSliderStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+ValueSliderStyle.swift"; sourceTree = "<group>"; };
-		64501617252CE0BB003B00B7 /* ValueSliderStyleConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueSliderStyleConfiguration.swift; sourceTree = "<group>"; };
-		64501618252CE0BB003B00B7 /* AnyValueSliderStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnyValueSliderStyle.swift; sourceTree = "<group>"; };
-		6450161B252CE0BB003B00B7 /* HorizontalValueSliderStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizontalValueSliderStyle.swift; sourceTree = "<group>"; };
-		6450161C252CE0BB003B00B7 /* ValueSliderOptions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueSliderOptions.swift; sourceTree = "<group>"; };
-		6450161E252CE0BB003B00B7 /* VerticalValueSliderStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerticalValueSliderStyle.swift; sourceTree = "<group>"; };
-		64501621252CE0BB003B00B7 /* HorizontalValueTrack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HorizontalValueTrack.swift; sourceTree = "<group>"; };
-		64501622252CE0BB003B00B7 /* EnviromnentValues+ValueTrackConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EnviromnentValues+ValueTrackConfiguration.swift"; sourceTree = "<group>"; };
-		64501623252CE0BB003B00B7 /* ValueTrackConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValueTrackConfiguration.swift; sourceTree = "<group>"; };
-		64501624252CE0BB003B00B7 /* EnvironmentValues+TrackValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EnvironmentValues+TrackValue.swift"; sourceTree = "<group>"; };
-		64501626252CE0BB003B00B7 /* VerticalValueTrack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerticalValueTrack.swift; sourceTree = "<group>"; };
-		64501628252CE0BB003B00B7 /* LinearValueMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinearValueMath.swift; sourceTree = "<group>"; };
-		64501629252CE0BB003B00B7 /* DefaultVerticalValueView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultVerticalValueView.swift; sourceTree = "<group>"; };
-		6450162A252CE0BB003B00B7 /* LinearRangeMath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinearRangeMath.swift; sourceTree = "<group>"; };
-		6450162B252CE0BB003B00B7 /* DefaultHorizontalValueView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultHorizontalValueView.swift; sourceTree = "<group>"; };
-		6450162C252CE0BB003B00B7 /* DefaultThumb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultThumb.swift; sourceTree = "<group>"; };
-		6450162D252CE0BB003B00B7 /* AccentColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccentColor.swift; sourceTree = "<group>"; };
 		64501664252D1E0D003B00B7 /* DependencyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyManager.swift; sourceTree = "<group>"; };
 		645D664C2537655F00BD6DDA /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		6490B987252E5830002727BE /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
@@ -175,6 +92,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				75D7744532259C43A77F48DC /* Pods_ABit.framework in Frameworks */,
+				64935444253CB93000A58453 /* Sliders in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -195,231 +113,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		645015ED252CE0BB003B00B7 /* Slider */ = {
-			isa = PBXGroup;
-			children = (
-				645015EE252CE0BB003B00B7 /* PointTrack */,
-				645015F2252CE0BB003B00B7 /* RangeSlider */,
-				645015FF252CE0BB003B00B7 /* PointSlider */,
-				6450160A252CE0BB003B00B7 /* RangeTrack */,
-				64501612252CE0BB003B00B7 /* ValueSlider */,
-				6450161F252CE0BB003B00B7 /* ValueTrack */,
-				64501627252CE0BB003B00B7 /* Base */,
-			);
-			path = Slider;
-			sourceTree = "<group>";
-		};
-		645015EE252CE0BB003B00B7 /* PointTrack */ = {
-			isa = PBXGroup;
-			children = (
-				645015EF252CE0BB003B00B7 /* PointTrackConfiguration.swift */,
-				645015F0252CE0BB003B00B7 /* EnvironmentValues+PointTrackConfiguration.swift */,
-				645015F1252CE0BB003B00B7 /* EnvironmentValues+TrackPoint.swift */,
-			);
-			path = PointTrack;
-			sourceTree = "<group>";
-		};
-		645015F2252CE0BB003B00B7 /* RangeSlider */ = {
-			isa = PBXGroup;
-			children = (
-				645015F3252CE0BB003B00B7 /* RangeSlider.swift */,
-				645015F4252CE0BB003B00B7 /* Style */,
-				645015F9252CE0BB003B00B7 /* Styles */,
-			);
-			path = RangeSlider;
-			sourceTree = "<group>";
-		};
-		645015F4252CE0BB003B00B7 /* Style */ = {
-			isa = PBXGroup;
-			children = (
-				645015F5252CE0BB003B00B7 /* RangeSliderStyle.swift */,
-				645015F6252CE0BB003B00B7 /* RangeSliderStyleConfiguration.swift */,
-				645015F7252CE0BB003B00B7 /* AnyRangeSliderStyle.swift */,
-				645015F8252CE0BB003B00B7 /* EnvironmentValues+RangeSliderStyle.swift */,
-			);
-			path = Style;
-			sourceTree = "<group>";
-		};
-		645015F9252CE0BB003B00B7 /* Styles */ = {
-			isa = PBXGroup;
-			children = (
-				645015FA252CE0BB003B00B7 /* Horizontal */,
-				645015FC252CE0BB003B00B7 /* RangeSliderOptions.swift */,
-				645015FD252CE0BB003B00B7 /* Vertical */,
-			);
-			path = Styles;
-			sourceTree = "<group>";
-		};
-		645015FA252CE0BB003B00B7 /* Horizontal */ = {
-			isa = PBXGroup;
-			children = (
-				645015FB252CE0BB003B00B7 /* HorizontalRangeSliderStyle.swift */,
-			);
-			path = Horizontal;
-			sourceTree = "<group>";
-		};
-		645015FD252CE0BB003B00B7 /* Vertical */ = {
-			isa = PBXGroup;
-			children = (
-				645015FE252CE0BB003B00B7 /* VerticalRangeSliderStyle.swift */,
-			);
-			path = Vertical;
-			sourceTree = "<group>";
-		};
-		645015FF252CE0BB003B00B7 /* PointSlider */ = {
-			isa = PBXGroup;
-			children = (
-				64501600252CE0BB003B00B7 /* Style */,
-				64501605252CE0BB003B00B7 /* Styles */,
-				64501609252CE0BB003B00B7 /* PointSlider.swift */,
-			);
-			path = PointSlider;
-			sourceTree = "<group>";
-		};
-		64501600252CE0BB003B00B7 /* Style */ = {
-			isa = PBXGroup;
-			children = (
-				64501601252CE0BB003B00B7 /* PointSliderStyleConfiguration.swift */,
-				64501602252CE0BB003B00B7 /* EnvironmentValues+PointSliderStyle.swift */,
-				64501603252CE0BB003B00B7 /* AnyPointSliderStyle.swift */,
-				64501604252CE0BB003B00B7 /* PointSliderStyle.swift */,
-			);
-			path = Style;
-			sourceTree = "<group>";
-		};
-		64501605252CE0BB003B00B7 /* Styles */ = {
-			isa = PBXGroup;
-			children = (
-				64501606252CE0BB003B00B7 /* Rectangular */,
-				64501608252CE0BB003B00B7 /* PointSliderOptions.swift */,
-			);
-			path = Styles;
-			sourceTree = "<group>";
-		};
-		64501606252CE0BB003B00B7 /* Rectangular */ = {
-			isa = PBXGroup;
-			children = (
-				64501607252CE0BB003B00B7 /* RectangularPointSliderStyle.swift */,
-			);
-			path = Rectangular;
-			sourceTree = "<group>";
-		};
-		6450160A252CE0BB003B00B7 /* RangeTrack */ = {
-			isa = PBXGroup;
-			children = (
-				6450160B252CE0BB003B00B7 /* RangeTrackConfiguration.swift */,
-				6450160C252CE0BB003B00B7 /* Horizontal */,
-				6450160E252CE0BB003B00B7 /* EnvironmentValues+TrackRange.swift */,
-				6450160F252CE0BB003B00B7 /* EnvironmentValues+RangeTrackConfiguration.swift */,
-				64501610252CE0BB003B00B7 /* Vertical */,
-			);
-			path = RangeTrack;
-			sourceTree = "<group>";
-		};
-		6450160C252CE0BB003B00B7 /* Horizontal */ = {
-			isa = PBXGroup;
-			children = (
-				6450160D252CE0BB003B00B7 /* HorizontalRangeTrack.swift */,
-			);
-			path = Horizontal;
-			sourceTree = "<group>";
-		};
-		64501610252CE0BB003B00B7 /* Vertical */ = {
-			isa = PBXGroup;
-			children = (
-				64501611252CE0BB003B00B7 /* VerticalRangeTrack.swift */,
-			);
-			path = Vertical;
-			sourceTree = "<group>";
-		};
-		64501612252CE0BB003B00B7 /* ValueSlider */ = {
-			isa = PBXGroup;
-			children = (
-				64501613252CE0BB003B00B7 /* ValueSlider.swift */,
-				64501614252CE0BB003B00B7 /* Style */,
-				64501619252CE0BB003B00B7 /* Styles */,
-			);
-			path = ValueSlider;
-			sourceTree = "<group>";
-		};
-		64501614252CE0BB003B00B7 /* Style */ = {
-			isa = PBXGroup;
-			children = (
-				64501615252CE0BB003B00B7 /* ValueSliderStyle.swift */,
-				64501616252CE0BB003B00B7 /* EnvironmentValues+ValueSliderStyle.swift */,
-				64501617252CE0BB003B00B7 /* ValueSliderStyleConfiguration.swift */,
-				64501618252CE0BB003B00B7 /* AnyValueSliderStyle.swift */,
-			);
-			path = Style;
-			sourceTree = "<group>";
-		};
-		64501619252CE0BB003B00B7 /* Styles */ = {
-			isa = PBXGroup;
-			children = (
-				6450161A252CE0BB003B00B7 /* Horizontal */,
-				6450161C252CE0BB003B00B7 /* ValueSliderOptions.swift */,
-				6450161D252CE0BB003B00B7 /* Vertical */,
-			);
-			path = Styles;
-			sourceTree = "<group>";
-		};
-		6450161A252CE0BB003B00B7 /* Horizontal */ = {
-			isa = PBXGroup;
-			children = (
-				6450161B252CE0BB003B00B7 /* HorizontalValueSliderStyle.swift */,
-			);
-			path = Horizontal;
-			sourceTree = "<group>";
-		};
-		6450161D252CE0BB003B00B7 /* Vertical */ = {
-			isa = PBXGroup;
-			children = (
-				6450161E252CE0BB003B00B7 /* VerticalValueSliderStyle.swift */,
-			);
-			path = Vertical;
-			sourceTree = "<group>";
-		};
-		6450161F252CE0BB003B00B7 /* ValueTrack */ = {
-			isa = PBXGroup;
-			children = (
-				64501620252CE0BB003B00B7 /* Horizontal */,
-				64501622252CE0BB003B00B7 /* EnviromnentValues+ValueTrackConfiguration.swift */,
-				64501623252CE0BB003B00B7 /* ValueTrackConfiguration.swift */,
-				64501624252CE0BB003B00B7 /* EnvironmentValues+TrackValue.swift */,
-				64501625252CE0BB003B00B7 /* Vertical */,
-			);
-			path = ValueTrack;
-			sourceTree = "<group>";
-		};
-		64501620252CE0BB003B00B7 /* Horizontal */ = {
-			isa = PBXGroup;
-			children = (
-				64501621252CE0BB003B00B7 /* HorizontalValueTrack.swift */,
-			);
-			path = Horizontal;
-			sourceTree = "<group>";
-		};
-		64501625252CE0BB003B00B7 /* Vertical */ = {
-			isa = PBXGroup;
-			children = (
-				64501626252CE0BB003B00B7 /* VerticalValueTrack.swift */,
-			);
-			path = Vertical;
-			sourceTree = "<group>";
-		};
-		64501627252CE0BB003B00B7 /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				64501628252CE0BB003B00B7 /* LinearValueMath.swift */,
-				64501629252CE0BB003B00B7 /* DefaultVerticalValueView.swift */,
-				6450162A252CE0BB003B00B7 /* LinearRangeMath.swift */,
-				6450162B252CE0BB003B00B7 /* DefaultHorizontalValueView.swift */,
-				6450162C252CE0BB003B00B7 /* DefaultThumb.swift */,
-				6450162D252CE0BB003B00B7 /* AccentColor.swift */,
-			);
-			path = Base;
-			sourceTree = "<group>";
-		};
 		6493543B253B581100A58453 /* Waveform */ = {
 			isa = PBXGroup;
 			children = (
@@ -461,7 +154,6 @@
 		64AB97F4251AAE780011D98B /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				645015ED252CE0BB003B00B7 /* Slider */,
 				6493543B253B581100A58453 /* Waveform */,
 			);
 			path = Components;
@@ -607,6 +299,7 @@
 			);
 			name = ABit;
 			packageProductDependencies = (
+				64935443253CB93000A58453 /* Sliders */,
 			);
 			productName = ABit;
 			productReference = 64CD0DB12516233A00363F75 /* ABit.app */;
@@ -680,6 +373,7 @@
 			);
 			mainGroup = 64CD0DA82516233A00363F75;
 			packageReferences = (
+				64935442253CB93000A58453 /* XCRemoteSwiftPackageReference "swiftui-sliders" */,
 			);
 			productRefGroup = 64CD0DB22516233A00363F75 /* Products */;
 			projectDirPath = "";
@@ -767,65 +461,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				64501665252D1E0E003B00B7 /* DependencyManager.swift in Sources */,
-				64501635252CE0BB003B00B7 /* EnvironmentValues+RangeSliderStyle.swift in Sources */,
-				64501641252CE0BB003B00B7 /* HorizontalRangeTrack.swift in Sources */,
-				6450162E252CE0BB003B00B7 /* PointTrackConfiguration.swift in Sources */,
-				64501636252CE0BB003B00B7 /* HorizontalRangeSliderStyle.swift in Sources */,
-				64501642252CE0BB003B00B7 /* EnvironmentValues+TrackRange.swift in Sources */,
-				64501650252CE0BB003B00B7 /* EnvironmentValues+TrackValue.swift in Sources */,
 				64D8DF9B25166F60000D0653 /* AudioPlayerView.swift in Sources */,
-				6450163C252CE0BB003B00B7 /* PointSliderStyle.swift in Sources */,
-				6450164A252CE0BB003B00B7 /* HorizontalValueSliderStyle.swift in Sources */,
-				6450163B252CE0BB003B00B7 /* AnyPointSliderStyle.swift in Sources */,
 				6493542F253B3C8700A58453 /* Hasher+Combine.swift in Sources */,
-				6450164D252CE0BB003B00B7 /* HorizontalValueTrack.swift in Sources */,
 				64D8DF9925166AE8000D0653 /* AudioManager.swift in Sources */,
 				64CD0DB72516233A00363F75 /* ContentView.swift in Sources */,
 				642723092516B6310052D5E6 /* AppDelegate.swift in Sources */,
-				64501634252CE0BB003B00B7 /* AnyRangeSliderStyle.swift in Sources */,
-				64501648252CE0BB003B00B7 /* ValueSliderStyleConfiguration.swift in Sources */,
 				640AD4302516289C00415B7E /* AudioFilePlayer.swift in Sources */,
 				64AB978F2517EA240011D98B /* CaseIterable+Iteration.swift in Sources */,
-				64501639252CE0BB003B00B7 /* PointSliderStyleConfiguration.swift in Sources */,
-				64501632252CE0BB003B00B7 /* RangeSliderStyle.swift in Sources */,
 				6450153F252A5549003B00B7 /* Inject.swift in Sources */,
 				6493542A2539C3B300A58453 /* Size+Hashable.swift in Sources */,
-				6450163F252CE0BB003B00B7 /* PointSlider.swift in Sources */,
-				64501655252CE0BB003B00B7 /* DefaultHorizontalValueView.swift in Sources */,
-				64501653252CE0BB003B00B7 /* DefaultVerticalValueView.swift in Sources */,
-				64501649252CE0BB003B00B7 /* AnyValueSliderStyle.swift in Sources */,
-				64501647252CE0BB003B00B7 /* EnvironmentValues+ValueSliderStyle.swift in Sources */,
 				6490B9A9253056E5002727BE /* AudioFileGraphicsRenderer.swift in Sources */,
 				640AD4322516295100415B7E /* AudioFilePicker.swift in Sources */,
-				64501657252CE0BB003B00B7 /* AccentColor.swift in Sources */,
-				64501652252CE0BB003B00B7 /* LinearValueMath.swift in Sources */,
-				6450164E252CE0BB003B00B7 /* EnviromnentValues+ValueTrackConfiguration.swift in Sources */,
-				64501644252CE0BB003B00B7 /* VerticalRangeTrack.swift in Sources */,
-				64501646252CE0BB003B00B7 /* ValueSliderStyle.swift in Sources */,
-				6450163E252CE0BB003B00B7 /* PointSliderOptions.swift in Sources */,
-				64501651252CE0BB003B00B7 /* VerticalValueTrack.swift in Sources */,
-				64501643252CE0BB003B00B7 /* EnvironmentValues+RangeTrackConfiguration.swift in Sources */,
-				6450164B252CE0BB003B00B7 /* ValueSliderOptions.swift in Sources */,
-				6450163D252CE0BB003B00B7 /* RectangularPointSliderStyle.swift in Sources */,
 				645D664D2537655F00BD6DDA /* Logger.swift in Sources */,
-				64501654252CE0BB003B00B7 /* LinearRangeMath.swift in Sources */,
-				6450162F252CE0BB003B00B7 /* EnvironmentValues+PointTrackConfiguration.swift in Sources */,
-				6450164C252CE0BB003B00B7 /* VerticalValueSliderStyle.swift in Sources */,
-				6450163A252CE0BB003B00B7 /* EnvironmentValues+PointSliderStyle.swift in Sources */,
-				64501656252CE0BB003B00B7 /* DefaultThumb.swift in Sources */,
-				64501633252CE0BB003B00B7 /* RangeSliderStyleConfiguration.swift in Sources */,
-				64501631252CE0BB003B00B7 /* RangeSlider.swift in Sources */,
-				64501630252CE0BB003B00B7 /* EnvironmentValues+TrackPoint.swift in Sources */,
-				64501637252CE0BB003B00B7 /* RangeSliderOptions.swift in Sources */,
 				6490B988252E5830002727BE /* WaveformView.swift in Sources */,
 				6427238B2516BCE60052D5E6 /* SceneDelegate.swift in Sources */,
-				64501645252CE0BB003B00B7 /* ValueSlider.swift in Sources */,
-				6450164F252CE0BB003B00B7 /* ValueTrackConfiguration.swift in Sources */,
 				649354252539C37200A58453 /* Collection+LastIndex.swift in Sources */,
 				64AB97D3251A934F0011D98B /* UnitInterval.swift in Sources */,
 				64935434253B56BB00A58453 /* WaveformViewController.swift in Sources */,
-				64501640252CE0BB003B00B7 /* RangeTrackConfiguration.swift in Sources */,
-				64501638252CE0BB003B00B7 /* VerticalRangeSliderStyle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1153,6 +805,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		64935442253CB93000A58453 /* XCRemoteSwiftPackageReference "swiftui-sliders" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/swift-extensions/swiftui-sliders.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		64935443253CB93000A58453 /* Sliders */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 64935442253CB93000A58453 /* XCRemoteSwiftPackageReference "swiftui-sliders" */;
+			productName = Sliders;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 64CD0DA92516233A00363F75 /* Project object */;
 }
