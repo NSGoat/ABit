@@ -1,4 +1,4 @@
-import AudioKit
+import Sliders
 import SwiftUI
 
 struct AudioPlayerView: View {
@@ -16,7 +16,7 @@ struct AudioPlayerView: View {
     init(audioFilePlayer: AudioFilePlayer, accentColor: Color) {
         self.audioFilePlayer = audioFilePlayer
         self.waveformColor = accentColor
-        self.waveformView = WaveformView(color: accentColor)
+        self.waveformView = WaveformView(color: accentColor, audioFile: audioFilePlayer.audioFile)
     }
 
     var body: some View {
@@ -91,13 +91,19 @@ struct AudioPlayerView: View {
     }
 
     var loopRangeSlider: some View {
-        RangeSlider(range: $audioFilePlayer.playPositionRange)
+        let track = Capsule().foregroundColor(.accentColor).opacity(0.2).frame(height: 0.5)
+        let thumbSize = CGSize(width: sliderThumbWidth, height: waveformHeight)
+        let thumb = Rectangle().foregroundColor(.primary)
+        let lowerThumb = thumb.cornerRadius(sliderThumbWidth, corners: [.topLeft, .bottomLeft])
+        let upperThumb = thumb.cornerRadius(sliderThumbWidth, corners: [.topRight, .bottomRight])
+
+        return RangeSlider(range: $audioFilePlayer.playPositionRange)
             .rangeSliderStyle(
-                HorizontalRangeSliderStyle(track: Capsule().foregroundColor(.accentColor).opacity(0.2).frame(height: 0.5),
-                                           lowerThumb: Capsule().foregroundColor(.primary),
-                                           upperThumb: Capsule().foregroundColor(.primary),
-                                           lowerThumbSize: CGSize(width: sliderThumbWidth, height: waveformHeight),
-                                           upperThumbSize: CGSize(width: sliderThumbWidth, height: waveformHeight),
+                HorizontalRangeSliderStyle(track: track,
+                                           lowerThumb: lowerThumb,
+                                           upperThumb: upperThumb,
+                                           lowerThumbSize: thumbSize,
+                                           upperThumbSize: thumbSize,
                                            options: .forceAdjacentValue
                 )
             )
@@ -115,8 +121,9 @@ struct AudioPlayerView: View {
                     .accentColor(waveformColor)
                     .disabled(true)
                     .padding(.horizontal, sliderThumbWidth)
-                loopRangeSlider
                 playheadView
+                    .padding(.horizontal, sliderThumbWidth)
+                loopRangeSlider
             }
             .frame(height: waveformHeight)
             .scaledToFill()
@@ -161,13 +168,22 @@ struct AudioPlayerView: View {
 
     var playheadView: some View {
         if let playheadPositionBinding = Binding($audioFilePlayer.playheadPosition) {
-            // TODO: Use ValueSlider with custom thumb and thumbsize
-            return AnyView(Slider(value: playheadPositionBinding)
-                            .disabled(true)
-                            .accentColor(.clear))
+            return AnyView(playheadView(playheadPosition: playheadPositionBinding,
+                                        waveformHeight: waveformHeight,
+                                        thumbSize: CGSize(width: 1, height: waveformHeight)))
         } else {
             return AnyView(EmptyView())
         }
+    }
+
+    func playheadView(playheadPosition: Binding<Double>, waveformHeight: CGFloat, thumbSize: CGSize) -> some View {
+        let thumb = Capsule().foregroundColor(.primary).opacity(0.7).frame(height: waveformHeight)
+        let thumbSize = CGSize(width: 1, height: waveformHeight)
+
+        return ValueSlider(value: playheadPosition)
+            .valueSliderStyle(
+                HorizontalValueSliderStyle(track: EmptyView(), thumb: thumb, thumbSize: thumbSize))
+            .disabled(true)
     }
 }
 

@@ -11,6 +11,7 @@
 		640AD4322516295100415B7E /* AudioFilePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640AD4312516295100415B7E /* AudioFilePicker.swift */; };
 		642723092516B6310052D5E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642723082516B6310052D5E6 /* AppDelegate.swift */; };
 		6427238B2516BCE60052D5E6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6427238A2516BCE60052D5E6 /* SceneDelegate.swift */; };
+		64465C10253DECA900F148FC /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 64465C0F253DECA900F148FC /* AudioKit */; };
 		6450153F252A5549003B00B7 /* Inject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6450153E252A5549003B00B7 /* Inject.swift */; };
 		64501665252D1E0E003B00B7 /* DependencyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64501664252D1E0D003B00B7 /* DependencyManager.swift */; };
 		645D664D2537655F00BD6DDA /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645D664C2537655F00BD6DDA /* Logger.swift */; };
@@ -21,6 +22,7 @@
 		6493542F253B3C8700A58453 /* Hasher+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6493542E253B3C8700A58453 /* Hasher+Combine.swift */; };
 		64935434253B56BB00A58453 /* WaveformViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64935433253B56BB00A58453 /* WaveformViewController.swift */; };
 		64935444253CB93000A58453 /* Sliders in Frameworks */ = {isa = PBXBuildFile; productRef = 64935443253CB93000A58453 /* Sliders */; };
+		64935449253CBF2000A58453 /* View+CornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64935448253CBF2000A58453 /* View+CornerRadius.swift */; };
 		64AB978F2517EA240011D98B /* CaseIterable+Iteration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AB978E2517EA240011D98B /* CaseIterable+Iteration.swift */; };
 		64AB97D3251A934F0011D98B /* UnitInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AB97D2251A934F0011D98B /* UnitInterval.swift */; };
 		64CD0DB72516233A00363F75 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64CD0DB62516233A00363F75 /* ContentView.swift */; };
@@ -30,6 +32,7 @@
 		64CD0DD22516233C00363F75 /* ABitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64CD0DD12516233C00363F75 /* ABitUITests.swift */; };
 		64D8DF9925166AE8000D0653 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D8DF9825166AE8000D0653 /* AudioManager.swift */; };
 		64D8DF9B25166F60000D0653 /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D8DF9A25166F60000D0653 /* AudioPlayerView.swift */; };
+		64F3DD132544BF0600DBC056 /* AVAudioFile+Duration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F3DD122544BF0600DBC056 /* AVAudioFile+Duration.swift */; };
 		75D7744532259C43A77F48DC /* Pods_ABit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29B36A20132C264C605775E /* Pods_ABit.framework */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +67,7 @@
 		649354292539C3B300A58453 /* Size+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Size+Hashable.swift"; sourceTree = "<group>"; };
 		6493542E253B3C8700A58453 /* Hasher+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Hasher+Combine.swift"; sourceTree = "<group>"; };
 		64935433253B56BB00A58453 /* WaveformViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformViewController.swift; sourceTree = "<group>"; };
+		64935448253CBF2000A58453 /* View+CornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+CornerRadius.swift"; sourceTree = "<group>"; };
 		64AB978E2517EA240011D98B /* CaseIterable+Iteration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CaseIterable+Iteration.swift"; sourceTree = "<group>"; };
 		64AB97D2251A934F0011D98B /* UnitInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitInterval.swift; sourceTree = "<group>"; };
 		64CD0DB12516233A00363F75 /* ABit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ABit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,6 +85,7 @@
 		64D8DF9A25166F60000D0653 /* AudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
 		64D8DF9C25169A17000D0653 /* ABit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ABit.entitlements; sourceTree = "<group>"; };
 		64D8DFA42516A280000D0653 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		64F3DD122544BF0600DBC056 /* AVAudioFile+Duration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVAudioFile+Duration.swift"; sourceTree = "<group>"; };
 		6A88A380D7A78F0F9450ADB9 /* Pods-ABit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ABit.debug.xcconfig"; path = "Target Support Files/Pods-ABit/Pods-ABit.debug.xcconfig"; sourceTree = "<group>"; };
 		C3FD3247E7315A7BB5F12AA3 /* Pods-ABit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ABit.release.xcconfig"; path = "Target Support Files/Pods-ABit/Pods-ABit.release.xcconfig"; sourceTree = "<group>"; };
 		D29B36A20132C264C605775E /* Pods_ABit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ABit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -91,6 +96,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64465C10253DECA900F148FC /* AudioKit in Frameworks */,
 				75D7744532259C43A77F48DC /* Pods_ABit.framework in Frameworks */,
 				64935444253CB93000A58453 /* Sliders in Frameworks */,
 			);
@@ -143,10 +149,12 @@
 		64AB97EB251A94880011D98B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				64F3DD122544BF0600DBC056 /* AVAudioFile+Duration.swift */,
 				64AB978E2517EA240011D98B /* CaseIterable+Iteration.swift */,
 				6493542E253B3C8700A58453 /* Hasher+Combine.swift */,
 				649354242539C37200A58453 /* Collection+LastIndex.swift */,
 				649354292539C3B300A58453 /* Size+Hashable.swift */,
+				64935448253CBF2000A58453 /* View+CornerRadius.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -300,6 +308,7 @@
 			name = ABit;
 			packageProductDependencies = (
 				64935443253CB93000A58453 /* Sliders */,
+				64465C0F253DECA900F148FC /* AudioKit */,
 			);
 			productName = ABit;
 			productReference = 64CD0DB12516233A00363F75 /* ABit.app */;
@@ -374,6 +383,7 @@
 			mainGroup = 64CD0DA82516233A00363F75;
 			packageReferences = (
 				64935442253CB93000A58453 /* XCRemoteSwiftPackageReference "swiftui-sliders" */,
+				64465C0E253DECA900F148FC /* XCRemoteSwiftPackageReference "AudioKit" */,
 			);
 			productRefGroup = 64CD0DB22516233A00363F75 /* Products */;
 			projectDirPath = "";
@@ -470,7 +480,9 @@
 				64AB978F2517EA240011D98B /* CaseIterable+Iteration.swift in Sources */,
 				6450153F252A5549003B00B7 /* Inject.swift in Sources */,
 				6493542A2539C3B300A58453 /* Size+Hashable.swift in Sources */,
+				64935449253CBF2000A58453 /* View+CornerRadius.swift in Sources */,
 				6490B9A9253056E5002727BE /* AudioFileGraphicsRenderer.swift in Sources */,
+				64F3DD132544BF0600DBC056 /* AVAudioFile+Duration.swift in Sources */,
 				640AD4322516295100415B7E /* AudioFilePicker.swift in Sources */,
 				645D664D2537655F00BD6DDA /* Logger.swift in Sources */,
 				6490B988252E5830002727BE /* WaveformView.swift in Sources */,
@@ -807,6 +819,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		64465C0E253DECA900F148FC /* XCRemoteSwiftPackageReference "AudioKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/AudioKit";
+			requirement = {
+				branch = "v5-master";
+				kind = branch;
+			};
+		};
 		64935442253CB93000A58453 /* XCRemoteSwiftPackageReference "swiftui-sliders" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/swift-extensions/swiftui-sliders.git";
@@ -818,6 +838,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		64465C0F253DECA900F148FC /* AudioKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 64465C0E253DECA900F148FC /* XCRemoteSwiftPackageReference "AudioKit" */;
+			productName = AudioKit;
+		};
 		64935443253CB93000A58453 /* Sliders */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 64935442253CB93000A58453 /* XCRemoteSwiftPackageReference "swiftui-sliders" */;

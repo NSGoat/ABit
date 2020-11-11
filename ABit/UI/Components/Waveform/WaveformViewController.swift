@@ -1,11 +1,11 @@
-import AudioKit
+import AVFoundation
 import UIKit
 
 class WaveformViewController: UIViewController {
 
     @Inject var renderer: AudioFileGraphicsRenderer
 
-    var audioFile: AKAudioFile?
+    var audioFile: AVAudioFile?
 
     var color: UIColor
 
@@ -59,7 +59,7 @@ class WaveformViewController: UIViewController {
         progressView.isHidden = true
     }
 
-    func updateAudioFile(_ newAudioFile: AKAudioFile?) {
+    func updateAudioFile(_ newAudioFile: AVAudioFile?) {
         guard
             let newAudioFile = newAudioFile
         else {

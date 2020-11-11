@@ -1,7 +1,6 @@
 import Foundation
 
 extension CaseIterable where Self: Equatable, AllCases: BidirectionalCollection {
-
     func previous() -> Self {
         let all = Self.allCases
         let idx = all.firstIndex(of: self)!

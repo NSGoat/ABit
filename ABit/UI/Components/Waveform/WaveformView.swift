@@ -1,4 +1,4 @@
-import AudioKit
+import AVFoundation
 import SwiftUI
 import UIKit
 
@@ -6,8 +6,11 @@ struct WaveformView: UIViewControllerRepresentable {
 
     let viewController: WaveformViewController
 
-    init(color: Color) {
+    let audioFile: AVAudioFile?
+
+    init(color: Color, audioFile: AVAudioFile?) {
         viewController = WaveformViewController(color: UIColor(color))
+        self.audioFile = audioFile
     }
 
     func makeUIViewController(context: Context) -> UIViewController {
@@ -16,7 +19,7 @@ struct WaveformView: UIViewControllerRepresentable {
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) { }
 
-    func updateAudioFile(audioFile: AKAudioFile?) {
+    func updateAudioFile(audioFile: AVAudioFile?) {
         viewController.updateAudioFile(audioFile)
     }
 }

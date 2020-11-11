@@ -1,4 +1,5 @@
 import AudioKit
+import AVFoundation
 import Foundation
 import UIKit
 
@@ -14,7 +15,7 @@ public class AudioFileGraphicsRenderer {
 
     @Inject var logger: Logger
 
-    func renderWaveformImage(audioFile: AKAudioFile, size: CGSize,
+    func renderWaveformImage(audioFile: AVAudioFile, size: CGSize,
                              style: RenderingStyle = .line,
                              color: UIColor,
                              completion: @escaping (UIImage?) -> Void) {
@@ -30,7 +31,7 @@ public class AudioFileGraphicsRenderer {
         }
     }
 
-    private func renderAudioFileGraphics(_ audioFile: AKAudioFile,
+    private func renderAudioFileGraphics(_ audioFile: AVAudioFile,
                                          size: CGSize,
                                          style: RenderingStyle,
                                          color: UIColor) -> UIImage {
@@ -44,15 +45,19 @@ public class AudioFileGraphicsRenderer {
         }
     }
 
-    private func renderWaveformBars(_ audioFile: AKAudioFile,
+    private func renderWaveformBars(_ audioFile: AVAudioFile,
                                     size: CGSize,
                                     color: UIColor) -> UIImage {
 
         logger.log(.info, "Began audio file graphics rendering")
 
-        let oversampling = 1
+        let oversampling = 1.0
         let startTime = Date()
-        let table = AKTable(file: audioFile)
+        guard
+            let table = Table(file: audioFile)
+        else {
+            return UIImage()
+        }
         let maxAmplitude = Double(table.max() ?? 1.0)
         let minAmplitude = Double(table.min() ?? -1.0)
         let absmax: Double = [maxAmplitude, abs(minAmplitude)].max() ?? 1.0
@@ -70,7 +75,7 @@ public class AudioFileGraphicsRenderer {
 
             logger.log(.verbose, "Create bezier path")
             let bezierPath = UIBezierPath()
-            bezierPath.move(to: CGPoint(x: 0.0, y: (1.0 - table[0] / absmax) * height))
+            bezierPath.move(to: CGPoint(x: 0.0, y: (1.0 - Double(table[0]) / absmax) * height))
 
             let strideWidth: Int = table.count / Int(width)
 
@@ -86,7 +91,7 @@ public class AudioFileGraphicsRenderer {
 
                 let rangeEnd = min(i+strideWidth, table.lastIndex ?? 0)
                 let range = i..<rangeEnd
-                let rangeAverage = averageValue(inRange: range, forTable: table)
+                let rangeAverage = Double(averageValue(inRange: range, forTable: table))
                 let y = (1.0 - rangeAverage / absmax) * height
 
                 bezierPath.addLine(to: CGPoint(x: x, y: y))
@@ -103,7 +108,7 @@ public class AudioFileGraphicsRenderer {
         }
     }
 
-    private func renderWaveformLine(_ audioFile: AKAudioFile,
+    private func renderWaveformLine(_ audioFile: AVAudioFile,
                                     size: CGSize,
                                     color: UIColor,
                                     oversampling: Double) -> UIImage {
@@ -111,7 +116,13 @@ public class AudioFileGraphicsRenderer {
         logger.log(.info, "Began audio file graphics rendering")
 
         let startTime = Date()
-        let table = AKTable(file: audioFile)
+
+        guard
+            let table = Table(file: audioFile)
+        else {
+            return UIImage()
+        }
+
         let maxAmplitude = Double(table.max() ?? 1.0)
         let minAmplitude = Double(table.min() ?? -1.0)
         let absmax: Double = [maxAmplitude, abs(minAmplitude)].max() ?? 1.0
@@ -129,7 +140,7 @@ public class AudioFileGraphicsRenderer {
 
             logger.log(.verbose, "Create bezier path")
             let bezierPath = UIBezierPath()
-            bezierPath.move(to: CGPoint(x: 0.0, y: (1.0 - table[0] / absmax) * height))
+            bezierPath.move(to: CGPoint(x: 0.0, y: (1.0 - Double(table[0]) / absmax) * height))
 
             let strideWidth: Int = table.count / Int(width)
 
@@ -137,7 +148,7 @@ public class AudioFileGraphicsRenderer {
 
             for i in stride(from: table.startIndex, to: lastIndex, by: max(strideWidth, 1)) {
                 let x = Double(i) / Double(strideWidth) / oversampling
-                let y = (1.0 - table[i] / absmax) * height
+                let y = (1.0 - Double(table[i]) / absmax) * height
 
                 bezierPath.addLine(to: CGPoint(x: x, y: y))
             }
@@ -153,17 +164,17 @@ public class AudioFileGraphicsRenderer {
         }
     }
 
-    private func averageValue(inRange range: Range<Int>, forTable table: AKTable) -> Double {
+    private func averageValue(inRange range: Range<Int>, forTable table: Table) -> Float {
         let sum = table[range].reduce(0.0, +)
-        return sum / range.count
+        return sum / Float(range.count)
     }
 
-    private func averageAbsoluteValue(inRange range: Range<Int>, forTable table: AKTable) -> Double {
+    private func averageAbsoluteValue(inRange range: Range<Int>, forTable table: Table) -> Float {
         let sum = table[range]
             .map {
                 abs($0)
             }.reduce(0.0, +)
 
-        return sum / range.count
+        return sum / Float(range.count)
     }
 }
