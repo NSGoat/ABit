@@ -64,31 +64,28 @@ final class AudioFilePlayer: ObservableObject {
 
     func play() {
         guard let fileUrl = fileUrl else { return }
+        guard playPositionRange.size > 0 else { return }
 
         do {
             // TODO: Investigate why we have to load load the audio file from the url here
             // Reading the file into a buffer fails if I use the class property (audioFile)
             let file = try AVAudioFile(forReading: fileUrl)
-
-            if loop {
-                let frameCapacity = AVAudioFrameCount(file.length)
-                if let buffer = AVAudioPCMBuffer(pcmFormat: file.processingFormat, frameCapacity: frameCapacity) {
-                    try file.read(into: buffer)
-
-                    let start = AVAudioFramePosition(playPositionRange.lowerBound * Double(file.length))
-                    let end = AVAudioFramePosition(playPositionRange.upperBound * Double(file.length))
-                    if let segment = buffer.segment(from: start, to: end) {
-                        audioPlayerNode.scheduleBuffer(segment,
-                                                       at: nil,
-                                                       options: [.loops, .interrupts],
-                                                       completionHandler: nil)
-                    }
-                }
-
-            } else {
-                audioPlayerNode.scheduleFile(file, at: nil, completionCallbackType: .dataPlayedBack) { _ in
-                    DispatchQueue.main.async { [weak self] in
-                        self?.stop()
+            let frameCapacity = AVAudioFrameCount(file.length)
+            if let buffer = AVAudioPCMBuffer(pcmFormat: file.processingFormat, frameCapacity: frameCapacity) {
+                try file.read(into: buffer)
+                
+                let start = AVAudioFramePosition(playPositionRange.lowerBound * Double(file.length))
+                let end = AVAudioFramePosition(playPositionRange.upperBound * Double(file.length))
+                if let segment = buffer.segment(from: start, to: end) {
+                    
+                    if loop {
+                        audioPlayerNode.scheduleBuffer(segment, at: nil, options: [.loops, .interrupts])
+                    } else {
+                        audioPlayerNode.scheduleBuffer(segment, at: nil, options: [.interrupts]) {
+                            DispatchQueue.main.async { [weak self] in
+                                self?.stop()
+                            }
+                        }
                     }
                 }
             }
@@ -159,17 +156,20 @@ final class AudioFilePlayer: ObservableObject {
                 return
             }
 
-            if self.loop {
+            let playheadTime: Double
+
+            if self.loop || self.playPositionRange.size < 1 {
                 let loopStartTime = self.playPositionRange.lowerBound * fileDuration
                 let loopDuration = self.playPositionRange.size * fileDuration
                 let currentTimeInLoop = playerTime.truncatingRemainder(dividingBy: loopDuration)
                 let currentTime = (loopStartTime + currentTimeInLoop)
-                self.playheadTime = currentTime
-                self.playheadPosition = currentTime / fileDuration
+                playheadTime = currentTime
             } else {
-                self.playheadTime = playerTime
-                self.playheadPosition = playerTime / fileDuration
+                playheadTime = playerTime
             }
+
+            self.playheadTime = playheadTime
+            self.playheadPosition = playheadTime / fileDuration
         }
     }
 
