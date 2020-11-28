@@ -16,7 +16,8 @@ struct AudioPlayerView: View {
     init(audioFilePlayer: AudioFilePlayer, accentColor: Color) {
         self.audioFilePlayer = audioFilePlayer
         self.waveformColor = accentColor
-        self.waveformView = WaveformView(color: accentColor, audioFile: audioFilePlayer.audioFile)
+        self.waveformView = WaveformView(color: accentColor)
+        self.waveformView?.render(audioFile: audioFilePlayer.audioFile)
     }
 
     var body: some View {
@@ -43,7 +44,7 @@ struct AudioPlayerView: View {
             #endif
         }, label: {
 
-            if let fileName = audioFilePlayer.loadedFileUrl?.lastPathComponent {
+            if let fileName = audioFilePlayer.fileUrl?.lastPathComponent {
                 Text(fileName)
             } else {
                 Image(systemName: "folder")
@@ -190,7 +191,7 @@ struct AudioPlayerView: View {
 extension AudioPlayerView: AudioFilePickerDelegate {
     func audioFilePicker(_ picker: AudioFilePicker, didPickAudioFileAt url: URL) {
         let loadedFile = audioFilePlayer.loadAudioFile(url: url)
-        waveformView?.updateAudioFile(audioFile: loadedFile)
+        waveformView?.render(audioFile: loadedFile)
     }
 }
 

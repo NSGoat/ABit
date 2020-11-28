@@ -1,4 +1,3 @@
-import AudioKit
 import AVFoundation
 import Combine
 import Foundation
@@ -16,8 +15,6 @@ final class AudioManager: ObservableObject {
 
     static let shared = AudioManager()
 
-    let engine = AKManager.engine
-    let mixer: AKMixer = AKMixer()
     var audioFilePlayers = [AudioChannel: AudioFilePlayer]()
 
     @Published var selectedChannel: AudioChannel = .a {
@@ -26,29 +23,38 @@ final class AudioManager: ObservableObject {
         }
     }
 
+    let audioEngine = AVAudioEngine()
+
     init() {
-        AKManager.output = mixer
-        try? AKManager.start()
         try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
 
-        configureNewAudioFilerPlayer(channel: .a)
-        configureNewAudioFilerPlayer(channel: .b)
-        selectedChannel = .a
-    }
+        let mixer = audioEngine.mainMixerNode
+        try? audioEngine.start()
+        audioEngine.prepare()
 
-    deinit {
-        try? AKManager.stop()
+        let playerA = configureNewAudioFilePlayer(channel: .a)
+        audioEngine.attach(playerA.audioPlayerNode)
+        audioEngine.connect(playerA.audioPlayerNode, to: mixer, format: nil)
+
+        let playerB = configureNewAudioFilePlayer(channel: .b)
+        audioEngine.attach(playerB.audioPlayerNode)
+        audioEngine.connect(playerB.audioPlayerNode, to: mixer, format: nil)
+        selectedChannel = .a
+
+        let url = Bundle.main.url(forResource: "Winstons - Amen, Brother", withExtension: "aif")
+        let countUrl = Bundle.main.url(forResource: "1, 2, 3, 4", withExtension: "mp3")
+        audioFilePlayer(channel: .a).loadAudioFile(url: url)
+        audioFilePlayer(channel: .b).loadAudioFile(url: countUrl)
     }
 
     func audioFilePlayer(channel: AudioChannel) -> AudioFilePlayer {
-        return audioFilePlayers[channel] ?? configureNewAudioFilerPlayer(channel: channel)
+        return audioFilePlayers[channel] ?? configureNewAudioFilePlayer(channel: channel)
     }
 
     @discardableResult
-    private func configureNewAudioFilerPlayer(channel: AudioChannel) -> AudioFilePlayer {
+    private func configureNewAudioFilePlayer(channel: AudioChannel) -> AudioFilePlayer {
         let audioFilePlayer = AudioFilePlayer(name: channel.rawValue)
         audioFilePlayers[channel] = audioFilePlayer
-        mixer.connect(input: audioFilePlayer.audioPlayer)
         return audioFilePlayer
     }
 

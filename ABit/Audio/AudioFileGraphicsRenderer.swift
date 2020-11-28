@@ -15,15 +15,25 @@ public class AudioFileGraphicsRenderer {
 
     @Inject var logger: Logger
 
+    private var cache: NSCache<AnyObject, UIImage> = NSCache()
+
     func renderWaveformImage(audioFile: AVAudioFile, size: CGSize,
                              style: RenderingStyle = .line,
                              color: UIColor,
                              completion: @escaping (UIImage?) -> Void) {
 
+        let cacheKey = Hasher.hashObject(combining: audioFile, size, style)
+        if let image = cache.object(forKey: cacheKey) {
+            completion(image)
+            return
+        }
+
         DispatchQueue.global(qos: .utility).async { [weak self, weak audioFile] in
             guard let audioFile = audioFile else { return }
 
             if let image = self?.renderAudioFileGraphics(audioFile, size: size, style: style, color: color) {
+                self?.cache.setObject(image, forKey: cacheKey, cost: Int(audioFile.duration))
+
                 DispatchQueue.main.async {
                     completion(image)
                 }
@@ -135,6 +145,9 @@ public class AudioFileGraphicsRenderer {
         return graphicsImageRenderer.image { context in
             logger.log(.verbose, "Get CoreGraphicsContext")
             let coreGraphicsContext = context.cgContext
+
+//            let tableWidth = CGFloat(table.count)
+//            let width = Double(max(size.width, tableWidth)) * oversampling
             let width = Double(size.width) * oversampling
             let height = Double(size.height) / 2.0
 

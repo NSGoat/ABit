@@ -23,6 +23,7 @@
 		64935434253B56BB00A58453 /* WaveformViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64935433253B56BB00A58453 /* WaveformViewController.swift */; };
 		64935444253CB93000A58453 /* Sliders in Frameworks */ = {isa = PBXBuildFile; productRef = 64935443253CB93000A58453 /* Sliders */; };
 		64935449253CBF2000A58453 /* View+CornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64935448253CBF2000A58453 /* View+CornerRadius.swift */; };
+		64AB2DA4257302D100C59E6F /* 1, 2, 3, 4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 64AB2DA3257302D100C59E6F /* 1, 2, 3, 4.mp3 */; };
 		64AB978F2517EA240011D98B /* CaseIterable+Iteration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AB978E2517EA240011D98B /* CaseIterable+Iteration.swift */; };
 		64AB97D3251A934F0011D98B /* UnitInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AB97D2251A934F0011D98B /* UnitInterval.swift */; };
 		64CD0DB72516233A00363F75 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64CD0DB62516233A00363F75 /* ContentView.swift */; };
@@ -30,10 +31,13 @@
 		64CD0DBC2516233C00363F75 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64CD0DBB2516233C00363F75 /* Preview Assets.xcassets */; };
 		64CD0DC72516233C00363F75 /* ABitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64CD0DC62516233C00363F75 /* ABitTests.swift */; };
 		64CD0DD22516233C00363F75 /* ABitUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64CD0DD12516233C00363F75 /* ABitUITests.swift */; };
+		64CEDAAC255DE21D008B5DB5 /* Winstons - Amen, Brother.aif in Resources */ = {isa = PBXBuildFile; fileRef = 64CEDAAB255DE21D008B5DB5 /* Winstons - Amen, Brother.aif */; };
 		64D8DF9925166AE8000D0653 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D8DF9825166AE8000D0653 /* AudioManager.swift */; };
 		64D8DF9B25166F60000D0653 /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D8DF9A25166F60000D0653 /* AudioPlayerView.swift */; };
+		64F3DD092544BE8B00DBC056 /* ClosedRange+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F3DD082544BE8B00DBC056 /* ClosedRange+Size.swift */; };
+		64F3DD0E2544BEBF00DBC056 /* AVAudioPlayerNode+CurrentTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F3DD0D2544BEBF00DBC056 /* AVAudioPlayerNode+CurrentTime.swift */; };
 		64F3DD132544BF0600DBC056 /* AVAudioFile+Duration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F3DD122544BF0600DBC056 /* AVAudioFile+Duration.swift */; };
-		75D7744532259C43A77F48DC /* Pods_ABit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29B36A20132C264C605775E /* Pods_ABit.framework */; };
+		64F3DD182544C04B00DBC056 /* AVAudioPCMBuffer+Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F3DD172544C04B00DBC056 /* AVAudioPCMBuffer+Segment.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +72,7 @@
 		6493542E253B3C8700A58453 /* Hasher+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Hasher+Combine.swift"; sourceTree = "<group>"; };
 		64935433253B56BB00A58453 /* WaveformViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformViewController.swift; sourceTree = "<group>"; };
 		64935448253CBF2000A58453 /* View+CornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+CornerRadius.swift"; sourceTree = "<group>"; };
+		64AB2DA3257302D100C59E6F /* 1, 2, 3, 4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "1, 2, 3, 4.mp3"; sourceTree = "<group>"; };
 		64AB978E2517EA240011D98B /* CaseIterable+Iteration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CaseIterable+Iteration.swift"; sourceTree = "<group>"; };
 		64AB97D2251A934F0011D98B /* UnitInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitInterval.swift; sourceTree = "<group>"; };
 		64CD0DB12516233A00363F75 /* ABit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ABit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,14 +86,15 @@
 		64CD0DCD2516233C00363F75 /* ABitUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABitUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		64CD0DD12516233C00363F75 /* ABitUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABitUITests.swift; sourceTree = "<group>"; };
 		64CD0DD32516233C00363F75 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		64CEDAAB255DE21D008B5DB5 /* Winstons - Amen, Brother.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Winstons - Amen, Brother.aif"; sourceTree = "<group>"; };
 		64D8DF9825166AE8000D0653 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		64D8DF9A25166F60000D0653 /* AudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
 		64D8DF9C25169A17000D0653 /* ABit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ABit.entitlements; sourceTree = "<group>"; };
 		64D8DFA42516A280000D0653 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		64F3DD082544BE8B00DBC056 /* ClosedRange+Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClosedRange+Size.swift"; sourceTree = "<group>"; };
+		64F3DD0D2544BEBF00DBC056 /* AVAudioPlayerNode+CurrentTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVAudioPlayerNode+CurrentTime.swift"; sourceTree = "<group>"; };
 		64F3DD122544BF0600DBC056 /* AVAudioFile+Duration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVAudioFile+Duration.swift"; sourceTree = "<group>"; };
-		6A88A380D7A78F0F9450ADB9 /* Pods-ABit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ABit.debug.xcconfig"; path = "Target Support Files/Pods-ABit/Pods-ABit.debug.xcconfig"; sourceTree = "<group>"; };
-		C3FD3247E7315A7BB5F12AA3 /* Pods-ABit.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ABit.release.xcconfig"; path = "Target Support Files/Pods-ABit/Pods-ABit.release.xcconfig"; sourceTree = "<group>"; };
-		D29B36A20132C264C605775E /* Pods_ABit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ABit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		64F3DD172544C04B00DBC056 /* AVAudioPCMBuffer+Segment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVAudioPCMBuffer+Segment.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,7 +103,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				64465C10253DECA900F148FC /* AudioKit in Frameworks */,
-				75D7744532259C43A77F48DC /* Pods_ABit.framework in Frameworks */,
 				64935444253CB93000A58453 /* Sliders in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -150,7 +155,10 @@
 			isa = PBXGroup;
 			children = (
 				64F3DD122544BF0600DBC056 /* AVAudioFile+Duration.swift */,
+				64F3DD172544C04B00DBC056 /* AVAudioPCMBuffer+Segment.swift */,
+				64F3DD0D2544BEBF00DBC056 /* AVAudioPlayerNode+CurrentTime.swift */,
 				64AB978E2517EA240011D98B /* CaseIterable+Iteration.swift */,
+				64F3DD082544BE8B00DBC056 /* ClosedRange+Size.swift */,
 				6493542E253B3C8700A58453 /* Hasher+Combine.swift */,
 				649354242539C37200A58453 /* Collection+LastIndex.swift */,
 				649354292539C3B300A58453 /* Size+Hashable.swift */,
@@ -175,8 +183,6 @@
 				64CD0DC52516233C00363F75 /* ABitTests */,
 				64CD0DD02516233C00363F75 /* ABitUITests */,
 				64CD0DB22516233A00363F75 /* Products */,
-				FA3D9C8BC58F3C41CA07F961 /* Pods */,
-				CCE904BC030D268AC8842F34 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -263,29 +269,14 @@
 		64D8DFA62516A2C6000D0653 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				64AB2DA3257302D100C59E6F /* 1, 2, 3, 4.mp3 */,
+				64CEDAAB255DE21D008B5DB5 /* Winstons - Amen, Brother.aif */,
 				64CD0DB82516233C00363F75 /* Assets.xcassets */,
 				64D8DF9C25169A17000D0653 /* ABit.entitlements */,
 				64CD0DBD2516233C00363F75 /* Info.plist */,
 				64CD0DBA2516233C00363F75 /* Preview Content */,
 			);
 			path = Resources;
-			sourceTree = "<group>";
-		};
-		CCE904BC030D268AC8842F34 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				D29B36A20132C264C605775E /* Pods_ABit.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		FA3D9C8BC58F3C41CA07F961 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				6A88A380D7A78F0F9450ADB9 /* Pods-ABit.debug.xcconfig */,
-				C3FD3247E7315A7BB5F12AA3 /* Pods-ABit.release.xcconfig */,
-			);
-			path = Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -295,7 +286,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 64CD0DD62516233C00363F75 /* Build configuration list for PBXNativeTarget "ABit" */;
 			buildPhases = (
-				F6613D024536577CA33AC73E /* [CP] Check Pods Manifest.lock */,
 				64CD0DAD2516233A00363F75 /* Sources */,
 				64CD0DAE2516233A00363F75 /* Frameworks */,
 				64CD0DAF2516233A00363F75 /* Resources */,
@@ -402,6 +392,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				64CD0DBC2516233C00363F75 /* Preview Assets.xcassets in Resources */,
+				64CEDAAC255DE21D008B5DB5 /* Winstons - Amen, Brother.aif in Resources */,
+				64AB2DA4257302D100C59E6F /* 1, 2, 3, 4.mp3 in Resources */,
 				64CD0DB92516233C00363F75 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -441,28 +433,6 @@
 			shellPath = /bin/sh;
 			shellScript = "if which swiftlint >/dev/null; then\n  swiftlint\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
 		};
-		F6613D024536577CA33AC73E /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ABit-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -470,14 +440,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64F3DD092544BE8B00DBC056 /* ClosedRange+Size.swift in Sources */,
 				64501665252D1E0E003B00B7 /* DependencyManager.swift in Sources */,
 				64D8DF9B25166F60000D0653 /* AudioPlayerView.swift in Sources */,
+				64F3DD0E2544BEBF00DBC056 /* AVAudioPlayerNode+CurrentTime.swift in Sources */,
 				6493542F253B3C8700A58453 /* Hasher+Combine.swift in Sources */,
 				64D8DF9925166AE8000D0653 /* AudioManager.swift in Sources */,
 				64CD0DB72516233A00363F75 /* ContentView.swift in Sources */,
 				642723092516B6310052D5E6 /* AppDelegate.swift in Sources */,
 				640AD4302516289C00415B7E /* AudioFilePlayer.swift in Sources */,
 				64AB978F2517EA240011D98B /* CaseIterable+Iteration.swift in Sources */,
+				64F3DD182544C04B00DBC056 /* AVAudioPCMBuffer+Segment.swift in Sources */,
 				6450153F252A5549003B00B7 /* Inject.swift in Sources */,
 				6493542A2539C3B300A58453 /* Size+Hashable.swift in Sources */,
 				64935449253CBF2000A58453 /* View+CornerRadius.swift in Sources */,
@@ -643,7 +616,6 @@
 		};
 		64CD0DD72516233C00363F75 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6A88A380D7A78F0F9450ADB9 /* Pods-ABit.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -669,7 +641,6 @@
 		};
 		64CD0DD82516233C00363F75 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C3FD3247E7315A7BB5F12AA3 /* Pods-ABit.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;

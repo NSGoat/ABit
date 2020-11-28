@@ -6,11 +6,8 @@ struct WaveformView: UIViewControllerRepresentable {
 
     let viewController: WaveformViewController
 
-    let audioFile: AVAudioFile?
-
-    init(color: Color, audioFile: AVAudioFile?) {
+    init(color: Color) {
         viewController = WaveformViewController(color: UIColor(color))
-        self.audioFile = audioFile
     }
 
     func makeUIViewController(context: Context) -> UIViewController {
@@ -19,7 +16,7 @@ struct WaveformView: UIViewControllerRepresentable {
 
     func updateUIViewController(_ uiViewController: UIViewController, context: Context) { }
 
-    func updateAudioFile(audioFile: AVAudioFile?) {
+    func render(audioFile: AVAudioFile?) {
         viewController.updateAudioFile(audioFile)
     }
 }
