@@ -1,4 +1,5 @@
 import AVFoundation
+import UIKit
 
 enum AudioFilePlayerState {
     case awaitingFile
@@ -13,6 +14,10 @@ final class AudioFilePlayer: ObservableObject {
 
     @Published var playerState: AudioFilePlayerState = .awaitingFile
 
+    @Published var playheadPosition: Double?
+
+    @Published var playheadTime: Double?
+
     @Published var loop: Bool = true
 
     @Published var mute: Bool = false {
@@ -21,33 +26,24 @@ final class AudioFilePlayer: ObservableObject {
         }
     }
 
-    @Published var playheadPosition: Double?
-    @Published var playheadTime: Double?
-
     var fileUrl: URL?
 
-    var audioPlayerNode = AVAudioPlayerNode()
+    lazy var audioPlayerNode = AVAudioPlayerNode()
 
-    private var playheadUpdateTimer: Timer?
-
-    private var name: String
-
-    init(name: String) {
-        self.name = name
-    }
+    private lazy var playheadUpdater = AudioFilePlayerPlayheadTracker(audioFilePlayer: self)
 
     @Published var audioFile: AVAudioFile? {
         didSet {
             stop()
-            playTimeRange = playTimeRange(audioFile: audioFile, playPositionRange: playPositionRange)
+            playTimeRange = audioFile?.timeRange(positionRange: playPositionRange)
         }
     }
 
-    @Published var playPositionRange: ClosedRange<TimeInterval> = 0.0...1.0 {
+    @Published var playPositionRange: ClosedRange<Double> = 0.0...1.0 {
         didSet {
             let previousState = playerState
             stop()
-            playTimeRange = playTimeRange(audioFile: audioFile, playPositionRange: playPositionRange)
+            playTimeRange = audioFile?.timeRange(positionRange: playPositionRange)
 
             if previousState == .playing {
                 play()
@@ -61,6 +57,26 @@ final class AudioFilePlayer: ObservableObject {
         stopPlayheadUpdates()
         stop()
     }
+}
+
+extension AudioFilePlayer {
+
+    @discardableResult
+    func loadAudioFile(url: URL?) -> AVAudioFile? {
+        guard let url = url else { return nil }
+
+        do {
+            audioFile = try AVAudioFile(forReading: url)
+            fileUrl = url
+            playerState = .stopped
+
+            return audioFile
+
+        } catch {
+            logger.log(.error, "Failed to load file \(url.absoluteString)", error: error)
+            return nil
+        }
+    }
 
     func play() {
         guard let fileUrl = fileUrl else { return }
@@ -73,11 +89,11 @@ final class AudioFilePlayer: ObservableObject {
             let frameCapacity = AVAudioFrameCount(file.length)
             if let buffer = AVAudioPCMBuffer(pcmFormat: file.processingFormat, frameCapacity: frameCapacity) {
                 try file.read(into: buffer)
-                
+
                 let start = AVAudioFramePosition(playPositionRange.lowerBound * Double(file.length))
                 let end = AVAudioFramePosition(playPositionRange.upperBound * Double(file.length))
                 if let segment = buffer.segment(from: start, to: end) {
-                    
+
                     if loop {
                         audioPlayerNode.scheduleBuffer(segment, at: nil, options: [.loops, .interrupts])
                     } else {
@@ -99,23 +115,6 @@ final class AudioFilePlayer: ObservableObject {
         }
     }
 
-    @discardableResult
-    func loadAudioFile(url: URL?) -> AVAudioFile? {
-        guard let url = url else { return nil }
-
-        do {
-            audioFile = try AVAudioFile(forReading: url)
-            fileUrl = url
-            playerState = .stopped
-
-            return audioFile
-
-        } catch {
-            logger.log(.error, "Failed to load file \(url.absoluteString)", error: error)
-            return nil
-        }
-    }
-
     func unpause() {
         audioPlayerNode.play()
         startPlayheadUpdates()
@@ -131,50 +130,20 @@ final class AudioFilePlayer: ObservableObject {
     func stop() {
         audioPlayerNode.stop()
         stopPlayheadUpdates()
+        playheadTime = nil
+        playheadPosition = nil
         playerState = .stopped
     }
 
-    private func playTimeRange(audioFile: AVAudioFile?,
-                               playPositionRange: ClosedRange<Double>) -> ClosedRange<TimeInterval>? {
-        guard let duration = audioFile?.duration else { return nil }
-        let timesBounds = [duration * playPositionRange.lowerBound,
-                           duration * playPositionRange.upperBound]
-
-        let startTime = timesBounds.min() ?? 0
-        let endTime = timesBounds.max() ?? duration
-
-        return startTime...endTime
-    }
-
-    private func startPlayheadUpdates(withTimeInterval interval: TimeInterval = 1/60) {
-        playheadUpdateTimer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
-            guard
-                let self = self,
-                let fileDuration = self.audioFile?.duration,
-                let playerTime = self.audioPlayerNode.currentTime
-            else {
-                return
-            }
-
-            let playheadTime: Double
-
-            if self.loop || self.playPositionRange.size < 1 {
-                let loopStartTime = self.playPositionRange.lowerBound * fileDuration
-                let loopDuration = self.playPositionRange.size * fileDuration
-                let currentTimeInLoop = playerTime.truncatingRemainder(dividingBy: loopDuration)
-                let currentTime = (loopStartTime + currentTimeInLoop)
-                playheadTime = currentTime
-            } else {
-                playheadTime = playerTime
-            }
-
-            self.playheadTime = playheadTime
-            self.playheadPosition = playheadTime / fileDuration
+    private func startPlayheadUpdates() {
+        let updateInterval = 1.0/Double(UIScreen.main.maximumFramesPerSecond)
+        playheadUpdater.startTracking(withTimeInterval: updateInterval) { playhead in
+            self.playheadTime = playhead?.time
+            self.playheadPosition = playhead?.position
         }
     }
 
     private func stopPlayheadUpdates() {
-        playheadUpdateTimer?.invalidate()
-        playheadUpdateTimer = nil
+        playheadUpdater.stopTracking()
     }
 }

@@ -1,6 +1,7 @@
 import Foundation
 
 extension Hasher {
+
     static func hashObject(combining hashables: AnyHashable...) -> AnyObject {
         let hashValue = hash(combining: hashables)
         return NSNumber(value: hashValue)

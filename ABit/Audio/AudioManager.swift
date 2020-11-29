@@ -53,7 +53,7 @@ final class AudioManager: ObservableObject {
 
     @discardableResult
     private func configureNewAudioFilePlayer(channel: AudioChannel) -> AudioFilePlayer {
-        let audioFilePlayer = AudioFilePlayer(name: channel.rawValue)
+        let audioFilePlayer = AudioFilePlayer()
         audioFilePlayers[channel] = audioFilePlayer
         return audioFilePlayer
     }
