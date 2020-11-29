@@ -7,7 +7,6 @@ struct AudioPlayerView: View {
 
     @State var showDocumentPicker = false
 
-    var waveformColor: Color
     var waveformView: WaveformView?
 
     private let sliderThumbWidth: CGFloat = 4
@@ -15,7 +14,6 @@ struct AudioPlayerView: View {
 
     init(audioFilePlayer: AudioFilePlayer, accentColor: Color) {
         self.audioFilePlayer = audioFilePlayer
-        self.waveformColor = accentColor
         self.waveformView = WaveformView(color: accentColor)
         self.waveformView?.render(audioFile: audioFilePlayer.audioFile)
     }
@@ -119,7 +117,6 @@ struct AudioPlayerView: View {
             }
             ZStack {
                 waveformView
-                    .accentColor(waveformColor)
                     .disabled(true)
                     .padding(.horizontal, sliderThumbWidth)
                 playheadView

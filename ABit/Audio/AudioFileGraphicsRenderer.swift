@@ -17,10 +17,10 @@ public class AudioFileGraphicsRenderer {
 
     private var cache: NSCache<AnyObject, UIImage> = NSCache()
 
-    func renderWaveformImage(audioFile: AVAudioFile, size: CGSize,
-                             style: RenderingStyle = .line,
-                             color: UIColor,
-                             completion: @escaping (UIImage?) -> Void) {
+    func renderWaveform(audioFile: AVAudioFile,
+                        size: CGSize,
+                        style: RenderingStyle = .line,
+                        completion: @escaping (UIImage?) -> Void) {
 
         let cacheKey = Hasher.hashObject(combining: audioFile, size, style)
         if let image = cache.object(forKey: cacheKey) {
@@ -31,7 +31,7 @@ public class AudioFileGraphicsRenderer {
         DispatchQueue.global(qos: .default).async { [weak self, weak audioFile] in
             guard let audioFile = audioFile else { return }
 
-            if let image = self?.renderAudioFileGraphics(audioFile, size: size, style: style, color: color) {
+            if let image = self?.renderAudioFileGraphics(audioFile, size: size, style: style) {
                 self?.cache.setObject(image, forKey: cacheKey, cost: Int(audioFile.duration))
 
                 DispatchQueue.main.async {
@@ -43,21 +43,18 @@ public class AudioFileGraphicsRenderer {
 
     private func renderAudioFileGraphics(_ audioFile: AVAudioFile,
                                          size: CGSize,
-                                         style: RenderingStyle,
-                                         color: UIColor) -> UIImage {
+                                         style: RenderingStyle) -> UIImage {
         switch style {
         case .line:
-            return renderWaveformLine(audioFile, size: size, color: color, oversampling: 8)
+            return renderWaveformLine(audioFile, size: size, oversampling: 8)
         case .block:
             return UIImage()
         case .bars:
-            return renderWaveformBars(audioFile, size: size, color: color)
+            return renderWaveformBars(audioFile, size: size)
         }
     }
 
-    private func renderWaveformBars(_ audioFile: AVAudioFile,
-                                    size: CGSize,
-                                    color: UIColor) -> UIImage {
+    private func renderWaveformBars(_ audioFile: AVAudioFile, size: CGSize) -> UIImage {
 
         logger.log(.info, "Began audio file graphics rendering")
 
@@ -110,7 +107,6 @@ public class AudioFileGraphicsRenderer {
             logger.log(.verbose, "Render audio path")
 
             coreGraphicsContext.addPath(bezierPath.cgPath)
-            coreGraphicsContext.setStrokeColor(color.cgColor)
             coreGraphicsContext.strokePath()
 
             let renderTime = String(format: "%.1f s", Date().timeIntervalSince(startTime))
@@ -120,7 +116,6 @@ public class AudioFileGraphicsRenderer {
 
     private func renderWaveformLine(_ audioFile: AVAudioFile,
                                     size: CGSize,
-                                    color: UIColor,
                                     oversampling: Double) -> UIImage {
 
         logger.log(.info, "Began audio file graphics rendering")
@@ -171,7 +166,6 @@ public class AudioFileGraphicsRenderer {
             logger.log(.verbose, "Render audio path")
 
             coreGraphicsContext.addPath(bezierPath.cgPath)
-            coreGraphicsContext.setStrokeColor(color.cgColor)
             coreGraphicsContext.strokePath()
 
             let renderTime = String(format: "%.1f s", Date().timeIntervalSince(startTime))

@@ -40,7 +40,9 @@ final class AudioFilePlayer: ObservableObject {
             playTimeRange = audioFile?.timeRange(positionRange: playPositionRange)
 
             if previousState == .playing {
-                play()
+                DispatchQueue.global(qos: .default).async {
+                    self.play()
+                }
             }
         }
     }
@@ -48,7 +50,6 @@ final class AudioFilePlayer: ObservableObject {
     @Published var playTimeRange: ClosedRange<TimeInterval>?
 
     var fileUrl: URL?
-
     lazy var audioPlayerNode = AVAudioPlayerNode()
     private lazy var playheadUpdater = AudioFilePlayerPlayheadTracker(audioFilePlayer: self)
 
@@ -104,9 +105,11 @@ extension AudioFilePlayer {
                 }
             }
 
-            audioPlayerNode.play()
-            playerState = .playing
-            startPlayheadUpdates()
+            DispatchQueue.main.async {
+                self.audioPlayerNode.play()
+                self.playerState = .playing
+                self.startPlayheadUpdates()
+            }
 
         } catch {
             logger.log(.error, "Failed to play file \(fileUrl.absoluteString)", error: error)

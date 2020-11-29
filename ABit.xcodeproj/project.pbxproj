@@ -14,8 +14,6 @@
 		6427238B2516BCE60052D5E6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6427238A2516BCE60052D5E6 /* SceneDelegate.swift */; };
 		64465C10253DECA900F148FC /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 64465C0F253DECA900F148FC /* AudioKit */; };
 		6450153F252A5549003B00B7 /* Inject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6450153E252A5549003B00B7 /* Inject.swift */; };
-		64501665252D1E0E003B00B7 /* DependencyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64501664252D1E0D003B00B7 /* DependencyManager.swift */; };
-		645D664D2537655F00BD6DDA /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645D664C2537655F00BD6DDA /* Logger.swift */; };
 		6490B988252E5830002727BE /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6490B987252E5830002727BE /* WaveformView.swift */; };
 		6490B9A9253056E5002727BE /* AudioFileGraphicsRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6490B9A8253056E5002727BE /* AudioFileGraphicsRenderer.swift */; };
 		649354252539C37200A58453 /* Collection+LastIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649354242539C37200A58453 /* Collection+LastIndex.swift */; };
@@ -28,6 +26,8 @@
 		64AB2DBA2573184E00C59E6F /* AVAudioFile+TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F3DD122544BF0600DBC056 /* AVAudioFile+TimeInterval.swift */; };
 		64AB978F2517EA240011D98B /* CaseIterable+Iteration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AB978E2517EA240011D98B /* CaseIterable+Iteration.swift */; };
 		64AB97D3251A934F0011D98B /* UnitInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AB97D2251A934F0011D98B /* UnitInterval.swift */; };
+		64BA8F722574142D0091D525 /* DependencyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64501664252D1E0D003B00B7 /* DependencyManager.swift */; };
+		64BA8F73257414300091D525 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645D664C2537655F00BD6DDA /* Logger.swift */; };
 		64CD0DB72516233A00363F75 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64CD0DB62516233A00363F75 /* ContentView.swift */; };
 		64CD0DB92516233C00363F75 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64CD0DB82516233C00363F75 /* Assets.xcassets */; };
 		64CD0DBC2516233C00363F75 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 64CD0DBB2516233C00363F75 /* Preview Assets.xcassets */; };
@@ -138,6 +138,8 @@
 		64AB978D2517E9F50011D98B /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				64501664252D1E0D003B00B7 /* DependencyManager.swift */,
+				645D664C2537655F00BD6DDA /* Logger.swift */,
 				64AB97EB251A94880011D98B /* Extensions */,
 				64AB97DC251A94240011D98B /* PropertyWrappers */,
 			);
@@ -172,6 +174,8 @@
 		64AB97F4251AAE780011D98B /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				64D8DF9A25166F60000D0653 /* AudioPlayerView.swift */,
+				640AD4312516295100415B7E /* AudioFilePicker.swift */,
 				6493543B253B581100A58453 /* Waveform */,
 			);
 			path = Components;
@@ -240,8 +244,6 @@
 			isa = PBXGroup;
 			children = (
 				64CD0DB62516233A00363F75 /* ContentView.swift */,
-				64D8DF9A25166F60000D0653 /* AudioPlayerView.swift */,
-				640AD4312516295100415B7E /* AudioFilePicker.swift */,
 				64AB97F4251AAE780011D98B /* Components */,
 			);
 			path = UI;
@@ -263,8 +265,6 @@
 			children = (
 				642723082516B6310052D5E6 /* AppDelegate.swift */,
 				6427238A2516BCE60052D5E6 /* SceneDelegate.swift */,
-				64501664252D1E0D003B00B7 /* DependencyManager.swift */,
-				645D664C2537655F00BD6DDA /* Logger.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -444,12 +444,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				64F3DD092544BE8B00DBC056 /* ClosedRange+Size.swift in Sources */,
-				64501665252D1E0E003B00B7 /* DependencyManager.swift in Sources */,
 				64D8DF9B25166F60000D0653 /* AudioPlayerView.swift in Sources */,
 				64F3DD0E2544BEBF00DBC056 /* AVAudioPlayerNode+CurrentTime.swift in Sources */,
 				6493542F253B3C8700A58453 /* Hasher+Combine.swift in Sources */,
+				64BA8F722574142D0091D525 /* DependencyManager.swift in Sources */,
 				64D8DF9925166AE8000D0653 /* AudioManager.swift in Sources */,
 				64CD0DB72516233A00363F75 /* ContentView.swift in Sources */,
+				64BA8F73257414300091D525 /* Logger.swift in Sources */,
 				642723092516B6310052D5E6 /* AppDelegate.swift in Sources */,
 				640AD4302516289C00415B7E /* AudioFilePlayer.swift in Sources */,
 				64AB978F2517EA240011D98B /* CaseIterable+Iteration.swift in Sources */,
@@ -460,7 +461,6 @@
 				64935449253CBF2000A58453 /* View+CornerRadius.swift in Sources */,
 				6490B9A9253056E5002727BE /* AudioFileGraphicsRenderer.swift in Sources */,
 				640AD4322516295100415B7E /* AudioFilePicker.swift in Sources */,
-				645D664D2537655F00BD6DDA /* Logger.swift in Sources */,
 				6490B988252E5830002727BE /* WaveformView.swift in Sources */,
 				6427238B2516BCE60052D5E6 /* SceneDelegate.swift in Sources */,
 				649354252539C37200A58453 /* Collection+LastIndex.swift in Sources */,

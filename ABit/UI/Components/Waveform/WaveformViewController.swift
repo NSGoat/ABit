@@ -20,6 +20,7 @@ class WaveformViewController: UIViewController {
         imageView.isHidden = true
         imageView.contentMode = .scaleToFill
         imageView.backgroundColor = .clear
+        imageView.tintColor = color
         progressView.isHidden = true
         progressView.backgroundColor = color
         progressView.layer.cornerRadius = 6
@@ -77,13 +78,12 @@ class WaveformViewController: UIViewController {
 //        let maxDimension = max(UIScreen.main.bounds.size.width, UIScreen.main.bounds.size.height)
 //        let size = CGSize(width: maxDimension, height: 150)
         let size = view.bounds.size
-        renderer.renderWaveformImage(audioFile: newAudioFile, size: size, color: color) { image in
+        renderer.renderWaveform(audioFile: newAudioFile, size: size) { image in
             DispatchQueue.main.async {
-                self.imageView.image = image
+                self.imageView.image = image?.withRenderingMode(.alwaysTemplate)
                 self.imageView.isHidden = false
                 self.stopLoadingAnimation()
             }
         }
     }
 }
-
