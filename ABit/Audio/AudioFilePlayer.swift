@@ -26,12 +26,6 @@ final class AudioFilePlayer: ObservableObject {
         }
     }
 
-    var fileUrl: URL?
-
-    lazy var audioPlayerNode = AVAudioPlayerNode()
-
-    private lazy var playheadUpdater = AudioFilePlayerPlayheadTracker(audioFilePlayer: self)
-
     @Published var audioFile: AVAudioFile? {
         didSet {
             stop()
@@ -53,8 +47,12 @@ final class AudioFilePlayer: ObservableObject {
 
     @Published var playTimeRange: ClosedRange<TimeInterval>?
 
+    var fileUrl: URL?
+
+    lazy var audioPlayerNode = AVAudioPlayerNode()
+    private lazy var playheadUpdater = AudioFilePlayerPlayheadTracker(audioFilePlayer: self)
+
     deinit {
-        stopPlayheadUpdates()
         stop()
     }
 }
@@ -68,7 +66,7 @@ extension AudioFilePlayer {
         do {
             audioFile = try AVAudioFile(forReading: url)
             fileUrl = url
-            playerState = .stopped
+            stop()
 
             return audioFile
 
@@ -115,10 +113,12 @@ extension AudioFilePlayer {
         }
     }
 
-    func unpause() {
-        audioPlayerNode.play()
-        startPlayheadUpdates()
-        playerState = .playing
+    func stop() {
+        audioPlayerNode.stop()
+        stopPlayheadUpdates()
+        playheadTime = nil
+        playheadPosition = nil
+        playerState = .stopped
     }
 
     func pause() {
@@ -127,12 +127,10 @@ extension AudioFilePlayer {
         playerState = .paused
     }
 
-    func stop() {
-        audioPlayerNode.stop()
-        stopPlayheadUpdates()
-        playheadTime = nil
-        playheadPosition = nil
-        playerState = .stopped
+    func unpause() {
+        audioPlayerNode.play()
+        startPlayheadUpdates()
+        playerState = .playing
     }
 
     private func startPlayheadUpdates() {

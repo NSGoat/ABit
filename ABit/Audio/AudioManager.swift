@@ -35,16 +35,14 @@ final class AudioManager: ObservableObject {
         let playerA = configureNewAudioFilePlayer(channel: .a)
         audioEngine.attach(playerA.audioPlayerNode)
         audioEngine.connect(playerA.audioPlayerNode, to: mixer, format: nil)
+        playerA.loadAudioFile(url: Bundle.main.url(forResource: "Winstons - Amen, Brother", withExtension: "aif"))
 
         let playerB = configureNewAudioFilePlayer(channel: .b)
         audioEngine.attach(playerB.audioPlayerNode)
         audioEngine.connect(playerB.audioPlayerNode, to: mixer, format: nil)
-        selectedChannel = .a
+        playerB.loadAudioFile(url: Bundle.main.url(forResource: "1, 2, 3, 4", withExtension: "mp3"))
 
-        let url = Bundle.main.url(forResource: "Winstons - Amen, Brother", withExtension: "aif")
-        let countUrl = Bundle.main.url(forResource: "1, 2, 3, 4", withExtension: "mp3")
-        audioFilePlayer(channel: .a).loadAudioFile(url: url)
-        audioFilePlayer(channel: .b).loadAudioFile(url: countUrl)
+        selectedChannel = .a
     }
 
     func audioFilePlayer(channel: AudioChannel) -> AudioFilePlayer {

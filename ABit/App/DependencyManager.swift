@@ -6,10 +6,14 @@ extension Logger: Injectable { }
 
 class DependencyManager {
 
+    lazy var logger = Logger.shared
+    lazy var audioFileGraphicsRenderer = AudioFileGraphicsRenderer.shared
+    lazy var audioManager = AudioManager.shared
+
     init() {
         let resolver = Resolver.shared
-        resolver.add(Logger.shared)
-        resolver.add(AudioManager.shared)
-        resolver.add(AudioFileGraphicsRenderer.shared)
+        resolver.add(logger)
+        resolver.add(audioFileGraphicsRenderer)
+        resolver.add(audioManager)
     }
 }

@@ -6,16 +6,20 @@ class Logger {
 
     var showTimestamp = true
     var showSourceLocation = true
-    var verboseEnabled = true
+    var level = LogLevel.info
 
-    enum LogLevel {
+    enum LogLevel: Int, Comparable {
         case error
         case warning
         case info
         case verbose
+
+        static func < (lhs: Logger.LogLevel, rhs: Logger.LogLevel) -> Bool {
+            lhs.rawValue < rhs.rawValue
+        }
     }
 
-    func log(_ level: LogLevel = .info,
+    func log(_ logLevel: LogLevel = .info,
              _ message: String,
              error: Error? = nil,
              file: String = #file,
@@ -29,22 +33,22 @@ class Logger {
 
         var sourceLocation = ""
         if showSourceLocation {
-            sourceLocation = "| \(file) : \(function) : \(line)"
+            sourceLocation = "| \(URL(fileURLWithPath: file).lastPathComponent):\(line) \(function)"
         }
 
         var logElements = [timestamp, message, sourceLocation].filter { !$0.isEmpty }
 
-        switch (level, verboseEnabled) {
-        case (.error, _):
+        switch logLevel {
+        case .error:
             logElements.insert("🚨", at: 0)
             print(logElements.joined(separator: " "))
-        case (.warning, _):
+        case .warning where logLevel <= level:
             logElements.insert("⚠️", at: 0)
             print(logElements.joined(separator: " "))
-        case (.info, _):
+        case .info where logLevel <= level:
             logElements.insert("ℹ️", at: 0)
             print(logElements.joined(separator: " "))
-        case (.verbose, verboseEnabled):
+        case .verbose where logLevel <= level:
             logElements.insert("🗣", at: 0)
             print(logElements.joined(separator: " "))
         default:

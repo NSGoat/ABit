@@ -28,7 +28,7 @@ public class AudioFileGraphicsRenderer {
             return
         }
 
-        DispatchQueue.global(qos: .utility).async { [weak self, weak audioFile] in
+        DispatchQueue.global(qos: .default).async { [weak self, weak audioFile] in
             guard let audioFile = audioFile else { return }
 
             if let image = self?.renderAudioFileGraphics(audioFile, size: size, style: style, color: color) {
@@ -128,6 +128,8 @@ public class AudioFileGraphicsRenderer {
         let startTime = Date()
 
         guard
+            audioFile.length > 0,
+            audioFile.fileFormat.channelCount > 0,
             let table = Table(file: audioFile)
         else {
             return UIImage()
