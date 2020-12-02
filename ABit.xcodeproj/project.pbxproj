@@ -12,14 +12,10 @@
 		641556002573D92800F7048F /* AudioFilePlayheadTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641555FF2573D92800F7048F /* AudioFilePlayheadTracker.swift */; };
 		642723092516B6310052D5E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642723082516B6310052D5E6 /* AppDelegate.swift */; };
 		6427238B2516BCE60052D5E6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6427238A2516BCE60052D5E6 /* SceneDelegate.swift */; };
-		64465C10253DECA900F148FC /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = 64465C0F253DECA900F148FC /* AudioKit */; };
 		6450153F252A5549003B00B7 /* Inject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6450153E252A5549003B00B7 /* Inject.swift */; };
-		6490B988252E5830002727BE /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6490B987252E5830002727BE /* WaveformView.swift */; };
-		6490B9A9253056E5002727BE /* AudioFileGraphicsRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6490B9A8253056E5002727BE /* AudioFileGraphicsRenderer.swift */; };
 		649354252539C37200A58453 /* Collection+LastIndex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649354242539C37200A58453 /* Collection+LastIndex.swift */; };
 		6493542A2539C3B300A58453 /* Size+Hashable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649354292539C3B300A58453 /* Size+Hashable.swift */; };
 		6493542F253B3C8700A58453 /* Hasher+Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6493542E253B3C8700A58453 /* Hasher+Combine.swift */; };
-		64935434253B56BB00A58453 /* WaveformViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64935433253B56BB00A58453 /* WaveformViewController.swift */; };
 		64935444253CB93000A58453 /* Sliders in Frameworks */ = {isa = PBXBuildFile; productRef = 64935443253CB93000A58453 /* Sliders */; };
 		64935449253CBF2000A58453 /* View+CornerRadius.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64935448253CBF2000A58453 /* View+CornerRadius.swift */; };
 		64AB2DA4257302D100C59E6F /* 1, 2, 3, 4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 64AB2DA3257302D100C59E6F /* 1, 2, 3, 4.mp3 */; };
@@ -36,6 +32,12 @@
 		64CEDAAC255DE21D008B5DB5 /* Winstons - Amen, Brother.aif in Resources */ = {isa = PBXBuildFile; fileRef = 64CEDAAB255DE21D008B5DB5 /* Winstons - Amen, Brother.aif */; };
 		64D8DF9925166AE8000D0653 /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D8DF9825166AE8000D0653 /* AudioManager.swift */; };
 		64D8DF9B25166F60000D0653 /* AudioPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D8DF9A25166F60000D0653 /* AudioPlayerView.swift */; };
+		64EA27472576F72F0034B373 /* ColorExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EA27402576F72F0034B373 /* ColorExtensions.swift */; };
+		64EA27492576F72F0034B373 /* TempiFFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EA27422576F72F0034B373 /* TempiFFT.swift */; };
+		64EA274A2576F72F0034B373 /* WaveformImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EA27432576F72F0034B373 /* WaveformImageView.swift */; };
+		64EA274B2576F72F0034B373 /* WaveformAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EA27442576F72F0034B373 /* WaveformAnalyzer.swift */; };
+		64EA274C2576F72F0034B373 /* WaveformImageTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EA27452576F72F0034B373 /* WaveformImageTypes.swift */; };
+		64EA276D257834390034B373 /* AudioGraphicsRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EA27412576F72F0034B373 /* AudioGraphicsRenderer.swift */; };
 		64F3DD092544BE8B00DBC056 /* ClosedRange+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F3DD082544BE8B00DBC056 /* ClosedRange+Size.swift */; };
 		64F3DD0E2544BEBF00DBC056 /* AVAudioPlayerNode+CurrentTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F3DD0D2544BEBF00DBC056 /* AVAudioPlayerNode+CurrentTime.swift */; };
 		64F3DD182544C04B00DBC056 /* AVAudioPCMBuffer+Segment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F3DD172544C04B00DBC056 /* AVAudioPCMBuffer+Segment.swift */; };
@@ -67,12 +69,9 @@
 		6450153E252A5549003B00B7 /* Inject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Inject.swift; sourceTree = "<group>"; };
 		64501664252D1E0D003B00B7 /* DependencyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyManager.swift; sourceTree = "<group>"; };
 		645D664C2537655F00BD6DDA /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
-		6490B987252E5830002727BE /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
-		6490B9A8253056E5002727BE /* AudioFileGraphicsRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileGraphicsRenderer.swift; sourceTree = "<group>"; };
 		649354242539C37200A58453 /* Collection+LastIndex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+LastIndex.swift"; sourceTree = "<group>"; };
 		649354292539C3B300A58453 /* Size+Hashable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Size+Hashable.swift"; sourceTree = "<group>"; };
 		6493542E253B3C8700A58453 /* Hasher+Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Hasher+Combine.swift"; sourceTree = "<group>"; };
-		64935433253B56BB00A58453 /* WaveformViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformViewController.swift; sourceTree = "<group>"; };
 		64935448253CBF2000A58453 /* View+CornerRadius.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+CornerRadius.swift"; sourceTree = "<group>"; };
 		64AB2DA3257302D100C59E6F /* 1, 2, 3, 4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "1, 2, 3, 4.mp3"; sourceTree = "<group>"; };
 		64AB978E2517EA240011D98B /* CaseIterable+Iteration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CaseIterable+Iteration.swift"; sourceTree = "<group>"; };
@@ -93,6 +92,12 @@
 		64D8DF9A25166F60000D0653 /* AudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
 		64D8DF9C25169A17000D0653 /* ABit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ABit.entitlements; sourceTree = "<group>"; };
 		64D8DFA42516A280000D0653 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		64EA27402576F72F0034B373 /* ColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
+		64EA27412576F72F0034B373 /* AudioGraphicsRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioGraphicsRenderer.swift; sourceTree = "<group>"; };
+		64EA27422576F72F0034B373 /* TempiFFT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempiFFT.swift; sourceTree = "<group>"; };
+		64EA27432576F72F0034B373 /* WaveformImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveformImageView.swift; sourceTree = "<group>"; };
+		64EA27442576F72F0034B373 /* WaveformAnalyzer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveformAnalyzer.swift; sourceTree = "<group>"; };
+		64EA27452576F72F0034B373 /* WaveformImageTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveformImageTypes.swift; sourceTree = "<group>"; };
 		64F3DD082544BE8B00DBC056 /* ClosedRange+Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClosedRange+Size.swift"; sourceTree = "<group>"; };
 		64F3DD0D2544BEBF00DBC056 /* AVAudioPlayerNode+CurrentTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVAudioPlayerNode+CurrentTime.swift"; sourceTree = "<group>"; };
 		64F3DD122544BF0600DBC056 /* AVAudioFile+TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVAudioFile+TimeInterval.swift"; sourceTree = "<group>"; };
@@ -104,7 +109,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				64465C10253DECA900F148FC /* AudioKit in Frameworks */,
 				64935444253CB93000A58453 /* Sliders in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -126,15 +130,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		6493543B253B581100A58453 /* Waveform */ = {
-			isa = PBXGroup;
-			children = (
-				6490B987252E5830002727BE /* WaveformView.swift */,
-				64935433253B56BB00A58453 /* WaveformViewController.swift */,
-			);
-			path = Waveform;
-			sourceTree = "<group>";
-		};
 		64AB978D2517E9F50011D98B /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -176,7 +171,6 @@
 			children = (
 				64D8DF9A25166F60000D0653 /* AudioPlayerView.swift */,
 				640AD4312516295100415B7E /* AudioFilePicker.swift */,
-				6493543B253B581100A58453 /* Waveform */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -255,7 +249,7 @@
 				64D8DF9825166AE8000D0653 /* AudioManager.swift */,
 				640AD42F2516289C00415B7E /* AudioFilePlayer.swift */,
 				641555FF2573D92800F7048F /* AudioFilePlayheadTracker.swift */,
-				6490B9A8253056E5002727BE /* AudioFileGraphicsRenderer.swift */,
+				64EA2757257701F10034B373 /* WaveformRenderer */,
 			);
 			path = Audio;
 			sourceTree = "<group>";
@@ -282,6 +276,19 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		64EA2757257701F10034B373 /* WaveformRenderer */ = {
+			isa = PBXGroup;
+			children = (
+				64EA27412576F72F0034B373 /* AudioGraphicsRenderer.swift */,
+				64EA27442576F72F0034B373 /* WaveformAnalyzer.swift */,
+				64EA27422576F72F0034B373 /* TempiFFT.swift */,
+				64EA27402576F72F0034B373 /* ColorExtensions.swift */,
+				64EA27452576F72F0034B373 /* WaveformImageTypes.swift */,
+				64EA27432576F72F0034B373 /* WaveformImageView.swift */,
+			);
+			path = WaveformRenderer;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -301,7 +308,6 @@
 			name = ABit;
 			packageProductDependencies = (
 				64935443253CB93000A58453 /* Sliders */,
-				64465C0F253DECA900F148FC /* AudioKit */,
 			);
 			productName = ABit;
 			productReference = 64CD0DB12516233A00363F75 /* ABit.app */;
@@ -376,7 +382,6 @@
 			mainGroup = 64CD0DA82516233A00363F75;
 			packageReferences = (
 				64935442253CB93000A58453 /* XCRemoteSwiftPackageReference "swiftui-sliders" */,
-				64465C0E253DECA900F148FC /* XCRemoteSwiftPackageReference "AudioKit" */,
 			);
 			productRefGroup = 64CD0DB22516233A00363F75 /* Products */;
 			projectDirPath = "";
@@ -444,28 +449,31 @@
 			buildActionMask = 2147483647;
 			files = (
 				64F3DD092544BE8B00DBC056 /* ClosedRange+Size.swift in Sources */,
+				64EA27472576F72F0034B373 /* ColorExtensions.swift in Sources */,
+				64EA274C2576F72F0034B373 /* WaveformImageTypes.swift in Sources */,
 				64D8DF9B25166F60000D0653 /* AudioPlayerView.swift in Sources */,
 				64F3DD0E2544BEBF00DBC056 /* AVAudioPlayerNode+CurrentTime.swift in Sources */,
+				64EA27492576F72F0034B373 /* TempiFFT.swift in Sources */,
 				6493542F253B3C8700A58453 /* Hasher+Combine.swift in Sources */,
 				64BA8F722574142D0091D525 /* DependencyManager.swift in Sources */,
+				64EA274A2576F72F0034B373 /* WaveformImageView.swift in Sources */,
 				64D8DF9925166AE8000D0653 /* AudioManager.swift in Sources */,
 				64CD0DB72516233A00363F75 /* ContentView.swift in Sources */,
 				64BA8F73257414300091D525 /* Logger.swift in Sources */,
 				642723092516B6310052D5E6 /* AppDelegate.swift in Sources */,
 				640AD4302516289C00415B7E /* AudioFilePlayer.swift in Sources */,
+				64EA276D257834390034B373 /* AudioGraphicsRenderer.swift in Sources */,
+				64EA274B2576F72F0034B373 /* WaveformAnalyzer.swift in Sources */,
 				64AB978F2517EA240011D98B /* CaseIterable+Iteration.swift in Sources */,
 				64F3DD182544C04B00DBC056 /* AVAudioPCMBuffer+Segment.swift in Sources */,
 				64AB2DBA2573184E00C59E6F /* AVAudioFile+TimeInterval.swift in Sources */,
 				6450153F252A5549003B00B7 /* Inject.swift in Sources */,
 				6493542A2539C3B300A58453 /* Size+Hashable.swift in Sources */,
 				64935449253CBF2000A58453 /* View+CornerRadius.swift in Sources */,
-				6490B9A9253056E5002727BE /* AudioFileGraphicsRenderer.swift in Sources */,
 				640AD4322516295100415B7E /* AudioFilePicker.swift in Sources */,
-				6490B988252E5830002727BE /* WaveformView.swift in Sources */,
 				6427238B2516BCE60052D5E6 /* SceneDelegate.swift in Sources */,
 				649354252539C37200A58453 /* Collection+LastIndex.swift in Sources */,
 				64AB97D3251A934F0011D98B /* UnitInterval.swift in Sources */,
-				64935434253B56BB00A58453 /* WaveformViewController.swift in Sources */,
 				641556002573D92800F7048F /* AudioFilePlayheadTracker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -625,7 +633,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ABit/Resources/ABit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"ABit/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = X8G7MMTMU8;
 				ENABLE_PREVIEWS = YES;
@@ -635,7 +643,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.2;
+				MARKETING_VERSION = 0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.RutterStudios.AB;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
@@ -651,7 +659,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ABit/Resources/ABit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"ABit/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = X8G7MMTMU8;
 				ENABLE_PREVIEWS = YES;
@@ -661,7 +669,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.2;
+				MARKETING_VERSION = 0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.RutterStudios.AB;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = YES;
@@ -796,14 +804,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		64465C0E253DECA900F148FC /* XCRemoteSwiftPackageReference "AudioKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/AudioKit/AudioKit";
-			requirement = {
-				branch = "v5-master";
-				kind = branch;
-			};
-		};
 		64935442253CB93000A58453 /* XCRemoteSwiftPackageReference "swiftui-sliders" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/swift-extensions/swiftui-sliders.git";
@@ -815,11 +815,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		64465C0F253DECA900F148FC /* AudioKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 64465C0E253DECA900F148FC /* XCRemoteSwiftPackageReference "AudioKit" */;
-			productName = AudioKit;
-		};
 		64935443253CB93000A58453 /* Sliders */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 64935442253CB93000A58453 /* XCRemoteSwiftPackageReference "swiftui-sliders" */;

@@ -7,15 +7,13 @@ struct AudioPlayerView: View {
 
     @State var showDocumentPicker = false
 
-    var waveformView: WaveformView?
-
     private let sliderThumbWidth: CGFloat = 4
     private let waveformHeight: CGFloat = 120
+    private let accentColor: Color
 
     init(audioFilePlayer: AudioFilePlayer, accentColor: Color) {
         self.audioFilePlayer = audioFilePlayer
-        self.waveformView = WaveformView(color: accentColor)
-        self.waveformView?.render(audioFile: audioFilePlayer.audioFile)
+        self.accentColor = accentColor
     }
 
     var body: some View {
@@ -90,7 +88,6 @@ struct AudioPlayerView: View {
     }
 
     var loopRangeSlider: some View {
-        let track = Capsule().foregroundColor(.accentColor).opacity(0.2).frame(height: 0.5)
         let thumbSize = CGSize(width: sliderThumbWidth, height: waveformHeight)
         let thumb = Rectangle().foregroundColor(.primary)
         let lowerThumb = thumb.cornerRadius(sliderThumbWidth, corners: [.topLeft, .bottomLeft])
@@ -98,7 +95,7 @@ struct AudioPlayerView: View {
 
         return RangeSlider(range: $audioFilePlayer.playPositionRange)
             .rangeSliderStyle(
-                HorizontalRangeSliderStyle(track: track,
+                HorizontalRangeSliderStyle(track: Rectangle().hidden(),
                                            lowerThumb: lowerThumb,
                                            upperThumb: upperThumb,
                                            lowerThumbSize: thumbSize,
@@ -116,17 +113,38 @@ struct AudioPlayerView: View {
                 loopTimeRangeText
             }
             ZStack {
-                waveformView
-                    .disabled(true)
-                    .padding(.horizontal, sliderThumbWidth)
+                if let image = audioFilePlayer.image {
+                    GeometryReader { geo in
+                        Image(uiImage: image)
+                            .resizable()
+                            .renderingMode(.template)
+                            .foregroundColor(accentColor)
+                            .frame(width: geo.size.width - sliderThumbWidth * 2)
+                            .padding(.horizontal, sliderThumbWidth)
+                            .disabled(true)
+                        }
+                }
+                if audioFilePlayer.renderingImage {
+                    Rectangle()
+                        .fill(accentColor)
+                        .cornerRadius(4)
+                        .opacity(0.2)
+//                        .opacity(loadingAnimation ? 0.2 : 0.0)
+//                        .animation(Animation.easeInOut(duration: 0.5).repeatForever())
+                }
                 playheadView
                     .padding(.horizontal, sliderThumbWidth)
                 loopRangeSlider
             }
             .frame(height: waveformHeight)
             .scaledToFill()
+//            .onAppear {
+//                loadingAnimation = true
+//            }
         }
     }
+
+    @State private var loadingAnimation = false
 
     var playTimeText: some View {
         if let playheadTime = $audioFilePlayer.playheadTime.wrappedValue {
@@ -187,8 +205,7 @@ struct AudioPlayerView: View {
 
 extension AudioPlayerView: AudioFilePickerDelegate {
     func audioFilePicker(_ picker: AudioFilePicker, didPickAudioFileAt url: URL) {
-        let loadedFile = audioFilePlayer.loadAudioFile(url: url)
-        waveformView?.render(audioFile: loadedFile)
+        audioFilePlayer.loadAudioFile(url: url)
     }
 }
 

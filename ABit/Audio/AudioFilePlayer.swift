@@ -12,6 +12,8 @@ final class AudioFilePlayer: ObservableObject {
 
     @Inject var logger: Logger
 
+    @Inject var audioGraphicsRenderer: AudioGraphicsRenderer
+
     @Published var playerState: AudioFilePlayerState = .awaitingFile
 
     @Published var playheadPosition: Double?
@@ -33,6 +35,9 @@ final class AudioFilePlayer: ObservableObject {
         }
     }
 
+    @Published var image: UIImage?
+    @Published var renderingImage: Bool = false
+
     @Published var playPositionRange: ClosedRange<Double> = 0.0...1.0 {
         didSet {
             let previousState = playerState
@@ -52,28 +57,30 @@ final class AudioFilePlayer: ObservableObject {
     var fileUrl: URL?
     lazy var audioPlayerNode = AVAudioPlayerNode()
     private lazy var playheadUpdater = AudioFilePlayerPlayheadTracker(audioFilePlayer: self)
+    private var lastBufferCache: (buffer: AVAudioPCMBuffer, timeRange: ClosedRange<TimeInterval>)?
 
     deinit {
         stop()
+        lastBufferCache = nil
     }
 }
 
 extension AudioFilePlayer {
 
-    @discardableResult
-    func loadAudioFile(url: URL?) -> AVAudioFile? {
-        guard let url = url else { return nil }
+    func loadAudioFile(url: URL?) {
+        guard let url = url else { return }
 
         do {
             audioFile = try AVAudioFile(forReading: url)
+
+            let width = UIScreen.main.bounds.size.width
+            let size = CGSize(width: width, height: width/3)
+            updateWaveformImage(url: url, size: size)
+
             fileUrl = url
             stop()
-
-            return audioFile
-
         } catch {
             logger.log(.error, "Failed to load file \(url.absoluteString)", error: error)
-            return nil
         }
     }
 
@@ -83,25 +90,23 @@ extension AudioFilePlayer {
 
         do {
             // TODO: Investigate why we have to load load the audio file from the url here
-            // Reading the file into a buffer fails if I use the class property (audioFile)
+            // guard let file = audioFile else { return }
+
             let file = try AVAudioFile(forReading: fileUrl)
             let frameCapacity = AVAudioFrameCount(file.length)
-            if let buffer = AVAudioPCMBuffer(pcmFormat: file.processingFormat, frameCapacity: frameCapacity) {
+
+            guard file.length > 0, file.fileFormat.channelCount > 0 else { return }
+
+            if lastBufferCache?.timeRange == playPositionRange, let buffer = lastBufferCache?.buffer {
+                playBuffer(buffer, looping: loop)
+            } else if let buffer = AVAudioPCMBuffer(pcmFormat: file.processingFormat, frameCapacity: frameCapacity) {
                 try file.read(into: buffer)
 
                 let start = AVAudioFramePosition(playPositionRange.lowerBound * Double(file.length))
                 let end = AVAudioFramePosition(playPositionRange.upperBound * Double(file.length))
                 if let segment = buffer.segment(from: start, to: end) {
-
-                    if loop {
-                        audioPlayerNode.scheduleBuffer(segment, at: nil, options: [.loops, .interrupts])
-                    } else {
-                        audioPlayerNode.scheduleBuffer(segment, at: nil, options: [.interrupts]) {
-                            DispatchQueue.main.async { [weak self] in
-                                self?.stop()
-                            }
-                        }
-                    }
+                    playBuffer(segment, looping: loop)
+                    lastBufferCache = (buffer: segment, timeRange: playPositionRange)
                 }
             }
 
@@ -113,6 +118,18 @@ extension AudioFilePlayer {
 
         } catch {
             logger.log(.error, "Failed to play file \(fileUrl.absoluteString)", error: error)
+        }
+    }
+
+    private func playBuffer(_ buffer: AVAudioPCMBuffer, looping: Bool) {
+        if loop {
+            audioPlayerNode.scheduleBuffer(buffer, at: nil, options: [.loops, .interrupts])
+        } else {
+            audioPlayerNode.scheduleBuffer(buffer, at: nil, options: [.interrupts]) {
+                DispatchQueue.main.async { [weak self] in
+                    self?.stop()
+                }
+            }
         }
     }
 
@@ -146,5 +163,17 @@ extension AudioFilePlayer {
 
     private func stopPlayheadUpdates() {
         playheadUpdater.stopTracking()
+    }
+
+    private func updateWaveformImage(url: URL, size: CGSize) {
+        self.image = nil
+        renderingImage = true
+
+        audioGraphicsRenderer.renderWaveformImage(audioFileUrl: url, size: size, style: .striped) { image in
+            DispatchQueue.main.async { [weak self] in
+                self?.image = image
+                self?.renderingImage = false
+            }
+        }
     }
 }
