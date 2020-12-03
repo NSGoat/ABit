@@ -1,6 +1,7 @@
 import AVFoundation
 import Combine
 import Foundation
+import SwiftUI
 
 enum AudioChannel: String, CaseIterable {
     case a = "A"
@@ -15,7 +16,11 @@ final class AudioManager: ObservableObject {
 
     static let shared = AudioManager()
 
+    private let audioEngine = AVAudioEngine()
+
     var audioFilePlayers = [AudioChannel: AudioFilePlayer]()
+
+    @Published var anyPlayerPlaying: Bool = false
 
     @Published var selectedChannel: AudioChannel = .a {
         didSet {
@@ -23,12 +28,11 @@ final class AudioManager: ObservableObject {
         }
     }
 
-    private let audioEngine = AVAudioEngine()
-
     init() {
         try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
 
         let mixer = audioEngine.mainMixerNode
+        mixer.outputVolume = 0.01
         try? audioEngine.start()
         audioEngine.prepare()
 
@@ -43,6 +47,8 @@ final class AudioManager: ObservableObject {
         playerB.loadAudioFile(url: Bundle.main.url(forResource: "1, 2, 3, 4", withExtension: "mp3"))
 
         selectedChannel = .a
+
+        setupAnyPlayerPlayingPublisher(playerA: playerA, playerB: playerB)
     }
 
     func audioFilePlayer(channel: AudioChannel) -> AudioFilePlayer {
@@ -54,6 +60,17 @@ final class AudioManager: ObservableObject {
         let audioFilePlayer = AudioFilePlayer()
         audioFilePlayers[channel] = audioFilePlayer
         return audioFilePlayer
+    }
+
+    private var cancellableSet: Set<AnyCancellable> = []
+
+    private func setupAnyPlayerPlayingPublisher(playerA: AudioFilePlayer, playerB: AudioFilePlayer) {
+        Publishers.CombineLatest(playerA.$playerState, playerB.$playerState)
+            .map { playerStateA, playerStateB -> Bool in
+                playerStateA == .playing || playerStateB == .playing
+            }
+            .assign(to: \.anyPlayerPlaying, on: self)
+            .store(in: &cancellableSet)
     }
 }
 

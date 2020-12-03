@@ -20,8 +20,7 @@ struct AudioPlayerView: View {
         VStack(spacing: 16) {
             HStack(spacing: 16) {
                 documentPickerButton
-                    .padding(.horizontal)
-                Spacer()
+                Spacer(minLength: 12)
                 playPauseButton
                 stopButton
                 loopButton
@@ -39,7 +38,6 @@ struct AudioPlayerView: View {
             viewController.present(picker.viewController, animated: true)
             #endif
         }, label: {
-
             if let fileName = audioFilePlayer.fileUrl?.lastPathComponent {
                 Text(fileName)
             } else {
