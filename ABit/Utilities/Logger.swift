@@ -19,6 +19,15 @@ class Logger {
         }
     }
 
+    static func log(_ logLevel: LogLevel = .info,
+                    _ message: String,
+                    error: Error? = nil,
+                    file: String = #file,
+                    function: String = #function,
+                    line: Int = #line) {
+        Logger.shared.log(logLevel, message, error: error, file: file, function: function, line: line)
+    }
+
     func log(_ logLevel: LogLevel = .info,
              _ message: String,
              error: Error? = nil,
