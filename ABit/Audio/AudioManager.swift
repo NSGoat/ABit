@@ -23,7 +23,7 @@ final class AudioManager: ObservableObject {
         }
     }
 
-    let audioEngine = AVAudioEngine()
+    private let audioEngine = AVAudioEngine()
 
     init() {
         try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
@@ -55,10 +55,43 @@ final class AudioManager: ObservableObject {
         audioFilePlayers[channel] = audioFilePlayer
         return audioFilePlayer
     }
+}
+
+extension AudioManager {
 
     func solo(channel: AudioChannel) {
         audioFilePlayers.forEach { (playerChannel, player) in
             player.mute = playerChannel != channel
+        }
+    }
+
+    func playAll() {
+        audioFilePlayers.values.forEach { player in
+            player.play()
+        }
+    }
+
+    func stopAll() {
+        audioFilePlayers.values.forEach { player in
+            player.stop()
+        }
+    }
+
+    func pauseAll() {
+        audioFilePlayers.values.forEach { player in
+            player.pause()
+        }
+    }
+
+    func unpauseAll() {
+        audioFilePlayers.values.forEach { player in
+            player.unpause()
+        }
+    }
+
+    func setAllPlayPositionRanges(_ playPositionRange: ClosedRange<Double>) {
+        audioFilePlayers.values.forEach { player in
+            player.playPositionRange = playPositionRange
         }
     }
 }

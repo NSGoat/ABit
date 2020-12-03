@@ -11,13 +11,14 @@ import Foundation
 import Accelerate
 import AVFoundation
 
-struct WaveformAnalysis {
-    let amplitudes: [Float]
-    let fft: [TempiFFT]?
-}
-
 /// Calculates the waveform of the initialized asset URL.
 public class WaveformAnalyzer {
+
+    struct Analysis {
+        let amplitudes: [Float]
+        let fft: [TempiFFT]?
+    }
+
     private let assetReader: AVAssetReader
     private let audioAssetTrack: AVAssetTrack
 
@@ -34,7 +35,7 @@ public class WaveformAnalyzer {
         self.assetReader = assetReader
         self.audioAssetTrack = assetTrack
     }
-    
+
     /// Returns the calculated waveform of the initialized asset URL.
     public func samples(count: Int, qos: DispatchQoS.QoSClass = .userInitiated, completionHandler: @escaping (_ amplitudes: [Float]?) -> ()) {
         waveformSamples(count: count, qos: qos, fftBands: nil) { analysis in
@@ -46,12 +47,13 @@ public class WaveformAnalyzer {
 // MARK: - Private
 
 fileprivate extension WaveformAnalyzer {
+
     private var silenceDbThreshold: Float { return -50.0 } // everything below -50 dB will be clipped
-    
+
     func waveformSamples(count requiredNumberOfSamples: Int,
                          qos: DispatchQoS.QoSClass,
                          fftBands: Int?,
-                         completionHandler: @escaping (_ analysis: WaveformAnalysis?) -> ()) {
+                         completionHandler: @escaping (_ analysis: Analysis?) -> Void) {
         let trackOutput = AVAssetReaderTrackOutput(track: audioAssetTrack, outputSettings: outputSettings())
         assetReader.add(trackOutput)
 
@@ -62,7 +64,9 @@ fileprivate extension WaveformAnalyzer {
             case .loaded:
                 let totalSamples = self.totalSamplesOfTrack()
                 DispatchQueue.global(qos: qos).async {
-                    let analysis = self.extract(totalSamples: totalSamples, downsampledTo: requiredNumberOfSamples, fftBands: fftBands)
+                    let analysis = self.extract(totalSamples: totalSamples,
+                                                downsampledTo: requiredNumberOfSamples,
+                                                fftBands: fftBands)
 
                     switch self.assetReader.status {
                     case .completed:
@@ -83,7 +87,7 @@ fileprivate extension WaveformAnalyzer {
         }
     }
 
-    func extract(totalSamples: Int, downsampledTo targetSampleCount: Int, fftBands: Int?) -> WaveformAnalysis {
+    func extract(totalSamples: Int, downsampledTo targetSampleCount: Int, fftBands: Int?) -> Analysis {
         var outputSamples = [Float]()
         var outputFFT = fftBands == nil ? nil : [TempiFFT]()
         var sampleBuffer = Data()
@@ -95,21 +99,24 @@ fileprivate extension WaveformAnalyzer {
 
         self.assetReader.startReading()
         while self.assetReader.status == .reading {
-            let trackOutput = assetReader.outputs.first!
-
-            guard let nextSampleBuffer = trackOutput.copyNextSampleBuffer(),
-                  let blockBuffer = CMSampleBufferGetDataBuffer(nextSampleBuffer) else {
+            guard  let trackOutput = assetReader.outputs.first,
+                   let nextSampleBuffer = trackOutput.copyNextSampleBuffer(),
+                   let blockBuffer = CMSampleBufferGetDataBuffer(nextSampleBuffer) else {
                 break
             }
 
             var readBufferLength = 0
-            var readBufferPointer: UnsafeMutablePointer<Int8>? = nil
-            CMBlockBufferGetDataPointer(blockBuffer, atOffset: 0, lengthAtOffsetOut: &readBufferLength, totalLengthOut: nil, dataPointerOut: &readBufferPointer)
+            var readBufferPointer: UnsafeMutablePointer<Int8>?
+            CMBlockBufferGetDataPointer(blockBuffer,
+                                        atOffset: 0,
+                                        lengthAtOffsetOut: &readBufferLength,
+                                        totalLengthOut: nil,
+                                        dataPointerOut: &readBufferPointer)
             sampleBuffer.append(UnsafeBufferPointer(start: readBufferPointer, count: readBufferLength))
             sampleBufferFFT.append(UnsafeBufferPointer(start: readBufferPointer, count: readBufferLength))
             CMSampleBufferInvalidate(nextSampleBuffer)
 
-            let processedSamples = process(sampleBuffer, from: assetReader, downsampleTo: samplesPerPixel)
+            let processedSamples = processBuffer(sampleBuffer, downsampleTo: samplesPerPixel)
             outputSamples += processedSamples
 
             if processedSamples.count > 0 {
@@ -132,31 +139,31 @@ fileprivate extension WaveformAnalyzer {
             let backfillPaddingSampleCount16 = backfillPaddingSampleCount * MemoryLayout<Int16>.size
             let backfillPaddingSamples = [UInt8](repeating: 0, count: backfillPaddingSampleCount16)
             sampleBuffer.append(backfillPaddingSamples, count: backfillPaddingSampleCount16)
-            let processedSamples = process(sampleBuffer, from: assetReader, downsampleTo: samplesPerPixel)
+            let processedSamples = processBuffer(sampleBuffer, downsampleTo: samplesPerPixel)
             outputSamples += processedSamples
         }
 
-        return WaveformAnalysis(amplitudes: normalize(outputSamples), fft: outputFFT)
+        return Analysis(amplitudes: normalize(outputSamples), fft: outputFFT)
     }
 
-    private func process(_ sampleBuffer: Data,
-                         from assetReader: AVAssetReader,
-                         downsampleTo samplesPerPixel: Int) -> [Float] {
+    private func processBuffer(_ sampleBuffer: Data, downsampleTo samplesPerPixel: Int) -> [Float] {
+
         var downSampledData = [Float]()
         let sampleLength = sampleBuffer.count / MemoryLayout<Int16>.size
+
         sampleBuffer.withUnsafeBytes { (samplesRawPointer: UnsafeRawBufferPointer) in
             let unsafeSamplesBufferPointer = samplesRawPointer.bindMemory(to: Int16.self)
             let unsafeSamplesPointer = unsafeSamplesBufferPointer.baseAddress!
-            var loudestClipValue: Float = 0.0
-            var quietestClipValue = silenceDbThreshold
+            var loudestValue: Float = 0.0
+            var quietestValue = silenceDbThreshold
             var zeroDbEquivalent: Float = Float(Int16.max) // maximum amplitude storable in Int16 = 0 Db (loudest)
             let samplesToProcess = vDSP_Length(sampleLength)
 
             var processingBuffer = [Float](repeating: 0.0, count: Int(samplesToProcess))
-            vDSP_vflt16(unsafeSamplesPointer, 1, &processingBuffer, 1, samplesToProcess) // convert 16bit int to float (
+            vDSP_vflt16(unsafeSamplesPointer, 1, &processingBuffer, 1, samplesToProcess) // 16bit int to float
             vDSP_vabs(processingBuffer, 1, &processingBuffer, 1, samplesToProcess) // absolute amplitude value
-            vDSP_vdbcon(processingBuffer, 1, &zeroDbEquivalent, &processingBuffer, 1, samplesToProcess, 1) // convert to DB
-            vDSP_vclip(processingBuffer, 1, &quietestClipValue, &loudestClipValue, &processingBuffer, 1, samplesToProcess)
+            vDSP_vdbcon(processingBuffer, 1, &zeroDbEquivalent, &processingBuffer, 1, samplesToProcess, 1) // dB scale
+            vDSP_vclip(processingBuffer, 1, &quietestValue, &loudestValue, &processingBuffer, 1, samplesToProcess)
 
             let filter = [Float](repeating: 1.0 / Float(samplesPerPixel), count: samplesPerPixel)
             let downSampledLength = sampleLength / samplesPerPixel
@@ -173,11 +180,10 @@ fileprivate extension WaveformAnalyzer {
         return downSampledData
     }
 
-    private func process(_ sampleBuffer: Data,
-                         samplesPerFFT: Int,
-                         fftBands: Int) -> [TempiFFT] {
+    private func process(_ sampleBuffer: Data, samplesPerFFT: Int, fftBands: Int) -> [TempiFFT] {
         var ffts = [TempiFFT]()
         let sampleLength = sampleBuffer.count / MemoryLayout<Int16>.size
+
         sampleBuffer.withUnsafeBytes { (samplesRawPointer: UnsafeRawBufferPointer) in
             let unsafeSamplesBufferPointer = samplesRawPointer.bindMemory(to: Int16.self)
             let unsafeSamplesPointer = unsafeSamplesBufferPointer.baseAddress!
@@ -211,7 +217,10 @@ fileprivate extension WaveformAnalyzer {
         autoreleasepool {
             let descriptions = audioAssetTrack.formatDescriptions as! [CMFormatDescription]
             descriptions.forEach { formatDescription in
-                guard let basicDescription = CMAudioFormatDescriptionGetStreamBasicDescription(formatDescription) else { return }
+                guard
+                    let basicDescription = CMAudioFormatDescriptionGetStreamBasicDescription(formatDescription)
+                else { return }
+
                 let channelCount = Int(basicDescription.pointee.mChannelsPerFrame)
                 let sampleRate = basicDescription.pointee.mSampleRate
                 let duration = Double(assetReader.asset.duration.value)

@@ -3,21 +3,19 @@ import AVFoundation
 import UIKit
 import CoreGraphics
 
+public typealias ImageCompletion = (_ image: UIImage?) -> Void
 
-/// Renders a UIImage of the waveform data calculated by the analyzer.
 public class AudioGraphicsRenderer {
-
-    public typealias ImageCompletion = (_ image: UIImage?) -> Void
 
     @Inject var logger: Logger
 
     static let shared = AudioGraphicsRenderer()
 
-    /// Renders a UIImage of the waveform data calculated by the analyzer.
     public func renderWaveformImage(audioAssetURL: URL,
                                     configuration: WaveformConfiguration,
                                     qos: DispatchQoS.QoSClass = .userInitiated,
-                                    completionHandler: @escaping ImageCompletion) {
+                                    completion: @escaping ImageCompletion) {
+
         let scaledSize = CGSize(width: configuration.size.width * configuration.scale,
                                 height: configuration.size.height * configuration.scale)
         let scaledConfiguration = WaveformConfiguration(size: scaledSize,
@@ -28,16 +26,15 @@ public class AudioGraphicsRenderer {
                                                         scale: configuration.scale,
                                                         paddingFactor: configuration.paddingFactor)
         guard let waveformAnalyzer = WaveformAnalyzer(audioAssetURL: audioAssetURL) else {
-            completionHandler(nil)
+            completion(nil)
             return
         }
         renderWaveformImage(withAnalyser: waveformAnalyzer,
                             configuration: scaledConfiguration,
                             qos: qos,
-                            completionHandler: completionHandler)
+                            completion: completion)
     }
 
-    /// Renders a UIImage of the waveform data calculated by the analyzer.
     public func renderWaveformImage(audioFileUrl audioAssetURL: URL,
                                     size: CGSize,
                                     color: UIColor = UIColor.black,
@@ -47,31 +44,34 @@ public class AudioGraphicsRenderer {
                                     scale: CGFloat = UIScreen.main.scale,
                                     paddingFactor: CGFloat? = nil,
                                     qos: DispatchQoS.QoSClass = .userInitiated,
-                                    completionHandler: @escaping ImageCompletion) {
-        let configuration = WaveformConfiguration(size: size, color: color, backgroundColor: backgroundColor,
-                                                  style: style, position: position, scale: scale,
+                                    completion: @escaping ImageCompletion) {
+
+        let configuration = WaveformConfiguration(size: size,
+                                                  color: color,
+                                                  backgroundColor: backgroundColor,
+                                                  style: style,
+                                                  position: position,
+                                                  scale: scale,
                                                   paddingFactor: paddingFactor)
 
-        renderWaveformImage(audioAssetURL: audioAssetURL,
-                            configuration: configuration,
-                            completionHandler: completionHandler)
+        renderWaveformImage(audioAssetURL: audioAssetURL, configuration: configuration, completion: completion)
     }
 }
 
-// MARK: Image generation
-
 private extension AudioGraphicsRenderer {
+
     func renderWaveformImage(withAnalyser waveformAnalyzer: WaveformAnalyzer,
                              configuration: WaveformConfiguration,
                              qos: DispatchQoS.QoSClass,
-                             completionHandler: @escaping ImageCompletion) {
+                             completion: @escaping ImageCompletion) {
+
         let sampleCount = Int(configuration.size.width * configuration.scale)
         waveformAnalyzer.samples(count: sampleCount, qos: qos) { samples in
             guard let samples = samples else {
-                completionHandler(nil)
+                completion(nil)
                 return
             }
-            completionHandler(self.graphImage(from: samples, with: configuration))
+            completion(self.graphImage(from: samples, with: configuration))
         }
     }
 
