@@ -5,22 +5,24 @@ class AppController: NSObject {
 
     static var shared = AppController()
 
+    @Inject var audioManager: AudioManager
+    @Inject var logger: Logger
+
     lazy var lastAudioLevel = AVAudioSession.sharedInstance().outputVolume
 
-    @Inject var audioManager: AudioManager
-    @Inject var volumeListener: SystemVolumeChangeListener
-    @Inject var logger: Logger
+    var volumeObserver =  SystemVolumeChangeObserver()
 
     private let maxVolume: Float = 1.0
 
     func switchChannedlOnRedundantVolumeUpPress(enabled: Bool) {
-        volumeListener.startVolumeObservation { [weak self] volume in
+        volumeObserver.startObserving { [weak self] volume in
             guard let self = self else { return }
 
-            if self.lastAudioLevel == self.maxVolume, volume == self.maxVolume {
+            if volume == self.maxVolume, self.lastAudioLevel == self.maxVolume, self.audioManager.allPlayersPlaying {
                 self.audioManager.selectedChannel.selectNext()
                 Logger.log(.info, changeToChannelMessage(self.audioManager.selectedChannel))
             }
+            self.lastAudioLevel = volume
         }
     }
 }

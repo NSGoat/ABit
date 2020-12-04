@@ -3,6 +3,7 @@ import UIKit
 
 enum AudioFilePlayerState {
     case awaitingFile
+    case loading
     case stopped
     case paused
     case playing
@@ -14,7 +15,7 @@ final class AudioFilePlayer: ObservableObject {
 
     @Inject var audioGraphicsRenderer: AudioGraphicsRenderer
 
-    @Published var playerState: AudioFilePlayerState = .awaitingFile
+    @Published var state: AudioFilePlayerState = .awaitingFile
 
     @Published var playheadPosition: Double?
 
@@ -40,7 +41,7 @@ final class AudioFilePlayer: ObservableObject {
 
     @Published var playPositionRange: ClosedRange<Double> = 0.0...1.0 {
         didSet {
-            let previousState = playerState
+            let previousState = state
             stop()
             playTimeRange = audioFile?.timeRange(positionRange: playPositionRange)
 
@@ -70,6 +71,8 @@ extension AudioFilePlayer {
     func loadAudioFile(url: URL?) {
         guard let url = url else { return }
 
+        state = .loading
+
         do {
             audioFile = try AVAudioFile(forReading: url)
 
@@ -81,6 +84,7 @@ extension AudioFilePlayer {
             stop()
         } catch {
             logger.log(.error, "Failed to load file \(url.absoluteString)", error: error)
+            state = .awaitingFile
         }
     }
 
@@ -112,7 +116,7 @@ extension AudioFilePlayer {
 
             DispatchQueue.main.async {
                 self.audioPlayerNode.play()
-                self.playerState = .playing
+                self.state = .playing
                 self.startPlayheadUpdates()
             }
 
@@ -138,19 +142,19 @@ extension AudioFilePlayer {
         stopPlayheadUpdates()
         playheadTime = nil
         playheadPosition = nil
-        playerState = .stopped
+        state = .stopped
     }
 
     func pause() {
         audioPlayerNode.pause()
         stopPlayheadUpdates()
-        playerState = .paused
+        state = .paused
     }
 
     func unpause() {
         audioPlayerNode.play()
         startPlayheadUpdates()
-        playerState = .playing
+        state = .playing
     }
 
     private func startPlayheadUpdates() {
