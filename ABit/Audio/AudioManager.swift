@@ -22,6 +22,8 @@ final class AudioManager: ObservableObject {
 
     @Published var anyPlayerPlaying: Bool = false
 
+    var allPlayersPlaying: Bool { audioFilePlayers.values.allSatisfy { $0.state == .playing } }
+
     @Published var selectedChannel: AudioChannel = .a {
         didSet {
             solo(channel: selectedChannel)
@@ -69,7 +71,7 @@ final class AudioManager: ObservableObject {
     private var cancellableSet: Set<AnyCancellable> = []
 
     private func setupAnyPlayerPlayingPublisher(playerA: AudioFilePlayer, playerB: AudioFilePlayer) {
-        Publishers.CombineLatest(playerA.$playerState, playerB.$playerState)
+        Publishers.CombineLatest(playerA.$state, playerB.$state)
             .map { playerStateA, playerStateB -> Bool in
                 playerStateA == .playing || playerStateB == .playing
             }

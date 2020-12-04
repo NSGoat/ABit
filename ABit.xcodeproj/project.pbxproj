@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0211299F257AAF9100CCA824 /* SystemVolumeChangeObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0211299E257AAF9100CCA824 /* SystemVolumeChangeObserver.swift */; };
 		640AD4302516289C00415B7E /* AudioFilePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640AD42F2516289C00415B7E /* AudioFilePlayer.swift */; };
 		640AD4322516295100415B7E /* AudioFilePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640AD4312516295100415B7E /* AudioFilePicker.swift */; };
 		641556002573D92800F7048F /* AudioFilePlayheadTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641555FF2573D92800F7048F /* AudioFilePlayheadTracker.swift */; };
@@ -40,7 +41,6 @@
 		64EA274C2576F72F0034B373 /* WaveformImageTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EA27452576F72F0034B373 /* WaveformImageTypes.swift */; };
 		64EA276D257834390034B373 /* AudioGraphicsRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EA27412576F72F0034B373 /* AudioGraphicsRenderer.swift */; };
 		64EA2781257925FB0034B373 /* AppController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EA2780257925FB0034B373 /* AppController.swift */; };
-		64EA27AC257936200034B373 /* SystemVolumeChangeListener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64EA27AB257936200034B373 /* SystemVolumeChangeListener.swift */; };
 		64EA27B9257943E10034B373 /* DependencyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64501664252D1E0D003B00B7 /* DependencyManager.swift */; };
 		64F3DD092544BE8B00DBC056 /* ClosedRange+Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F3DD082544BE8B00DBC056 /* ClosedRange+Size.swift */; };
 		64F3DD0E2544BEBF00DBC056 /* AVAudioPlayerNode+CurrentTime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F3DD0D2544BEBF00DBC056 /* AVAudioPlayerNode+CurrentTime.swift */; };
@@ -65,6 +65,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0211299E257AAF9100CCA824 /* SystemVolumeChangeObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemVolumeChangeObserver.swift; sourceTree = "<group>"; };
 		640AD42F2516289C00415B7E /* AudioFilePlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioFilePlayer.swift; sourceTree = "<group>"; };
 		640AD4312516295100415B7E /* AudioFilePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFilePicker.swift; sourceTree = "<group>"; };
 		641555FF2573D92800F7048F /* AudioFilePlayheadTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFilePlayheadTracker.swift; sourceTree = "<group>"; };
@@ -105,7 +106,6 @@
 		64EA27442576F72F0034B373 /* WaveformAnalyzer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveformAnalyzer.swift; sourceTree = "<group>"; };
 		64EA27452576F72F0034B373 /* WaveformImageTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveformImageTypes.swift; sourceTree = "<group>"; };
 		64EA2780257925FB0034B373 /* AppController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppController.swift; sourceTree = "<group>"; };
-		64EA27AB257936200034B373 /* SystemVolumeChangeListener.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemVolumeChangeListener.swift; sourceTree = "<group>"; };
 		64F3DD082544BE8B00DBC056 /* ClosedRange+Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ClosedRange+Size.swift"; sourceTree = "<group>"; };
 		64F3DD0D2544BEBF00DBC056 /* AVAudioPlayerNode+CurrentTime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVAudioPlayerNode+CurrentTime.swift"; sourceTree = "<group>"; };
 		64F3DD122544BF0600DBC056 /* AVAudioFile+TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVAudioFile+TimeInterval.swift"; sourceTree = "<group>"; };
@@ -141,7 +141,7 @@
 		64AB978D2517E9F50011D98B /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				64EA27AB257936200034B373 /* SystemVolumeChangeListener.swift */,
+				0211299E257AAF9100CCA824 /* SystemVolumeChangeObserver.swift */,
 				645D664C2537655F00BD6DDA /* Logger.swift */,
 				64AB97EB251A94880011D98B /* Extensions */,
 				64AB97DC251A94240011D98B /* PropertyWrappers */,
@@ -472,9 +472,9 @@
 				6493542F253B3C8700A58453 /* Hasher+Combine.swift in Sources */,
 				64EA274A2576F72F0034B373 /* WaveformImageView.swift in Sources */,
 				64D8DF9925166AE8000D0653 /* AudioManager.swift in Sources */,
+				0211299F257AAF9100CCA824 /* SystemVolumeChangeObserver.swift in Sources */,
 				64CD0DB72516233A00363F75 /* ContentView.swift in Sources */,
 				64BA8F73257414300091D525 /* Logger.swift in Sources */,
-				64EA27AC257936200034B373 /* SystemVolumeChangeListener.swift in Sources */,
 				6493A9AD25797B1600E2EF33 /* AudioMasterControls.swift in Sources */,
 				642723092516B6310052D5E6 /* AppDelegate.swift in Sources */,
 				640AD4302516289C00415B7E /* AudioFilePlayer.swift in Sources */,

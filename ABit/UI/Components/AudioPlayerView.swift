@@ -51,9 +51,11 @@ struct AudioPlayerView: View {
 
     var playPauseButton: some View {
         Button(action: {
-            switch audioFilePlayer.playerState {
+            switch audioFilePlayer.state {
             case .awaitingFile:
                 self.showDocumentPicker.toggle()
+            case .loading:
+                break
             case .stopped:
                 audioFilePlayer.play()
             case .paused:
@@ -62,7 +64,7 @@ struct AudioPlayerView: View {
                 audioFilePlayer.pause()
             }
         }, label: {
-            Image(systemName: audioFilePlayer.playerState == .playing ? "pause" : "play")
+            Image(systemName: audioFilePlayer.state == .playing ? "pause" : "play")
                 .font(.system(size: 16, weight: .bold))
         })
     }
@@ -72,7 +74,7 @@ struct AudioPlayerView: View {
             audioFilePlayer.stop()
         }, label: {
             Image(systemName: "stop")
-                .font(.system(size: 16, weight: audioFilePlayer.playerState == .playing ? .bold : .light))
+                .font(.system(size: 16, weight: audioFilePlayer.state == .playing ? .bold : .light))
         })
     }
 
