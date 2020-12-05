@@ -3,6 +3,7 @@ import UIKit
 
 enum AudioFilePlayerState {
     case awaitingFile
+    case loading
     case stopped
     case paused
     case playing
@@ -14,7 +15,9 @@ final class AudioFilePlayer: ObservableObject {
 
     @Inject var audioGraphicsRenderer: AudioGraphicsRenderer
 
-    @Published var playerState: AudioFilePlayerState = .awaitingFile
+    private var audioFileManager: DocumentFileManager<AVAudioFile>
+
+    @Published var state: AudioFilePlayerState = .awaitingFile
 
     @Published var playheadPosition: Double?
 
@@ -28,19 +31,13 @@ final class AudioFilePlayer: ObservableObject {
         }
     }
 
-    @Published var audioFile: AVAudioFile? {
-        didSet {
-            stop()
-            playTimeRange = audioFile?.timeRange(positionRange: playPositionRange)
-        }
-    }
-
     @Published var image: UIImage?
     @Published var renderingImage: Bool = false
 
+    @Published var playTimeRange: ClosedRange<TimeInterval>?
     @Published var playPositionRange: ClosedRange<Double> = 0.0...1.0 {
         didSet {
-            let previousState = playerState
+            let previousState = state
             stop()
             playTimeRange = audioFile?.timeRange(positionRange: playPositionRange)
 
@@ -52,16 +49,23 @@ final class AudioFilePlayer: ObservableObject {
         }
     }
 
-    @Published var playTimeRange: ClosedRange<TimeInterval>?
+    var audioFile: AVAudioFile? {
+        didSet {
+            playTimeRange = audioFile?.timeRange(positionRange: playPositionRange)
+        }
+    }
 
     var fileUrl: URL?
     lazy var audioPlayerNode = AVAudioPlayerNode()
     private lazy var playheadUpdater = AudioFilePlayerPlayheadTracker(audioFilePlayer: self)
     private var lastBufferCache: (buffer: AVAudioPCMBuffer, timeRange: ClosedRange<TimeInterval>)?
 
+    init(audioFileManager: DocumentFileManager<AVAudioFile>) {
+        self.audioFileManager = audioFileManager
+    }
+
     deinit {
-        stop()
-        lastBufferCache = nil
+        unloadPlayer()
     }
 }
 
@@ -69,19 +73,34 @@ extension AudioFilePlayer {
 
     func loadAudioFile(url: URL?) {
         guard let url = url else { return }
+        unloadPlayer()
+        state = .loading
 
         do {
-            audioFile = try AVAudioFile(forReading: url)
+            let safeUrl = try audioFileManager.writeAudioFileToDocuments(sourceUrl: url)
+            audioFile = try AVAudioFile(forReading: safeUrl)
 
             let width = UIScreen.main.bounds.size.width
             let size = CGSize(width: width, height: width/3)
-            updateWaveformImage(url: url, size: size)
+            updateWaveformImage(url: safeUrl, size: size)
 
-            fileUrl = url
+            fileUrl = safeUrl
             stop()
         } catch {
             logger.log(.error, "Failed to load file \(url.absoluteString)", error: error)
+            state = .awaitingFile
         }
+    }
+
+    func unloadPlayer() {
+        stop()
+        fileUrl = nil
+        audioFile = nil
+        lastBufferCache = nil
+        image = nil
+        playPositionRange = 0.0...1.0
+        playTimeRange = nil
+        state = .awaitingFile
     }
 
     func play() {
@@ -97,7 +116,7 @@ extension AudioFilePlayer {
 
             guard file.length > 0, file.fileFormat.channelCount > 0 else { return }
 
-            if lastBufferCache?.timeRange == playPositionRange, let buffer = lastBufferCache?.buffer {
+            if lastBufferCache?.timeRange == playTimeRange, let buffer = lastBufferCache?.buffer {
                 playBuffer(buffer, looping: loop)
             } else if let buffer = AVAudioPCMBuffer(pcmFormat: file.processingFormat, frameCapacity: frameCapacity) {
                 try file.read(into: buffer)
@@ -106,13 +125,18 @@ extension AudioFilePlayer {
                 let end = AVAudioFramePosition(playPositionRange.upperBound * Double(file.length))
                 if let segment = buffer.segment(from: start, to: end) {
                     playBuffer(segment, looping: loop)
-                    lastBufferCache = (buffer: segment, timeRange: playPositionRange)
+
+                    if let playTimeRange = playTimeRange {
+                        lastBufferCache = (buffer: segment, timeRange: playTimeRange)
+                    } else {
+                        lastBufferCache = nil
+                    }
                 }
             }
 
             DispatchQueue.main.async {
                 self.audioPlayerNode.play()
-                self.playerState = .playing
+                self.state = .playing
                 self.startPlayheadUpdates()
             }
 
@@ -138,19 +162,19 @@ extension AudioFilePlayer {
         stopPlayheadUpdates()
         playheadTime = nil
         playheadPosition = nil
-        playerState = .stopped
+        state = .stopped
     }
 
     func pause() {
         audioPlayerNode.pause()
         stopPlayheadUpdates()
-        playerState = .paused
+        state = .paused
     }
 
     func unpause() {
         audioPlayerNode.play()
         startPlayheadUpdates()
-        playerState = .playing
+        state = .playing
     }
 
     private func startPlayheadUpdates() {

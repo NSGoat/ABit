@@ -4,7 +4,6 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var dependancyManager = DependencyManager()
-
     lazy var appController = dependancyManager.appController
 
     func application(_ application: UIApplication,
