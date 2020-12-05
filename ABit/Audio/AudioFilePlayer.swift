@@ -15,6 +15,8 @@ final class AudioFilePlayer: ObservableObject {
 
     @Inject var audioGraphicsRenderer: AudioGraphicsRenderer
 
+    private var audioFileManager: DocumentFileManager<AVAudioFile>
+
     @Published var state: AudioFilePlayerState = .awaitingFile
 
     @Published var playheadPosition: Double?
@@ -58,6 +60,10 @@ final class AudioFilePlayer: ObservableObject {
     private lazy var playheadUpdater = AudioFilePlayerPlayheadTracker(audioFilePlayer: self)
     private var lastBufferCache: (buffer: AVAudioPCMBuffer, timeRange: ClosedRange<TimeInterval>)?
 
+    init(audioFileManager: DocumentFileManager<AVAudioFile>) {
+        self.audioFileManager = audioFileManager
+    }
+
     deinit {
         unloadPlayer()
     }
@@ -71,13 +77,14 @@ extension AudioFilePlayer {
         state = .loading
 
         do {
-            audioFile = try AVAudioFile(forReading: url)
+            let safeUrl = try audioFileManager.writeAudioFileToDocuments(sourceUrl: url)
+            audioFile = try AVAudioFile(forReading: safeUrl)
 
             let width = UIScreen.main.bounds.size.width
             let size = CGSize(width: width, height: width/3)
-            updateWaveformImage(url: url, size: size)
+            updateWaveformImage(url: safeUrl, size: size)
 
-            fileUrl = url
+            fileUrl = safeUrl
             stop()
         } catch {
             logger.log(.error, "Failed to load file \(url.absoluteString)", error: error)

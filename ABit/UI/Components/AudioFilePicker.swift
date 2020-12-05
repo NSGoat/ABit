@@ -20,11 +20,6 @@ struct AudioFilePicker: UIViewControllerRepresentable {
 
         func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
             guard let url = urls.first else { return }
-
-            parent.delegate?.audioFilePicker(parent, didPickAudioFileAt: url)
-        }
-
-        func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
             parent.delegate?.audioFilePicker(parent, didPickAudioFileAt: url)
         }
     }
@@ -35,7 +30,6 @@ struct AudioFilePicker: UIViewControllerRepresentable {
 
     var viewController: UIDocumentPickerViewController = {
         let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.audio], asCopy: true)
-
         documentPicker.shouldShowFileExtensions = true
         documentPicker.allowsMultipleSelection = false
         return documentPicker

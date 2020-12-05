@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0211299F257AAF9100CCA824 /* SystemVolumeChangeObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0211299E257AAF9100CCA824 /* SystemVolumeChangeObserver.swift */; };
+		02484BA6257ACE2300AA8719 /* DocumentFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02484BA5257ACE2300AA8719 /* DocumentFileManager.swift */; };
+		02B82890257BC4F400B0332F /* AVAudioFile+UrlReadable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02B8288F257BC4F400B0332F /* AVAudioFile+UrlReadable.swift */; };
 		640AD4302516289C00415B7E /* AudioFilePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640AD42F2516289C00415B7E /* AudioFilePlayer.swift */; };
 		640AD4322516295100415B7E /* AudioFilePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640AD4312516295100415B7E /* AudioFilePicker.swift */; };
 		641556002573D92800F7048F /* AudioFilePlayheadTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641555FF2573D92800F7048F /* AudioFilePlayheadTracker.swift */; };
@@ -66,6 +68,8 @@
 
 /* Begin PBXFileReference section */
 		0211299E257AAF9100CCA824 /* SystemVolumeChangeObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SystemVolumeChangeObserver.swift; sourceTree = "<group>"; };
+		02484BA5257ACE2300AA8719 /* DocumentFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = DocumentFileManager.swift; path = ABit/Utilities/DocumentFileManager.swift; sourceTree = SOURCE_ROOT; };
+		02B8288F257BC4F400B0332F /* AVAudioFile+UrlReadable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVAudioFile+UrlReadable.swift"; sourceTree = "<group>"; };
 		640AD42F2516289C00415B7E /* AudioFilePlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioFilePlayer.swift; sourceTree = "<group>"; };
 		640AD4312516295100415B7E /* AudioFilePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFilePicker.swift; sourceTree = "<group>"; };
 		641555FF2573D92800F7048F /* AudioFilePlayheadTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFilePlayheadTracker.swift; sourceTree = "<group>"; };
@@ -163,6 +167,7 @@
 			children = (
 				6493A9B1257980E600E2EF33 /* AudioChannel+Color.swift */,
 				64F3DD122544BF0600DBC056 /* AVAudioFile+TimeInterval.swift */,
+				02B8288F257BC4F400B0332F /* AVAudioFile+UrlReadable.swift */,
 				64F3DD172544C04B00DBC056 /* AVAudioPCMBuffer+Segment.swift */,
 				64F3DD0D2544BEBF00DBC056 /* AVAudioPlayerNode+CurrentTime.swift */,
 				64AB978E2517EA240011D98B /* CaseIterable+Iteration.swift */,
@@ -258,6 +263,7 @@
 			children = (
 				64D8DF9825166AE8000D0653 /* AudioManager.swift */,
 				640AD42F2516289C00415B7E /* AudioFilePlayer.swift */,
+				02484BA5257ACE2300AA8719 /* DocumentFileManager.swift */,
 				641555FF2573D92800F7048F /* AudioFilePlayheadTracker.swift */,
 				64EA2757257701F10034B373 /* WaveformRenderer */,
 			);
@@ -467,6 +473,7 @@
 				64D8DF9B25166F60000D0653 /* AudioPlayerView.swift in Sources */,
 				6493A9B62579834400E2EF33 /* AudioChannel+Color.swift in Sources */,
 				64F3DD0E2544BEBF00DBC056 /* AVAudioPlayerNode+CurrentTime.swift in Sources */,
+				02484BA6257ACE2300AA8719 /* DocumentFileManager.swift in Sources */,
 				64EA2781257925FB0034B373 /* AppController.swift in Sources */,
 				64EA27492576F72F0034B373 /* TempiFFT.swift in Sources */,
 				6493542F253B3C8700A58453 /* Hasher+Combine.swift in Sources */,
@@ -485,6 +492,7 @@
 				64AB2DBA2573184E00C59E6F /* AVAudioFile+TimeInterval.swift in Sources */,
 				6450153F252A5549003B00B7 /* Inject.swift in Sources */,
 				6493542A2539C3B300A58453 /* Size+Hashable.swift in Sources */,
+				02B82890257BC4F400B0332F /* AVAudioFile+UrlReadable.swift in Sources */,
 				64935449253CBF2000A58453 /* View+CornerRadius.swift in Sources */,
 				640AD4322516295100415B7E /* AudioFilePicker.swift in Sources */,
 				6427238B2516BCE60052D5E6 /* SceneDelegate.swift in Sources */,
