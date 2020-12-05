@@ -28,5 +28,5 @@ class AppController: NSObject {
 }
 
 private func changeToChannelMessage(_ channel: AudioChannel) -> String {
-    return "Switched to channel \(channel.rawValue) on redundant volume up press"
+    return "Switched to channel \(channel.rawValue) on redundant volume increment"
 }

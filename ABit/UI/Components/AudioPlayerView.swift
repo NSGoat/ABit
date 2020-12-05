@@ -204,6 +204,7 @@ struct AudioPlayerView: View {
 }
 
 extension AudioPlayerView: AudioFilePickerDelegate {
+
     func audioFilePicker(_ picker: AudioFilePicker, didPickAudioFileAt url: URL) {
         audioFilePlayer.loadAudioFile(url: url)
     }
@@ -211,6 +212,6 @@ extension AudioPlayerView: AudioFilePickerDelegate {
 
 struct AudioPlayerView_Previews: PreviewProvider {
     static var previews: some View {
-        AudioPlayerView(audioFilePlayer: AudioManager().audioFilePlayer(channel: .a), accentColor: .accentColor)
+        AudioPlayerView(audioFilePlayer: AudioManager(dependencyManager: DependencyManager.shared).audioFilePlayer(channel: .a), accentColor: .accentColor)
     }
 }

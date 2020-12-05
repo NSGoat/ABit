@@ -14,7 +14,7 @@ enum AudioChannel: String, CaseIterable {
 
 final class AudioManager: ObservableObject {
 
-    static let shared = AudioManager()
+    var dependencyManager: DependencyManager
 
     private let audioEngine = AVAudioEngine()
 
@@ -30,7 +30,8 @@ final class AudioManager: ObservableObject {
         }
     }
 
-    init() {
+    init(dependencyManager: DependencyManager) {
+        self.dependencyManager = dependencyManager
         try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
 
         let mixer = audioEngine.mainMixerNode
@@ -63,7 +64,7 @@ final class AudioManager: ObservableObject {
 
     @discardableResult
     private func configureNewAudioFilePlayer(channel: AudioChannel) -> AudioFilePlayer {
-        let audioFilePlayer = AudioFilePlayer()
+        let audioFilePlayer = AudioFilePlayer(audioFileManager: dependencyManager.audioFileManager)
         audioFilePlayers[channel] = audioFilePlayer
         return audioFilePlayer
     }
