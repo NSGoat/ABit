@@ -23,6 +23,6 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView(audioManager: AudioManager(dependencyManager: DependencyManager.shared))
+        ContentView(audioManager: AudioManager(audioFileManager: DependencyManager.shared.audioFileManager))
     }
 }

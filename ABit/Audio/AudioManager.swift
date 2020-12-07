@@ -14,7 +14,7 @@ enum AudioChannel: String, CaseIterable {
 
 final class AudioManager: ObservableObject {
 
-    var dependencyManager: DependencyManager
+    var audioFileManager: AudioFileManager
 
     private let audioEngine = AVAudioEngine()
 
@@ -30,32 +30,33 @@ final class AudioManager: ObservableObject {
         }
     }
 
-    init(dependencyManager: DependencyManager) {
-        self.dependencyManager = dependencyManager
-        try? AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+    init(audioFileManager: AudioFileManager) {
+        self.audioFileManager = audioFileManager
 
-        let mixer = audioEngine.mainMixerNode
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
+            let mixer = audioEngine.mainMixerNode
 
-        #if DEBUG
-        mixer.outputVolume = 0.01
-        #endif
+            #if DEBUG
+            mixer.outputVolume = 0.003
+            #endif
 
-        try? audioEngine.start()
-        audioEngine.prepare()
+            try audioEngine.start()
+            audioEngine.prepare()
 
-        let playerA = configureNewAudioFilePlayer(channel: .a)
-        audioEngine.attach(playerA.audioPlayerNode)
-        audioEngine.connect(playerA.audioPlayerNode, to: mixer, format: nil)
-        playerA.loadAudioFile(url: Bundle.main.url(forResource: "Winstons - Amen, Brother", withExtension: "aif"))
+            let fallbackUrlA = Bundle.main.url(forResource: "Winstons - Amen, Brother", withExtension: "aif")
+            let playerA = configureNewAudioFilePlayer(channel: .a, fallbackUrl: fallbackUrlA)
 
-        let playerB = configureNewAudioFilePlayer(channel: .b)
-        audioEngine.attach(playerB.audioPlayerNode)
-        audioEngine.connect(playerB.audioPlayerNode, to: mixer, format: nil)
-        playerB.loadAudioFile(url: Bundle.main.url(forResource: "1, 2, 3, 4", withExtension: "mp3"))
+            let fallbackUrlB = Bundle.main.url(forResource: "1, 2, 3, 4", withExtension: "mp3")
+            let playerB = configureNewAudioFilePlayer(channel: .b, fallbackUrl: fallbackUrlB)
 
-        selectedChannel = .a
+            selectedChannel = .a
 
-        setupAnyPlayerPlayingPublisher(playerA: playerA, playerB: playerB)
+            setupAnyPlayerPlayingPublisher(playerA: playerA, playerB: playerB)
+
+        } catch {
+            Logger.log(.error, "Failed to initialise AudioManager", error: error)
+        }
     }
 
     func audioFilePlayer(channel: AudioChannel) -> AudioFilePlayer {
@@ -63,9 +64,16 @@ final class AudioManager: ObservableObject {
     }
 
     @discardableResult
-    private func configureNewAudioFilePlayer(channel: AudioChannel) -> AudioFilePlayer {
-        let audioFilePlayer = AudioFilePlayer(audioFileManager: dependencyManager.audioFileManager)
+    private func configureNewAudioFilePlayer(channel: AudioChannel, fallbackUrl: URL? = nil) -> AudioFilePlayer {
+        let audioFilePlayer = AudioFilePlayer(audioFileManager: audioFileManager, cacheKey: channel.rawValue)
         audioFilePlayers[channel] = audioFilePlayer
+
+        audioEngine.attach(audioFilePlayer.audioPlayerNode)
+        audioEngine.connect(audioFilePlayer.audioPlayerNode, to: audioEngine.mainMixerNode, format: nil)
+
+        let  url = try? audioFileManager.retrieveBookmarkedUrl(userDefaultsKey: channel.rawValue)
+        audioFilePlayer.loadAudioFile(url: url ?? fallbackUrl)
+
         return audioFilePlayer
     }
 

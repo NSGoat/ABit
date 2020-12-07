@@ -56,11 +56,13 @@ final class AudioFilePlayer: ObservableObject {
     }
 
     var fileUrl: URL?
+    var cacheKey: String
     lazy var audioPlayerNode = AVAudioPlayerNode()
     private lazy var playheadUpdater = AudioFilePlayerPlayheadTracker(audioFilePlayer: self)
     private var lastBufferCache: (buffer: AVAudioPCMBuffer, timeRange: ClosedRange<TimeInterval>)?
 
-    init(audioFileManager: DocumentFileManager<AVAudioFile>) {
+    init(audioFileManager: AudioFileManager, cacheKey: String) {
+        self.cacheKey = cacheKey
         self.audioFileManager = audioFileManager
     }
 
@@ -77,14 +79,16 @@ extension AudioFilePlayer {
         state = .loading
 
         do {
-            let safeUrl = try audioFileManager.writeAudioFileToDocuments(sourceUrl: url)
+            let safeUrl = try audioFileManager.storeFileInDocuments(sourceUrl: url)
             audioFile = try AVAudioFile(forReading: safeUrl)
+            try audioFileManager.storeUrlBookmark(safeUrl, userDefaultsKey: cacheKey)
 
             let width = UIScreen.main.bounds.size.width
             let size = CGSize(width: width, height: width/3)
             updateWaveformImage(url: safeUrl, size: size)
 
             fileUrl = safeUrl
+
             stop()
         } catch {
             logger.log(.error, "Failed to load file \(url.absoluteString)", error: error)
@@ -110,6 +114,7 @@ extension AudioFilePlayer {
         do {
             // TODO: Investigate why we have to load load the audio file from the url here
             // guard let file = audioFile else { return }
+            let bool = fileUrl.startAccessingSecurityScopedResource()
 
             let file = try AVAudioFile(forReading: fileUrl)
             let frameCapacity = AVAudioFrameCount(file.length)
@@ -159,6 +164,7 @@ extension AudioFilePlayer {
 
     func stop() {
         audioPlayerNode.stop()
+        fileUrl?.stopAccessingSecurityScopedResource()
         stopPlayheadUpdates()
         playheadTime = nil
         playheadPosition = nil
