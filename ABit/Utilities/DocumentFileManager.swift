@@ -13,6 +13,11 @@ enum DocumentFileManagerError: Error {
 
 class DocumentFileManager<T: UrlReadable>: NSObject {
 
+    struct Document {
+        let file: T
+        let url: URL
+    }
+
     private let directoryName: String?
 
     lazy private var fileManager = FileManager.default
@@ -21,7 +26,26 @@ class DocumentFileManager<T: UrlReadable>: NSObject {
         self.directoryName = directoryName
     }
 
-    func storeFileInDocuments(sourceUrl: URL) throws -> URL {
+    func storeFileAsDocument(sourceUrl: URL, bookmarkedWithKey userDefaultsKey: String?) throws -> Document {
+        let url = try storeFileInDocuments(sourceUrl: sourceUrl)
+        let file = try T(forReading: url)
+
+        if let userDefaultsKey = userDefaultsKey {
+            try storeUrlBookmark(url, userDefaultsKey: userDefaultsKey)
+        }
+
+        return Document(file: file, url: url)
+    }
+
+    func retrieveDocument(userDefaultsKey key: String) throws -> Document {
+        let url = try retrieveBookmarkedUrl(userDefaultsKey: key)
+        let file = try T(forReading: url)
+        return Document(file: file, url: url)
+    }
+
+    /// Mark: - Helpers
+
+    private func storeFileInDocuments(sourceUrl: URL) throws -> URL {
         guard let directoryUrl = directoryUrl else { throw DocumentFileManagerError.documentFolderNotFound }
         let sourceData = try Data(contentsOf: sourceUrl, options: [])
         let fileUrl = directoryUrl.appendingPathComponent(sourceUrl.lastPathComponent)
@@ -33,12 +57,12 @@ class DocumentFileManager<T: UrlReadable>: NSObject {
         return fileUrl
     }
 
-    func storeUrlBookmark(_ url: URL, userDefaultsKey: String) throws {
+    private func storeUrlBookmark(_ url: URL, userDefaultsKey: String) throws {
         let bookmarkData = try url.bookmarkData()
         UserDefaults.standard.setValue(bookmarkData, forKey: userDefaultsKey)
     }
 
-    func retrieveBookmarkedUrl(userDefaultsKey key: String) throws -> URL {
+    private func retrieveBookmarkedUrl(userDefaultsKey key: String) throws -> URL {
         guard let bookmarkData = UserDefaults.standard.value(forKey: key) as? Data else  {
             throw DocumentFileManagerError.bookmarkNotFound
         }
@@ -52,8 +76,6 @@ class DocumentFileManager<T: UrlReadable>: NSObject {
             return url
         }
     }
-
-    /// Mark: - Helpers
 
     private var directoryUrl: URL? {
         let documentDirectory = fileManager.urls(for: .documentDirectory, in: .userDomainMask).first

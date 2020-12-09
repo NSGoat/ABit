@@ -71,7 +71,7 @@ final class AudioManager: ObservableObject {
         audioEngine.attach(audioFilePlayer.audioPlayerNode)
         audioEngine.connect(audioFilePlayer.audioPlayerNode, to: audioEngine.mainMixerNode, format: nil)
 
-        let  url = try? audioFileManager.retrieveBookmarkedUrl(userDefaultsKey: channel.rawValue)
+        let url = try? audioFileManager.retrieveDocument(userDefaultsKey: channel.rawValue).url
         audioFilePlayer.loadAudioFile(url: url ?? fallbackUrl)
 
         return audioFilePlayer

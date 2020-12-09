@@ -128,9 +128,8 @@ struct AudioPlayerView: View {
                     Rectangle()
                         .fill(accentColor)
                         .cornerRadius(4)
-                        .opacity(0.2)
-//                        .opacity(loadingAnimation ? 0.2 : 0.0)
-//                        .animation(Animation.easeInOut(duration: 0.5).repeatForever())
+                        .opacity(loadingAnimation ? 0.2 : 0.0)
+                        .animation(Animation.easeInOut(duration: 0.5).repeatForever())
                 }
                 playheadView
                     .padding(.horizontal, sliderThumbWidth)
@@ -138,9 +137,9 @@ struct AudioPlayerView: View {
             }
             .frame(height: waveformHeight)
             .scaledToFill()
-//            .onAppear {
-//                loadingAnimation = true
-//            }
+            .onAppear {
+                loadingAnimation = true
+            }
         }
     }
 
