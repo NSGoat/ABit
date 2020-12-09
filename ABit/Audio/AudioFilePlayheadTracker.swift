@@ -20,17 +20,7 @@ class AudioFilePlayerPlayheadTracker {
     @discardableResult
     func startTracking(withTimeInterval timeInterval: TimeInterval, block: @escaping (Playhead?) -> Void) -> Playhead? {
         playheadUpdateTimer = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { _ in
-            if let audioFile = self.audioFilePlayer.audioFile,
-               let playheadTime = self.playheadTime(audioFile: audioFile,
-                                                    audioPlayerNode: self.audioFilePlayer.audioPlayerNode,
-                                                    looping: self.audioFilePlayer.loop,
-                                                    playPositionRange: self.audioFilePlayer.playPositionRange) {
-
-                self.playhead = Playhead(time: playheadTime, position: playheadTime / audioFile.duration)
-            } else {
-                self.playhead = nil
-            }
-
+            self.playhead = self.playhead(audioFilePlayer: self.audioFilePlayer)
             block(self.playhead)
         }
 
@@ -42,15 +32,27 @@ class AudioFilePlayerPlayheadTracker {
         playheadUpdateTimer = nil
     }
 
-    private func playheadTime(audioFile: AVAudioFile,
-                              audioPlayerNode: AVAudioPlayerNode,
-                              looping: Bool,
-                              playPositionRange: ClosedRange<Double>) -> TimeInterval? {
+    private func playhead(audioFilePlayer: AudioFilePlayer) -> Playhead? {
+        guard let duration = audioFilePlayer.audioFileDuration,
+              let playerTime = audioFilePlayer.audioPlayerNode.currentTime
+        else {
+            return nil
+        }
 
-        guard let playerTime = audioPlayerNode.currentTime else { return nil }
+        let currentPlayheadTime = playheadTime(playerTime: playerTime,
+                                               fileDuration: duration,
+                                               playPositionRange: audioFilePlayer.playPositionRange,
+                                               looping: audioFilePlayer.loop)
+
+        return Playhead(time: currentPlayheadTime, position: currentPlayheadTime/duration)
+    }
+
+    private func playheadTime(playerTime: TimeInterval,
+                              fileDuration: TimeInterval,
+                              playPositionRange: ClosedRange<Double>,
+                              looping: Bool) -> TimeInterval {
 
         if looping || playPositionRange.size < 1 {
-            let fileDuration = audioFile.duration
             let loopStartTime = playPositionRange.lowerBound * fileDuration
             let loopDuration = playPositionRange.size * fileDuration
             let currentTimeInLoop = playerTime.truncatingRemainder(dividingBy: loopDuration)
