@@ -51,13 +51,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		64B6941C257BFB8C0012DEA5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 64B69418257BFB8C0012DEA5 /* FileLoader.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 64B69401257BFB8A0012DEA5;
-			remoteInfo = FileLoader;
-		};
 		64CD0DC32516233C00363F75 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 64CD0DA92516233A00363F75 /* Project object */;
@@ -95,7 +88,6 @@
 		64AB2DA3257302D100C59E6F /* 1, 2, 3, 4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "1, 2, 3, 4.mp3"; sourceTree = "<group>"; };
 		64AB978E2517EA240011D98B /* CaseIterable+Iteration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CaseIterable+Iteration.swift"; sourceTree = "<group>"; };
 		64AB97D2251A934F0011D98B /* UnitInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitInterval.swift; sourceTree = "<group>"; };
-		64B69418257BFB8C0012DEA5 /* FileLoader.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FileLoader.xcodeproj; path = ../Sandbox/FileLoader/FileLoader.xcodeproj; sourceTree = "<group>"; };
 		64B69426257D3AD70012DEA5 /* AudioFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileManager.swift; sourceTree = "<group>"; };
 		64CD0DB12516233A00363F75 /* ABit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ABit.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		64CD0DB62516233A00363F75 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -202,14 +194,6 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
-		64B69419257BFB8C0012DEA5 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				64B6941D257BFB8C0012DEA5 /* FileLoader.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		64B69439257D42780012DEA5 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
@@ -221,7 +205,6 @@
 		64CD0DA82516233A00363F75 = {
 			isa = PBXGroup;
 			children = (
-				64B69418257BFB8C0012DEA5 /* FileLoader.xcodeproj */,
 				64D8DFA42516A280000D0653 /* .swiftlint.yml */,
 				64CD0DB32516233A00363F75 /* ABit */,
 				64CD0DC52516233C00363F75 /* ABitTests */,
@@ -431,12 +414,6 @@
 			);
 			productRefGroup = 64CD0DB22516233A00363F75 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 64B69419257BFB8C0012DEA5 /* Products */;
-					ProjectRef = 64B69418257BFB8C0012DEA5 /* FileLoader.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				64CD0DB02516233A00363F75 /* ABit */,
@@ -445,16 +422,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		64B6941D257BFB8C0012DEA5 /* FileLoader.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = FileLoader.app;
-			remoteRef = 64B6941C257BFB8C0012DEA5 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		64CD0DAF2516233A00363F75 /* Resources */ = {
@@ -702,7 +669,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ABit/Resources/ABit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"ABit/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = X8G7MMTMU8;
 				ENABLE_PREVIEWS = YES;
@@ -728,7 +695,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = ABit/Resources/ABit.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"ABit/Resources/Preview Content\"";
 				DEVELOPMENT_TEAM = X8G7MMTMU8;
 				ENABLE_PREVIEWS = YES;
