@@ -276,7 +276,7 @@
 				64D8DF9825166AE8000D0653 /* AudioManager.swift */,
 				640AD42F2516289C00415B7E /* AudioFilePlayer.swift */,
 				641555FF2573D92800F7048F /* AudioFilePlayheadTracker.swift */,
-				64EA2757257701F10034B373 /* WaveformRenderer */,
+				64EA2757257701F10034B373 /* AudioGraphicsRenderer */,
 			);
 			path = Audio;
 			sourceTree = "<group>";
@@ -305,7 +305,7 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		64EA2757257701F10034B373 /* WaveformRenderer */ = {
+		64EA2757257701F10034B373 /* AudioGraphicsRenderer */ = {
 			isa = PBXGroup;
 			children = (
 				64EA27412576F72F0034B373 /* AudioGraphicsRenderer.swift */,
@@ -315,7 +315,7 @@
 				64EA27452576F72F0034B373 /* WaveformImageTypes.swift */,
 				64EA27432576F72F0034B373 /* WaveformImageView.swift */,
 			);
-			path = WaveformRenderer;
+			path = AudioGraphicsRenderer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
