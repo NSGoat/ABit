@@ -15,15 +15,22 @@ class AppController: NSObject {
     private let maxVolume: Float = 1.0
 
     func switchChannedlOnRedundantVolumeUpPress(enabled: Bool) {
-        volumeObserver.startObserving { [weak self] volume in
-            guard let self = self else { return }
-
-            if volume == self.maxVolume, self.lastAudioLevel == self.maxVolume, self.audioManager.allPlayersPlaying {
-                self.audioManager.selectedChannel.selectNext()
-                Logger.log(.info, changeToChannelMessage(self.audioManager.selectedChannel))
+        if enabled {
+            volumeObserver.startObserving { [weak self] volume in
+                guard let self = self else { return }
+                self.handleVolumeChange(volume)
             }
-            self.lastAudioLevel = volume
+        } else {
+            volumeObserver.stopObserving()
         }
+    }
+
+    private func handleVolumeChange(_ volume: Float) {
+        if volume == self.maxVolume, self.lastAudioLevel == self.maxVolume, self.audioManager.allPlayersPlaying {
+            self.audioManager.selectedChannel.selectNext()
+            Logger.log(.info, changeToChannelMessage(self.audioManager.selectedChannel))
+        }
+        self.lastAudioLevel = volume
     }
 }
 
