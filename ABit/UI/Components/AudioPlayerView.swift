@@ -1,5 +1,8 @@
+import Foundation
 import Sliders
 import SwiftUI
+
+typealias TapAction = () -> Void
 
 struct AudioPlayerView: View {
 
@@ -7,13 +10,15 @@ struct AudioPlayerView: View {
 
     @State var showDocumentPicker = false
 
-    private let sliderThumbWidth: CGFloat = 4
+    private let sliderThumbWidth: CGFloat = 16
     private let waveformHeight: CGFloat = 120
     private let accentColor: Color
+    private let tapAction: TapAction
 
-    init(audioFilePlayer: AudioFilePlayer, accentColor: Color) {
+    init(audioFilePlayer: AudioFilePlayer, accentColor: Color, tapAction: @escaping TapAction) {
         self.audioFilePlayer = audioFilePlayer
         self.accentColor = accentColor
+        self.tapAction = tapAction
     }
 
     var body: some View {
@@ -26,6 +31,16 @@ struct AudioPlayerView: View {
                 loopButton
             }
             playerInfoView(playTimeRange: $audioFilePlayer.playTimeRange.wrappedValue)
+        }
+        .contentShape(Rectangle())
+        .onTapGesture {
+            tapAction()
+            if audioFilePlayer.state == .awaitingFile {
+                self.showDocumentPicker.toggle()
+            }
+        }
+        .sheet(isPresented: self.$showDocumentPicker) {
+            AudioFilePicker(delegate: self)
         }
     }
 
@@ -44,9 +59,6 @@ struct AudioPlayerView: View {
                 Image(systemName: "folder")
             }
         })
-        .sheet(isPresented: self.$showDocumentPicker) {
-            AudioFilePicker(delegate: self)
-        }
     }
 
     var playPauseButton: some View {
@@ -89,7 +101,7 @@ struct AudioPlayerView: View {
 
     var loopRangeSlider: some View {
         let thumbSize = CGSize(width: sliderThumbWidth, height: waveformHeight)
-        let thumb = Rectangle().foregroundColor(.primary)
+        let thumb = Rectangle().foregroundColor(accentColor)
         let lowerThumb = thumb.cornerRadius(sliderThumbWidth, corners: [.topLeft, .bottomLeft])
         let upperThumb = thumb.cornerRadius(sliderThumbWidth, corners: [.topRight, .bottomRight])
 
@@ -106,7 +118,9 @@ struct AudioPlayerView: View {
     }
 
     func playerInfoView(playTimeRange: ClosedRange<Double>?) -> some View {
-        VStack {
+        let highlightPlayer = audioFilePlayer.mute && audioFilePlayer.state != .awaitingFile
+
+        return VStack {
             HStack {
                 playTimeText
                 Spacer()
@@ -118,11 +132,11 @@ struct AudioPlayerView: View {
                         Image(uiImage: image)
                             .resizable()
                             .renderingMode(.template)
-                            .foregroundColor(accentColor)
+                            .foregroundColor(highlightPlayer ? accentColor : .black)
                             .frame(width: geo.size.width - sliderThumbWidth * 2)
                             .padding(.horizontal, sliderThumbWidth)
                             .disabled(true)
-                        }
+                    }
                 }
                 if audioFilePlayer.renderingImage {
                     Rectangle()
@@ -135,6 +149,8 @@ struct AudioPlayerView: View {
                     .padding(.horizontal, sliderThumbWidth)
                 loopRangeSlider
             }
+            .background(accentColor.opacity(highlightPlayer ? 0.0 : 0.15))
+            .cornerRadius(sliderThumbWidth/2.0)
             .frame(height: waveformHeight)
             .scaledToFill()
             .onAppear {
@@ -192,7 +208,7 @@ struct AudioPlayerView: View {
     }
 
     func playheadView(playheadPosition: Binding<Double>, waveformHeight: CGFloat, thumbSize: CGSize) -> some View {
-        let thumb = Capsule().foregroundColor(.primary).opacity(0.7).frame(height: waveformHeight)
+        let thumb = Capsule().foregroundColor(accentColor).frame(height: waveformHeight)
         let thumbSize = CGSize(width: 1, height: waveformHeight)
 
         return ValueSlider(value: playheadPosition)
@@ -212,6 +228,8 @@ extension AudioPlayerView: AudioFilePickerDelegate {
 struct AudioPlayerView_Previews: PreviewProvider {
     static var previews: some View {
         let audioManager = AudioManager(audioFileManager: AudioFileManager(directoryName: "Audio"))
-        AudioPlayerView(audioFilePlayer: audioManager.audioFilePlayer(channel: .a), accentColor: .accentColor)
+        AudioPlayerView(audioFilePlayer: audioManager.audioFilePlayer(channel: .a),
+                        accentColor: .accentColor,
+                        tapAction: { })
     }
 }

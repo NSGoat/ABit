@@ -25,7 +25,7 @@ final class AudioFilePlayer: ObservableObject {
 
     @Published var loop: Bool = true
 
-    @Published var mute: Bool = false {
+    @Published var mute: Bool = true {
         didSet {
             audioPlayerNode.volume = mute ? 0 : 1
         }

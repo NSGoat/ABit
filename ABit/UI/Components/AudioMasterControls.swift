@@ -42,10 +42,10 @@ struct AudioMasterControls: View {
 
     private var channelSwitchButton: some View {
         let channel = audioManager.selectedChannel
-        let color = channel.color
+        let color = channel?.color
 
         return Button(action: {
-            audioManager.selectedChannel.selectNext()
+            audioManager.selectedChannel?.selectNext()
         }, label: {
             Group {
                 Text("A")

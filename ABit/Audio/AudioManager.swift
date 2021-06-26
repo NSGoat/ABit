@@ -24,9 +24,13 @@ final class AudioManager: ObservableObject {
 
     var allPlayersPlaying: Bool { audioFilePlayers.values.allSatisfy { $0.state == .playing } }
 
-    @Published var selectedChannel: AudioChannel = .a {
+    @Published var selectedChannel: AudioChannel? {
         didSet {
-            solo(channel: selectedChannel)
+            if let selectedChannel = selectedChannel {
+                solo(channel: selectedChannel)
+            } else {
+                muteAll()
+            }
         }
     }
 
@@ -37,19 +41,11 @@ final class AudioManager: ObservableObject {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
             let mixer = audioEngine.mainMixerNode
 
-#if DEBUG
-            mixer.outputVolume = 0.01
-#endif
-
             try audioEngine.start()
             audioEngine.prepare()
 
-            let fallbackUrlA = Bundle.main.url(forResource: "Winstons - Amen, Brother", withExtension: "aif")
-            let playerA = configureNewAudioFilePlayer(channel: .a, fallbackUrl: fallbackUrlA)
-
-            let fallbackUrlB = Bundle.main.url(forResource: "1, 2, 3, 4", withExtension: "mp3")
-            let playerB = configureNewAudioFilePlayer(channel: .b, fallbackUrl: fallbackUrlB)
-
+            let playerA = configureNewAudioFilePlayer(channel: .a, fallbackUrl: nil)
+            let playerB = configureNewAudioFilePlayer(channel: .b, fallbackUrl: nil)
             selectedChannel = .a
 
             setupAnyPlayerPlayingPublisher(playerA: playerA, playerB: playerB)
@@ -94,6 +90,12 @@ extension AudioManager {
     func solo(channel: AudioChannel) {
         audioFilePlayers.forEach { (playerChannel, player) in
             player.mute = playerChannel != channel
+        }
+    }
+
+    func muteAll() {
+        audioFilePlayers.forEach { (playerChannel, player) in
+            player.mute = true
         }
     }
 
