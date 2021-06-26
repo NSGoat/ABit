@@ -7,7 +7,7 @@ struct AudioPlayerView: View {
 
     @State var showDocumentPicker = false
 
-    private let sliderThumbWidth: CGFloat = 4
+    private let sliderThumbWidth: CGFloat = 16
     private let waveformHeight: CGFloat = 120
     private let accentColor: Color
 
@@ -27,6 +27,9 @@ struct AudioPlayerView: View {
             }
             playerInfoView(playTimeRange: $audioFilePlayer.playTimeRange.wrappedValue)
         }
+        .sheet(isPresented: self.$showDocumentPicker) {
+            AudioFilePicker(delegate: self)
+        }
     }
 
     var documentPickerButton: some View {
@@ -44,9 +47,6 @@ struct AudioPlayerView: View {
                 Image(systemName: "folder")
             }
         })
-        .sheet(isPresented: self.$showDocumentPicker) {
-            AudioFilePicker(delegate: self)
-        }
     }
 
     var playPauseButton: some View {
@@ -89,7 +89,7 @@ struct AudioPlayerView: View {
 
     var loopRangeSlider: some View {
         let thumbSize = CGSize(width: sliderThumbWidth, height: waveformHeight)
-        let thumb = Rectangle().foregroundColor(.primary)
+        let thumb = Rectangle().foregroundColor(accentColor)
         let lowerThumb = thumb.cornerRadius(sliderThumbWidth, corners: [.topLeft, .bottomLeft])
         let upperThumb = thumb.cornerRadius(sliderThumbWidth, corners: [.topRight, .bottomRight])
 
@@ -118,7 +118,7 @@ struct AudioPlayerView: View {
                         Image(uiImage: image)
                             .resizable()
                             .renderingMode(.template)
-                            .foregroundColor(accentColor)
+                            .foregroundColor(audioFilePlayer.mute ? accentColor : .black)
                             .frame(width: geo.size.width - sliderThumbWidth * 2)
                             .padding(.horizontal, sliderThumbWidth)
                             .disabled(true)
@@ -135,6 +135,8 @@ struct AudioPlayerView: View {
                     .padding(.horizontal, sliderThumbWidth)
                 loopRangeSlider
             }
+            .background(accentColor.opacity(audioFilePlayer.mute ? 0.0 : 0.15))
+            .cornerRadius(sliderThumbWidth/2.0)
             .frame(height: waveformHeight)
             .scaledToFill()
             .onAppear {
@@ -192,7 +194,7 @@ struct AudioPlayerView: View {
     }
 
     func playheadView(playheadPosition: Binding<Double>, waveformHeight: CGFloat, thumbSize: CGSize) -> some View {
-        let thumb = Capsule().foregroundColor(.primary).opacity(0.7).frame(height: waveformHeight)
+        let thumb = Capsule().foregroundColor(accentColor).frame(height: waveformHeight)
         let thumbSize = CGSize(width: 1, height: waveformHeight)
 
         return ValueSlider(value: playheadPosition)
