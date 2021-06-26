@@ -14,7 +14,7 @@ enum AudioChannel: String, CaseIterable {
 
 final class AudioManager: ObservableObject {
 
-    var audioFileManager: AudioFileManager
+    var playConfigurationManager: AudioPlayConfigurationManager
 
     private let audioEngine = AVAudioEngine()
 
@@ -30,8 +30,8 @@ final class AudioManager: ObservableObject {
         }
     }
 
-    init(audioFileManager: AudioFileManager) {
-        self.audioFileManager = audioFileManager
+    init(playConfigurationManager: AudioPlayConfigurationManager) {
+        self.playConfigurationManager = playConfigurationManager
 
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
@@ -65,16 +65,22 @@ final class AudioManager: ObservableObject {
 
     @discardableResult
     private func configureNewAudioFilePlayer(channel: AudioChannel, fallbackUrl: URL? = nil) -> AudioFilePlayer {
-        let audioFilePlayer = AudioFilePlayer(audioFileManager: audioFileManager, cacheKey: channel.rawValue)
+        let key = defaultsKey(channel: channel)
+        let audioFilePlayer = AudioFilePlayer(audioFileManager: playConfigurationManager, cacheKey: key)
         audioFilePlayers[channel] = audioFilePlayer
 
         audioEngine.attach(audioFilePlayer.audioPlayerNode)
         audioEngine.connect(audioFilePlayer.audioPlayerNode, to: audioEngine.mainMixerNode, format: nil)
 
-        let url = try? audioFileManager.retrieveDocument(userDefaultsKey: channel.rawValue).url
-        audioFilePlayer.loadAudioFile(url: url ?? fallbackUrl)
+        if let playConfiguration = playConfigurationManager.playConfiguration(userDefaultsKey: key) {
+            audioFilePlayer.configure(playConfiguration)
+        }
 
         return audioFilePlayer
+    }
+
+    private func defaultsKey(channel: AudioChannel) -> String {
+        "AudioPlayConfiguration_Channel_\(channel.rawValue)"
     }
 
     private var cancellableSet: Set<AnyCancellable> = []
@@ -124,6 +130,12 @@ extension AudioManager {
     func setAllPlayPositionRanges(_ playPositionRange: ClosedRange<Double>) {
         audioFilePlayers.values.forEach { player in
             player.playPositionRange = playPositionRange
+        }
+    }
+
+    func saveAllConfigurations() {
+        audioFilePlayers.values.forEach { player in
+            player.saveConfiguration()
         }
     }
 }

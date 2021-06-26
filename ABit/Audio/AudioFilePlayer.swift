@@ -15,7 +15,7 @@ final class AudioFilePlayer: ObservableObject {
 
     @Inject var audioGraphicsRenderer: AudioGraphicsRenderer
 
-    private var audioFileManager: DocumentFileManager<AVAudioFile>
+    private var playConfigurationManager: AudioPlayConfigurationManager
 
     @Published var state: AudioFilePlayerState = .awaitingFile
 
@@ -61,9 +61,13 @@ final class AudioFilePlayer: ObservableObject {
     private lazy var playheadUpdater = AudioFilePlayerPlayheadTracker(audioFilePlayer: self)
     private var lastBufferCache: (buffer: AVAudioPCMBuffer, timeRange: ClosedRange<TimeInterval>)?
 
-    init(audioFileManager: AudioFileManager, cacheKey: String) {
+    init(audioFileManager: AudioPlayConfigurationManager, cacheKey: String) {
         self.bookmarkKey = cacheKey
-        self.audioFileManager = audioFileManager
+        self.playConfigurationManager = audioFileManager
+
+        if let configuration = audioFileManager.playConfiguration(userDefaultsKey: cacheKey) {
+            configure(configuration)
+        }
     }
 
     deinit {
@@ -73,13 +77,29 @@ final class AudioFilePlayer: ObservableObject {
 
 extension AudioFilePlayer {
 
+    func configure(_ playConfiguration: PlayConfiguration) {
+        loadAudioFile(url: playConfiguration.fileUrl)
+        playPositionRange = playConfiguration.positionRange
+        loop = playConfiguration.loop
+    }
+
+    func saveConfiguration() {
+        if let fileUrl = fileUrl {
+            let configuration = PlayConfiguration(audioFileUrl: fileUrl, positionRange: playPositionRange, loop: loop)
+            playConfigurationManager.savePlayConfiguration(configuration, userDefaultsKey: bookmarkKey)
+        } else {
+            playConfigurationManager.clearPlayConfiguration(forUserDefaultsKey: bookmarkKey)
+        }
+    }
+
     func loadAudioFile(url: URL?) {
         guard let url = url else { return }
         unloadPlayer()
         state = .loading
 
         do {
-            let document = try audioFileManager.storeFileAsDocument(sourceUrl: url, bookmarkedWithKey: bookmarkKey)
+            let document = try playConfigurationManager.storeFileAsDocument(sourceUrl: url,
+                                                                            bookmarkedWithKey: bookmarkKey)
             audioFileDuration = document.file.duration
             fileUrl = document.url
 
@@ -87,8 +107,6 @@ extension AudioFilePlayer {
 
             let width = UIScreen.main.bounds.size.width
             updateWaveformImage(url: document.url, size: CGSize(width: width, height: width/3))
-
-            stop()
         } catch {
             logger.log(.error, "Failed to load file \(url.absoluteString)", error: error)
             unloadPlayer()
@@ -163,6 +181,7 @@ extension AudioFilePlayer {
 
     func stop() {
         audioPlayerNode.stop()
+        saveConfiguration()
         fileUrl?.stopAccessingSecurityScopedResource()
         stopPlayheadUpdates()
         playheadTime = nil

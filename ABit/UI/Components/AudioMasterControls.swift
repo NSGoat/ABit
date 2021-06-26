@@ -66,6 +66,7 @@ struct AudioMasterControls: View {
 
 struct AudioMasterControls_Previews: PreviewProvider {
     static var previews: some View {
-        AudioMasterControls(audioManager: AudioManager(audioFileManager: DependencyManager.shared.audioFileManager))
+        let audioManager = AudioManager(playConfigurationManager: DependencyManager.shared.playConfigurationManager)
+        AudioMasterControls(audioManager: audioManager)
     }
 }
