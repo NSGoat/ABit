@@ -25,7 +25,7 @@ final class AudioFilePlayer: ObservableObject {
 
     @Published var loop: Bool = true
 
-    @Published var mute: Bool = false {
+    @Published var mute: Bool = true {
         didSet {
             audioPlayerNode.volume = mute ? 0 : 1
         }
@@ -156,7 +156,12 @@ extension AudioFilePlayer {
                 }
             }
 
-            DispatchQueue.main.async {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else { return }
+                guard self.startEngineIfNeeded() else {
+                    return
+                }
+
                 self.audioPlayerNode.play()
                 self.state = .playing
                 self.startPlayheadUpdates()
@@ -199,6 +204,22 @@ extension AudioFilePlayer {
         audioPlayerNode.play()
         startPlayheadUpdates()
         state = .playing
+    }
+
+    //MARK - Private Functions
+
+    @discardableResult
+    private func startEngineIfNeeded() -> Bool {
+        guard let engine = self.audioPlayerNode.engine else { return false }
+        guard !engine.isRunning else { return true }
+
+        do {
+            try engine.start()
+        } catch {
+            return false
+        }
+
+        return true
     }
 
     private func startPlayheadUpdates() {

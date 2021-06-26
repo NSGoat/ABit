@@ -27,13 +27,13 @@ class AppController: NSObject {
 
     private func handleVolumeChange(_ volume: Float) {
         if volume == self.maxVolume, self.lastAudioLevel == self.maxVolume, self.audioManager.allPlayersPlaying {
-            self.audioManager.selectedChannel.selectNext()
+            self.audioManager.selectedChannel?.selectNext()
             Logger.log(.info, changeToChannelMessage(self.audioManager.selectedChannel))
         }
         self.lastAudioLevel = volume
     }
 }
 
-private func changeToChannelMessage(_ channel: AudioChannel) -> String {
-    return "Switched to channel \(channel.rawValue) on redundant volume increment"
+private func changeToChannelMessage(_ channel: AudioChannel?) -> String {
+    return "Switched to channel \(channel?.rawValue) on redundant volume increment"
 }

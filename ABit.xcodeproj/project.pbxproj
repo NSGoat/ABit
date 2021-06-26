@@ -13,6 +13,7 @@
 		640AD4302516289C00415B7E /* AudioFilePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640AD42F2516289C00415B7E /* AudioFilePlayer.swift */; };
 		640AD4322516295100415B7E /* AudioFilePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 640AD4312516295100415B7E /* AudioFilePicker.swift */; };
 		641556002573D92800F7048F /* AudioFilePlayheadTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 641555FF2573D92800F7048F /* AudioFilePlayheadTracker.swift */; };
+		64194A3526375A7500F05678 /* 1, 2, 3, 4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 64AB2DA3257302D100C59E6F /* 1, 2, 3, 4.mp3 */; };
 		642723092516B6310052D5E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642723082516B6310052D5E6 /* AppDelegate.swift */; };
 		6427238B2516BCE60052D5E6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6427238A2516BCE60052D5E6 /* SceneDelegate.swift */; };
 		642D51D22635DAC500E401AC /* AudioDocumentPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642D51D12635DAC500E401AC /* AudioDocumentPicker.swift */; };
@@ -448,6 +449,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64194A3526375A7500F05678 /* 1, 2, 3, 4.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

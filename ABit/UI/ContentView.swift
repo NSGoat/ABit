@@ -7,17 +7,29 @@ struct ContentView: View {
     var body: some View {
         VStack(spacing: 16) {
             Spacer()
-            AudioPlayerView(audioFilePlayer: audioManager.audioFilePlayer(channel: .a),
-                            accentColor: AudioChannel.a.color)
-                .accentColor(AudioChannel.a.color)
-                .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
-            AudioPlayerView(audioFilePlayer: audioManager.audioFilePlayer(channel: .b),
-                            accentColor: AudioChannel.b.color)
-                .accentColor(AudioChannel.b.color)
-                .padding(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
+            Image("HeaderIcon")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .onTapGesture {
+                    audioManager.selectedChannel?.selectNext()
+                }
+            Spacer()
+            audioPlayerView(channel: .a)
+            audioPlayerView(channel: .b)
             AudioMasterControls(audioManager: audioManager)
         }
         .padding(.bottom)
+    }
+
+    func audioPlayerView(channel: AudioChannel) -> some View {
+        AudioPlayerView(
+            audioFilePlayer: audioManager.audioFilePlayer(channel: channel),
+            accentColor: channel.color,
+            tapAction: {
+                audioManager.selectedChannel = channel
+            })
+            .accentColor(channel.color)
+            .padding(.horizontal)
     }
 }
 
