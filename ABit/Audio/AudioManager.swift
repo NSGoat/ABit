@@ -37,9 +37,9 @@ final class AudioManager: ObservableObject {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
             let mixer = audioEngine.mainMixerNode
 
-            #if DEBUG
-            mixer.outputVolume = 0.003
-            #endif
+#if DEBUG
+            mixer.outputVolume = 0.01
+#endif
 
             try audioEngine.start()
             audioEngine.prepare()

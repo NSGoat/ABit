@@ -63,7 +63,7 @@ class DocumentFileManager<T: UrlReadable>: NSObject {
     }
 
     private func retrieveBookmarkedUrl(userDefaultsKey key: String) throws -> URL {
-        guard let bookmarkData = UserDefaults.standard.value(forKey: key) as? Data else  {
+        guard let bookmarkData = UserDefaults.standard.value(forKey: key) as? Data else {
             throw DocumentFileManagerError.bookmarkNotFound
         }
 
