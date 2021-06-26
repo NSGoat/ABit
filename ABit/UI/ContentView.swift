@@ -11,7 +11,7 @@ struct ContentView: View {
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .onTapGesture {
-                    audioManager.selectedChannel.selectNext()
+                    audioManager.selectedChannel?.selectNext()
                 }
             Spacer()
             audioPlayerView(channel: .a)
@@ -22,13 +22,14 @@ struct ContentView: View {
     }
 
     func audioPlayerView(channel: AudioChannel) -> some View {
-        return AudioPlayerView(audioFilePlayer: audioManager.audioFilePlayer( channel: channel),
-                               accentColor: channel.color)
+        AudioPlayerView(
+            audioFilePlayer: audioManager.audioFilePlayer(channel: channel),
+            accentColor: channel.color,
+            tapAction: {
+                audioManager.selectedChannel = channel
+            })
             .accentColor(channel.color)
             .padding(.horizontal)
-            .onTapGesture {
-                audioManager.selectedChannel = channel
-            }
     }
 }
 
