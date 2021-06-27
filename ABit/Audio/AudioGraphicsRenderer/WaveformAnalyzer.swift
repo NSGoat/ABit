@@ -37,7 +37,7 @@ public class WaveformAnalyzer {
     }
 
     /// Returns the calculated waveform of the initialized asset URL.
-    public func samples(count: Int, qos: DispatchQoS.QoSClass = .userInitiated, completionHandler: @escaping (_ amplitudes: [Float]?) -> ()) {
+    public func samples(count: Int, qos: DispatchQoS.QoSClass = .userInitiated, completionHandler: @escaping (_ amplitudes: [Float]?) -> Void) {
         waveformSamples(count: count, qos: qos, fftBands: nil) { analysis in
             completionHandler(analysis?.amplitudes)
         }

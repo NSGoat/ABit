@@ -29,7 +29,6 @@
  Note that TempiFFT expects a mono signal (i.e. numChannels == 1) which is ideal for performance.
  */
 
-
 import Foundation
 import Accelerate
 
@@ -39,7 +38,7 @@ import Accelerate
     case hamming
 }
 
-@objc class TempiFFT : NSObject {
+@objc class TempiFFT: NSObject {
 
     /// The length of the sample buffer we'll be analyzing.
     private(set) var size: Int
@@ -49,9 +48,7 @@ import Accelerate
 
     /// The Nyquist frequency is ```sampleRate``` / 2
     var nyquistFrequency: Float {
-        get {
-            return sampleRate / 2.0
-        }
+        return sampleRate / 2.0
     }
 
     // After performing the FFT, contains size/2 magnitudes, one for each frequency band.
@@ -65,9 +62,7 @@ import Accelerate
 
     /// The average bandwidth throughout the spectrum (nyquist / magnitudes.count)
     var bandwidth: Float {
-        get {
-            return self.nyquistFrequency / Float(self.magnitudes.count)
-        }
+        return self.nyquistFrequency / Float(self.magnitudes.count)
     }
 
     /// The number of calculated bands (must call calculateLinearBands() or calculateLogarithmicBands() first).

@@ -18,7 +18,7 @@ struct ContentView: View {
             audioPlayerView(channel: .b)
             AudioMasterControls(audioManager: audioManager)
         }
-        .padding(.bottom)
+        .padding(.bottom, 16)
     }
 
     func audioPlayerView(channel: AudioChannel) -> some View {
