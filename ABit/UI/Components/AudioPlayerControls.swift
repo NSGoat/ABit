@@ -39,7 +39,7 @@ struct AudioPlayerControls: View {
             }
         }, label: {
             Image(systemName: audioFilePlayer.state == .playing ? "pause" : "play")
-                .font(.system(size: 16, weight: .bold))
+                .font(.system(size: 20, weight: .bold))
         })
     }
 
@@ -48,7 +48,7 @@ struct AudioPlayerControls: View {
             audioFilePlayer.stop()
         }, label: {
             Image(systemName: "stop")
-                .font(.system(size: 16, weight: audioFilePlayer.state == .playing ? .bold : .light))
+                .font(.system(size: 20, weight: audioFilePlayer.state == .playing ? .bold : .light))
         })
     }
 
@@ -57,7 +57,7 @@ struct AudioPlayerControls: View {
             audioFilePlayer.loop.toggle()
         }, label: {
             Image(systemName: "repeat")
-                .font(.system(size: 16, weight: audioFilePlayer.loop ? .bold : .light))
+                .font(.system(size: 20, weight: audioFilePlayer.loop ? .bold : .light))
         })
     }
 }
