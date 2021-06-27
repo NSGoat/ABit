@@ -100,7 +100,7 @@ extension AudioManager {
     }
 
     func muteAll() {
-        audioFilePlayers.forEach { (playerChannel, player) in
+        audioFilePlayers.values.forEach { (player) in
             player.mute = true
         }
     }

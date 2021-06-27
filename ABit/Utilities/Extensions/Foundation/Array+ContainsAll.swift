@@ -1,6 +1,6 @@
 import Foundation
 
-extension Array where Self.Element : Equatable {
+extension Array where Self.Element: Equatable {
 
     func containsAll(_ elements: Self.Element...) -> Bool {
         containsAll(elements)

@@ -26,6 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationWillTerminate(_ application: UIApplication) {
-        dependancyManager.audioManager.audioFilePlayers.values.forEach { $0.saveConfiguration() }
+        dependancyManager.audioManager.saveAllConfigurations()
     }
 }
