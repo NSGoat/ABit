@@ -15,7 +15,7 @@ final class AudioFilePlayer: ObservableObject {
 
     @Inject var audioGraphicsRenderer: AudioGraphicsRenderer
 
-    private var playConfigurationManager: AudioPlayConfigurationManager
+    private var audioPlayerConfigurationManager: AudioPlayerConfigurationManager
 
     @Published var state: AudioFilePlayerState = .awaitingFile
 
@@ -61,11 +61,11 @@ final class AudioFilePlayer: ObservableObject {
     private lazy var playheadUpdater = AudioFilePlayerPlayheadTracker(audioFilePlayer: self)
     private var lastBufferCache: (buffer: AVAudioPCMBuffer, timeRange: ClosedRange<TimeInterval>)?
 
-    init(audioFileManager: AudioPlayConfigurationManager, cacheKey: String) {
+    init(audioFileManager: AudioPlayerConfigurationManager, cacheKey: String) {
         self.bookmarkKey = cacheKey
-        self.playConfigurationManager = audioFileManager
+        self.audioPlayerConfigurationManager = audioFileManager
 
-        if let configuration = audioFileManager.playConfiguration(userDefaultsKey: cacheKey) {
+        if let configuration = audioFileManager.playerConfiguration(userDefaultsKey: cacheKey) {
             configure(configuration)
         }
     }
@@ -77,18 +77,19 @@ final class AudioFilePlayer: ObservableObject {
 
 extension AudioFilePlayer {
 
-    func configure(_ playConfiguration: PlayConfiguration) {
-        loadAudioFile(url: playConfiguration.fileUrl)
-        playPositionRange = playConfiguration.positionRange
-        loop = playConfiguration.loop
+    func configure(_ playerConfiguration: AudioPlayerConfiguration) {
+        loadAudioFile(url: playerConfiguration.fileUrl)
+        playPositionRange = playerConfiguration.triggers.first?.positionRange ?? 0...1
+        loop = playerConfiguration.triggers.first?.loop ?? true
     }
 
     func saveConfiguration() {
         if let fileUrl = fileUrl {
-            let configuration = PlayConfiguration(audioFileUrl: fileUrl, positionRange: playPositionRange, loop: loop)
-            playConfigurationManager.savePlayConfiguration(configuration, userDefaultsKey: bookmarkKey)
+            let trigger = AudioPlayerConfiguration.Trigger(mode: .cue, loop: loop, positionRange: playPositionRange)
+            let configuration = AudioPlayerConfiguration(fileUrl: fileUrl, triggers: [trigger])
+            audioPlayerConfigurationManager.savePlayerConfiguration(configuration, userDefaultsKey: bookmarkKey)
         } else {
-            playConfigurationManager.clearPlayConfiguration(forUserDefaultsKey: bookmarkKey)
+            audioPlayerConfigurationManager.clearPlayerConfiguration(forUserDefaultsKey: bookmarkKey)
         }
     }
 
@@ -98,7 +99,7 @@ extension AudioFilePlayer {
         state = .loading
 
         do {
-            let document = try playConfigurationManager.storeFileAsDocument(sourceUrl: url,
+            let document = try audioPlayerConfigurationManager.storeFileAsDocument(sourceUrl: url,
                                                                             bookmarkedWithKey: bookmarkKey)
             audioFileDuration = document.file.duration
             fileUrl = document.url

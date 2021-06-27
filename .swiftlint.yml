@@ -12,3 +12,7 @@ line_length:
     ignores_comments: true
     ignores_interpolated_strings: true
     ignores_urls: true
+
+nesting:
+    type_level: 3
+

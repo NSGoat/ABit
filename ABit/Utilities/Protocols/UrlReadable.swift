@@ -1,5 +1,5 @@
 import AVFoundation
 
-protocol UrlReadable: class {
+protocol UrlReadable: AnyObject {
     init(forReading: URL) throws
 }

@@ -227,7 +227,8 @@ extension AudioPlayerView: AudioFilePickerDelegate {
 
 struct AudioPlayerView_Previews: PreviewProvider {
     static var previews: some View {
-        let audioManager = AudioManager(playConfigurationManager: AudioPlayConfigurationManager(directoryName: "Conf"))
+        let audioPlayerConfigurationManager = AudioPlayerConfigurationManager(directoryName: "Conf")
+        let audioManager = AudioManager(audioPlayerConfigurationManager: audioPlayerConfigurationManager)
         AudioPlayerView(
             audioFilePlayer: audioManager.audioFilePlayer(channel: .a),
             accentColor: .accentColor,
