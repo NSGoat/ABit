@@ -8,7 +8,7 @@ extension View {
 }
 
 struct CornerRadiusStyle: ViewModifier {
-    
+
     var radius: CGFloat
     var corners: UIRectCorner
 
@@ -18,7 +18,10 @@ struct CornerRadiusStyle: ViewModifier {
         var corners = UIRectCorner.allCorners
 
         func path(in rect: CGRect) -> Path {
-            let path = UIBezierPath(roundedRect: rect, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+            let radiiSize = CGSize(width: radius, height: radius)
+            let path = UIBezierPath(roundedRect: rect,
+                                    byRoundingCorners: corners,
+                                    cornerRadii: radiiSize)
             return Path(path.cgPath)
         }
     }

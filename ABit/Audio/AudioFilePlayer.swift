@@ -207,7 +207,7 @@ extension AudioFilePlayer {
         state = .playing
     }
 
-    //MARK - Private Functions
+    ///MARK: – Private Functions
 
     @discardableResult
     private func startEngineIfNeeded() -> Bool {

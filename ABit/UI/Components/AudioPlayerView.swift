@@ -54,7 +54,7 @@ struct AudioPlayerView_Previews: PreviewProvider {
     static var previews: some View {
         let audioPlayerConfigurationManager = AudioPlayerConfigurationManager(directoryName: "Conf")
         let audioManager = AudioManager(audioPlayerConfigurationManager: audioPlayerConfigurationManager)
-        
+
         AudioPlayerView(
             audioFilePlayer: audioManager.audioFilePlayer(channel: .a),
             accentColor: .accentColor,

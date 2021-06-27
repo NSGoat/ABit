@@ -95,7 +95,8 @@ private extension AudioGraphicsRenderer {
     private func drawGraph(samples: [Float], onContext context: CGContext, configuration: WaveformConfiguration) {
         let graphRect = CGRect(origin: CGPoint.zero, size: configuration.size)
         let positionAdjustedGraphCenter = CGFloat(configuration.position.value()) * graphRect.size.height
-        let verticalPaddingDivisor = configuration.paddingFactor ?? CGFloat(configuration.position.value() == 0.5 ? 2.5 : 1.5)
+        let verticalPaddingDivisorFallback = CGFloat(configuration.position.value() == 0.5 ? 2.5 : 1.5)
+        let verticalPaddingDivisor = configuration.paddingFactor ?? verticalPaddingDivisorFallback
         let drawMappingFactor = graphRect.size.height / verticalPaddingDivisor
         let minimumGraphAmplitude: CGFloat = 1 // we want to see at least a 1pt line for silence
 
