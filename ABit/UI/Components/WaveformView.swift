@@ -4,13 +4,14 @@ import SwiftUI
 struct WaveformView: View {
 
     @ObservedObject var audioFilePlayer: AudioFilePlayer
-
     @State private var loadingAnimation = false
 
     private let sliderThumbWidth: CGFloat = 16
     private let waveformHeight: CGFloat = 120
     private let accentColor: Color
     private let tapAction: TapAction
+    private var highlightPlayer: Bool { audioFilePlayer.state != .awaitingFile && !audioFilePlayer.mute }
+    private var playtimeRange: ClosedRange<Double> { audioFilePlayer.playPositionRange }
 
     init(audioFilePlayer: AudioFilePlayer, accentColor: Color, tapAction: @escaping TapAction) {
         self.audioFilePlayer = audioFilePlayer
@@ -18,48 +19,27 @@ struct WaveformView: View {
         self.tapAction = tapAction
     }
 
-    var highlightPlayer: Bool { audioFilePlayer.mute && audioFilePlayer.state != .awaitingFile }
-    var playtimeRange: ClosedRange<Double> { audioFilePlayer.playPositionRange }
-
     var body: some View {
         ZStack {
             GeometryReader { geometry in
-                Rectangle()
-                    .fill(accentColor)
-                    .opacity(highlightPlayer ? 0.0 : 0.3)
-                    .padding(horizontalInsets(dimension: geometry.size.width - sliderThumbWidth,
-                                              scaledByRange: audioFilePlayer.playPositionRange))
-                    .disabled(true)
-            }
-            if let image = audioFilePlayer.image {
-                GeometryReader { geometry in
-                    Image(uiImage: image)
-                        .resizable()
-                        .renderingMode(.template)
-                        .foregroundColor(highlightPlayer ? accentColor : .black)
+                if let image = audioFilePlayer.image {
+                    loopRangeRectangle(geometry: geometry, sliderThumbWidth: sliderThumbWidth, selectedRange: playtimeRange)
+                    waveformImage(uiImage: image, color: highlightPlayer ? .black : accentColor)
                         .frame(width: geometry.size.width - sliderThumbWidth * 2)
                         .padding(.horizontal, sliderThumbWidth)
-                        .disabled(true)
-//                    Image(uiImage: image)
-//                        .resizable()
-//                        .renderingMode(.template)
-//                        .foregroundColor(.black)
-//                        .frame(width: geometry.size.width - sliderThumbWidth * 2)
-//                        .padding(horizontalInsets(dimension: geometry.size.width - sliderThumbWidth,
-//                                                  scaledByRange: audioFilePlayer.playPositionRange))
-//                        .disabled(true)
+
                 }
-            }
-            if audioFilePlayer.renderingImage {
-                Rectangle()
-                    .fill(accentColor)
-                    .cornerRadius(4)
-                    .opacity(loadingAnimation ? 0.2 : 0.0)
-                    .animation(Animation.easeInOut(duration: 0.2).repeatForever())
-            } else if audioFilePlayer.image != nil && audioFilePlayer.state != .awaitingFile {
-                playheadView
-                    .padding(.horizontal, sliderThumbWidth)
-                loopRangeSlider
+                if audioFilePlayer.renderingImage {
+                    Rectangle()
+                        .fill(accentColor)
+                        .cornerRadius(4)
+                        .opacity(loadingAnimation ? 0.2 : 0.0)
+                        .animation(Animation.easeInOut(duration: 0.2).repeatForever())
+                } else if audioFilePlayer.image != nil && audioFilePlayer.state != .awaitingFile {
+                    playheadView
+                        .padding(.horizontal, sliderThumbWidth)
+                    loopRangeSlider
+                }
             }
         }
         .background(accentColor.opacity(0.1))
@@ -71,7 +51,25 @@ struct WaveformView: View {
         }
     }
 
-    var loopRangeSlider: some View {
+    private func loopRangeRectangle(geometry: GeometryProxy,
+                                    sliderThumbWidth: CGFloat,
+                                    selectedRange: ClosedRange<Double>) -> some View {
+        Rectangle()
+            .fill(accentColor)
+            .opacity(highlightPlayer ? 0.3 : 0.0)
+            .padding(horizontalInsets(dimension: geometry.size.width - sliderThumbWidth,
+                                      scaledByRange: selectedRange))
+            .disabled(true)
+    }
+    private func waveformImage(uiImage: UIImage, color: Color) -> some View {
+        Image(uiImage: uiImage)
+            .resizable()
+            .renderingMode(.template)
+            .foregroundColor(color)
+            .disabled(true)
+    }
+
+    private var loopRangeSlider: some View {
         let thumbSize = CGSize(width: sliderThumbWidth, height: waveformHeight)
         let thumb = Rectangle().foregroundColor(accentColor)
         let lowerThumb = thumb.cornerRadius(sliderThumbWidth, corners: [.topLeft, .bottomLeft])
@@ -89,7 +87,7 @@ struct WaveformView: View {
             )
     }
 
-    var playheadView: some View {
+    private var playheadView: some View {
         if let playheadPositionBinding = Binding($audioFilePlayer.playheadPosition) {
             return AnyView(playheadView(playheadPosition: playheadPositionBinding,
                                         waveformHeight: waveformHeight,
@@ -99,7 +97,7 @@ struct WaveformView: View {
         }
     }
 
-    func playheadView(playheadPosition: Binding<Double>, waveformHeight: CGFloat, thumbSize: CGSize) -> some View {
+    private func playheadView(playheadPosition: Binding<Double>, waveformHeight: CGFloat, thumbSize: CGSize) -> some View {
         let thumb = Capsule().foregroundColor(accentColor).frame(height: waveformHeight)
         let thumbSize = CGSize(width: 1, height: waveformHeight)
 
@@ -109,7 +107,7 @@ struct WaveformView: View {
             .disabled(true)
     }
 
-    func horizontalInsets(dimension: CGFloat, scaledByRange range: ClosedRange<Double>) -> EdgeInsets {
+    private func horizontalInsets(dimension: CGFloat, scaledByRange range: ClosedRange<Double>) -> EdgeInsets {
         EdgeInsets(top: 0,
                    leading: dimension * CGFloat(range.lowerBound),
                    bottom: 0,
