@@ -35,5 +35,5 @@ class AppController: NSObject {
 }
 
 private func changeToChannelMessage(_ channel: AudioChannel?) -> String {
-    return "Switched to channel \(channel?.rawValue) on redundant volume increment"
+    return "Switched to channel \(String(describing: channel?.rawValue.description)) on redundant volume increment"
 }

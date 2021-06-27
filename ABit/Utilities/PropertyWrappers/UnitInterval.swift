@@ -1,20 +1,21 @@
 import Foundation
 
-/// Clamp in range 0.0 to 1.0
+/// Clamp value to 0.0 to 1.0
 @propertyWrapper
-struct UnitInterval {
+struct UnitInterval<Type> where Type: FloatingPoint {
 
-    init(wrappedValue: Double) {
+    init(wrappedValue: Type) {
         self.wrappedValue = wrappedValue
     }
 
-    var wrappedValue: Double {
+    var wrappedValue: Type {
         didSet {
-            wrappedValue = min(max(0.0, wrappedValue), 1.0)
+            wrappedValue = wrappedValue.unitIntervalClamped()
         }
     }
 }
 
+/// Clamp range to 0.0 to 1.0
 @propertyWrapper
 struct UnitIntervalRange<Bound> where Bound: FloatingPoint {
 
@@ -29,24 +30,24 @@ struct UnitIntervalRange<Bound> where Bound: FloatingPoint {
     }
 }
 
-extension Comparable {
-    func clamped(to limits: ClosedRange<Self>) -> Self {
-        return min(max(self, limits.lowerBound), limits.upperBound)
-    }
-}
+extension UnitIntervalRange: Codable where Bound == Double {
 
-extension FloatingPoint {
-    static var one: Self {
-        Self(1)
+    enum CodingKeys: String, CodingKey {
+        case upperBound
+        case lowerBound
     }
 
-    func clampedUnitInterval() -> Self {
-        clamped(to: Self.zero...Self.one)
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(wrappedValue.lowerBound, forKey: .lowerBound)
+        try container.encode(wrappedValue.upperBound, forKey: .upperBound)
     }
-}
 
-struct UnitIntervalRangeB<Bound> where Bound: FloatingPoint {
-    init(_ value: ClosedRange<Bound>) {
+    init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        let lowerBound = try values.decode(Double.self, forKey: .lowerBound)
+        let upperBound = try values.decode(Double.self, forKey: .upperBound)
 
+        wrappedValue = lowerBound...upperBound
     }
 }

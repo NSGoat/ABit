@@ -14,7 +14,7 @@ enum AudioChannel: String, CaseIterable {
 
 final class AudioManager: ObservableObject {
 
-    var playConfigurationManager: AudioPlayConfigurationManager
+    var audioPlayerConfigurationManager: AudioPlayerConfigurationManager
 
     private let audioEngine = AVAudioEngine()
 
@@ -34,8 +34,8 @@ final class AudioManager: ObservableObject {
         }
     }
 
-    init(playConfigurationManager: AudioPlayConfigurationManager) {
-        self.playConfigurationManager = playConfigurationManager
+    init(audioPlayerConfigurationManager: AudioPlayerConfigurationManager) {
+        self.audioPlayerConfigurationManager = audioPlayerConfigurationManager
 
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
@@ -62,21 +62,21 @@ final class AudioManager: ObservableObject {
     @discardableResult
     private func configureNewAudioFilePlayer(channel: AudioChannel, fallbackUrl: URL? = nil) -> AudioFilePlayer {
         let key = defaultsKey(channel: channel)
-        let audioFilePlayer = AudioFilePlayer(audioFileManager: playConfigurationManager, cacheKey: key)
+        let audioFilePlayer = AudioFilePlayer(audioFileManager: audioPlayerConfigurationManager, cacheKey: key)
         audioFilePlayers[channel] = audioFilePlayer
 
         audioEngine.attach(audioFilePlayer.audioPlayerNode)
         audioEngine.connect(audioFilePlayer.audioPlayerNode, to: audioEngine.mainMixerNode, format: nil)
 
-        if let playConfiguration = playConfigurationManager.playConfiguration(userDefaultsKey: key) {
-            audioFilePlayer.configure(playConfiguration)
+        if let playerConfiguration = audioPlayerConfigurationManager.playerConfiguration(userDefaultsKey: key) {
+            audioFilePlayer.configure(playerConfiguration)
         }
 
         return audioFilePlayer
     }
 
     private func defaultsKey(channel: AudioChannel) -> String {
-        "AudioPlayConfiguration_Channel_\(channel.rawValue)"
+        "AudioPlayerConfiguration_Channel_\(channel.rawValue)"
     }
 
     private var cancellableSet: Set<AnyCancellable> = []
@@ -100,7 +100,7 @@ extension AudioManager {
     }
 
     func muteAll() {
-        audioFilePlayers.forEach { (playerChannel, player) in
+        audioFilePlayers.values.forEach { (player) in
             player.mute = true
         }
     }

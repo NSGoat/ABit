@@ -10,12 +10,12 @@ class DependencyManager {
     static var shared = DependencyManager()
 
     lazy var appController = AppController.shared
-    lazy var playConfigurationManager = AudioPlayConfigurationManager(directoryName: "PlayConfigurationManager")
+    lazy var audioPlayerConfigurationManager = AudioPlayerConfigurationManager(directoryName: "PlayerConfiguration")
 
     // Injectable
     lazy var logger = Logger.shared
     lazy var audioFileGraphicsRenderer = AudioGraphicsRenderer.shared
-    lazy var audioManager = AudioManager(playConfigurationManager: playConfigurationManager)
+    lazy var audioManager = AudioManager(audioPlayerConfigurationManager: audioPlayerConfigurationManager)
 
     init() {
         let resolver = Resolver.shared
