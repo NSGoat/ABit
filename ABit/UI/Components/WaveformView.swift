@@ -22,51 +22,55 @@ struct WaveformView: View {
     var body: some View {
         ZStack {
             GeometryReader { geometry in
-                if let image = audioFilePlayer.image {
+                if let image = audioFilePlayer.image, audioFilePlayer.state != .awaitingFile {
                     loopRangeRectangle(geometry: geometry, sliderThumbWidth: sliderThumbWidth, selectedRange: playtimeRange)
                     waveformImage(uiImage: image, color: highlightPlayer ? .black : accentColor)
                         .frame(width: geometry.size.width - sliderThumbWidth * 2)
                         .padding(.horizontal, sliderThumbWidth)
 
-                }
-                if audioFilePlayer.renderingImage {
+                    playheadView
+                        .padding(.horizontal, sliderThumbWidth)
+                    loopRangeSlider
+
+                } else if audioFilePlayer.renderingImage {
                     Rectangle()
                         .fill(accentColor)
                         .cornerRadius(4)
                         .opacity(loadingAnimation ? 0.2 : 0.0)
                         .animation(Animation.easeInOut(duration: 0.2).repeatForever())
-                } else if audioFilePlayer.image != nil && audioFilePlayer.state != .awaitingFile {
-                    playheadView
-                        .padding(.horizontal, sliderThumbWidth)
-                    loopRangeSlider
+                } else {
+                    folderImage
                 }
             }
         }
         .background(accentColor.opacity(0.1))
         .cornerRadius(sliderThumbWidth/2.0)
         .frame(height: waveformHeight)
-        .scaledToFill()
         .onAppear {
             loadingAnimation = true
         }
     }
 
-    private func loopRangeRectangle(geometry: GeometryProxy,
-                                    sliderThumbWidth: CGFloat,
-                                    selectedRange: ClosedRange<Double>) -> some View {
-        Rectangle()
-            .fill(accentColor)
-            .opacity(highlightPlayer ? 0.3 : 0.0)
-            .padding(horizontalInsets(dimension: geometry.size.width - sliderThumbWidth,
-                                      scaledByRange: selectedRange))
-            .disabled(true)
-    }
     private func waveformImage(uiImage: UIImage, color: Color) -> some View {
         Image(uiImage: uiImage)
             .resizable()
             .renderingMode(.template)
             .foregroundColor(color)
             .disabled(true)
+    }
+
+    private var folderImage: some View {
+        VStack {
+            Spacer()
+            HStack {
+                Spacer()
+                Image(systemName: "folder")
+                    .renderingMode(.template)
+                    .foregroundColor(accentColor)
+                Spacer()
+            }
+            Spacer()
+        }
     }
 
     private var loopRangeSlider: some View {
@@ -85,6 +89,17 @@ struct WaveformView: View {
                                            options: .forceAdjacentValue
                 )
             )
+    }
+
+    private func loopRangeRectangle(geometry: GeometryProxy,
+                                    sliderThumbWidth: CGFloat,
+                                    selectedRange: ClosedRange<Double>) -> some View {
+        Rectangle()
+            .fill(accentColor)
+            .opacity(highlightPlayer ? 0.3 : 0.0)
+            .padding(horizontalInsets(dimension: geometry.size.width - sliderThumbWidth,
+                                      scaledByRange: selectedRange))
+            .disabled(true)
     }
 
     private var playheadView: some View {

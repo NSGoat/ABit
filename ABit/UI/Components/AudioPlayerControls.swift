@@ -16,29 +16,11 @@ struct AudioPlayerControls: View {
 
     var body: some View {
         HStack(spacing: 16) {
-            documentPickerButton
             Spacer(minLength: 12)
             playPauseButton
             stopButton
             loopButton
         }
-    }
-
-    private var documentPickerButton: some View {
-        Button(action: {
-            self.showDocumentPicker.wrappedValue.toggle()
-            #if targetEnvironment(macCatalyst)
-            let viewController = UIApplication.shared.windows[0].rootViewController!
-            let picker = AudioDocumentPicker(url: $url)
-            viewController.present(picker.viewController, animated: true)
-            #endif
-        }, label: {
-            if let fileName = audioFilePlayer.fileUrl?.lastPathComponent {
-                Text(fileName)
-            } else {
-                Image(systemName: "folder")
-            }
-        })
     }
 
     private var playPauseButton: some View {

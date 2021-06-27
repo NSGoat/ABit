@@ -10,8 +10,6 @@ struct AudioPlayerView: View {
 
     @State var showDocumentPicker = false
 
-    private let sliderThumbWidth: CGFloat = 16
-    private let waveformHeight: CGFloat = 120
     private let accentColor: Color
     private let tapAction: TapAction
 
@@ -22,13 +20,16 @@ struct AudioPlayerView: View {
     }
 
     var body: some View {
-        VStack(spacing: 16) {
-            AudioPlayerControls(audioFilePlayer: audioFilePlayer,
-                                accentColor: accentColor,
-                                showDocumentPicker: $showDocumentPicker)
-            AudioPlayerInfoView(audioFilePlayer: audioFilePlayer,
-                                accentColor: accentColor,
-                                tapAction: tapAction)
+        VStack {
+            HStack {
+                playTimeText
+                Spacer(minLength: 16)
+                AudioPlayerControls(audioFilePlayer: audioFilePlayer,
+                                    accentColor: accentColor,
+                                    showDocumentPicker: $showDocumentPicker)
+            }
+            WaveformView(audioFilePlayer: audioFilePlayer, accentColor: accentColor, tapAction: tapAction)
+            documentPickerButton
         }
         .contentShape(Rectangle())
         .onTapGesture {
@@ -40,6 +41,28 @@ struct AudioPlayerView: View {
         .sheet(isPresented: self.$showDocumentPicker) {
             AudioFilePicker(delegate: self)
         }
+    }
+
+    private var documentPickerButton: some View {
+        Button(action: {
+            self.$showDocumentPicker.wrappedValue.toggle()
+        }, label: {
+            if let fileName = audioFilePlayer.fileUrl?.lastPathComponent {
+                Text(fileName)
+            }
+        })
+    }
+
+    private var playTimeText: some View {
+        let playheadTime = $audioFilePlayer.playheadTime.wrappedValue ?? 0
+            let minutes = playheadTime/60
+            let seconds = playheadTime.truncatingRemainder(dividingBy: 60)
+            let playTimeString = String(format: "%2.0f:%2.2f", minutes, seconds)
+
+            return AnyView(Text(playTimeString)
+                .font(.system(.body, design: .monospaced))
+                .fontWeight(.bold)
+                .foregroundColor(.accentColor))
     }
 }
 
