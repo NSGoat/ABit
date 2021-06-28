@@ -6,9 +6,13 @@ protocol AudioFilePickerDelegate {
     func audioFilePicker(_ picker: AudioFilePicker, didPickAudioFileAt url: URL)
 }
 
-struct AudioFilePicker: UIViewControllerRepresentable {
+final class AudioFilePicker: UIViewControllerRepresentable {
 
     var delegate: AudioFilePickerDelegate?
+
+    init(delegate: AudioFilePickerDelegate?) {
+        self.delegate = delegate
+    }
 
     class Coordinator: NSObject, UIDocumentPickerDelegate {
 
@@ -22,24 +26,32 @@ struct AudioFilePicker: UIViewControllerRepresentable {
             guard let url = urls.first else { return }
             parent.delegate?.audioFilePicker(parent, didPickAudioFileAt: url)
         }
+
+        func documentPickerWasCancelled(_ controller: UIDocumentPickerViewController) { }
     }
 
     func makeCoordinator() -> Coordinator {
         return Coordinator(parent: self)
     }
 
-    var viewController: UIDocumentPickerViewController = {
-        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.audio], asCopy: true)
-        documentPicker.shouldShowFileExtensions = true
-        documentPicker.allowsMultipleSelection = false
-        return documentPicker
-    }()
-
     func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
         viewController.delegate = context.coordinator
-
         return viewController
     }
 
+    var viewController: UIDocumentPickerViewController = {
+        let documentPicker = UIDocumentPickerViewController(forOpeningContentTypes: [.audio], asCopy: copyFile)
+        documentPicker.shouldShowFileExtensions = true
+        return documentPicker
+    }()
+
     func updateUIViewController(_ uiViewController: UIDocumentPickerViewController, context: Context) { }
+
+    private static var copyFile: Bool {
+        #if targetEnvironment(macCatalyst)
+        return false
+        #else
+        return true
+        #endif
+    }
 }
