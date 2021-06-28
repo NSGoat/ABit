@@ -53,16 +53,20 @@ struct AudioPlayerView: View {
         })
     }
 
-    private var playTimeText: some View {
-        let playheadTime = $audioFilePlayer.playheadTime.wrappedValue ?? 0
+    private var playTimeText: Text {
+        if [.paused, .playing, .stopped].contains($audioFilePlayer.state.wrappedValue) {
+            let playheadTime = $audioFilePlayer.playheadTime.wrappedValue ?? 0
             let minutes = playheadTime/60
             let seconds = playheadTime.truncatingRemainder(dividingBy: 60)
             let playTimeString = String(format: "%2.0f:%2.2f", minutes, seconds)
 
-            return AnyView(Text(playTimeString)
+            return Text(playTimeString)
                 .font(.system(.body, design: .monospaced))
                 .fontWeight(.bold)
-                .foregroundColor(.accentColor))
+                .foregroundColor(.accentColor)
+        } else {
+            return Text("")
+        }
     }
 }
 

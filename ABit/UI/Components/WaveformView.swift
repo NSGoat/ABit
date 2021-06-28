@@ -20,27 +20,13 @@ struct WaveformView: View {
     }
 
     var body: some View {
-        ZStack {
-            GeometryReader { geometry in
-                if let image = audioFilePlayer.image, audioFilePlayer.state != .awaitingFile {
-                    loopRangeRectangle(geometry: geometry, sliderThumbWidth: sliderThumbWidth, selectedRange: playtimeRange)
-                    waveformImage(uiImage: image, color: highlightPlayer ? .primary : accentColor)
-                        .frame(width: geometry.size.width - sliderThumbWidth * 2)
-                        .padding(.horizontal, sliderThumbWidth)
-
-                    playheadView
-                        .padding(.horizontal, sliderThumbWidth)
-                    loopRangeSlider
-
-                } else if audioFilePlayer.renderingImage {
-                    Rectangle()
-                        .fill(accentColor)
-                        .cornerRadius(4)
-                        .opacity(loadingAnimation ? 0.2 : 0.0)
-                        .animation(Animation.easeInOut(duration: 0.2).repeatForever())
-                } else {
-                    folderImage
-                }
+        GeometryReader { geometry in
+            if audioFilePlayer.renderingImage {
+                loadingView
+            } else if let image = audioFilePlayer.image, audioFilePlayer.state != .awaitingFile {
+                audioView(geometry: geometry, waveformImage: image, waveformColor: highlightPlayer ? .primary : accentColor)
+            } else {
+                folderImage
             }
         }
         .background(accentColor.opacity(0.1))
@@ -51,12 +37,28 @@ struct WaveformView: View {
         }
     }
 
-    private func waveformImage(uiImage: UIImage, color: Color) -> some View {
-        Image(uiImage: uiImage)
-            .resizable()
-            .renderingMode(.template)
-            .foregroundColor(color)
-            .disabled(true)
+    fileprivate func audioView(geometry: GeometryProxy, waveformImage: UIImage, waveformColor: Color) -> some View {
+        ZStack {
+            loopRangeRectangle(geometry: geometry, sliderThumbWidth: sliderThumbWidth, selectedRange: playtimeRange)
+            Image(uiImage: waveformImage)
+                .resizable()
+                .renderingMode(.template)
+                .foregroundColor(waveformColor)
+                .frame(width: geometry.size.width - sliderThumbWidth * 2)
+                .padding(.horizontal, sliderThumbWidth)
+                .disabled(true)
+            playheadView
+                .padding(.horizontal, sliderThumbWidth)
+            loopRangeSlider
+        }
+    }
+
+    private var loadingView: some View {
+        Rectangle()
+            .fill(accentColor)
+            .cornerRadius(4)
+            .opacity(loadingAnimation ? 0.2 : 0.0)
+            .animation(Animation.easeInOut(duration: 0.2).repeatForever())
     }
 
     private var folderImage: some View {
