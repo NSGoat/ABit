@@ -20,6 +20,7 @@ struct AudioPlayerControls: View {
             playPauseButton
             stopButton
             loopButton
+            ejectButton
         }
     }
 
@@ -39,7 +40,7 @@ struct AudioPlayerControls: View {
             }
         }, label: {
             Image(systemName: audioFilePlayer.state == .playing ? "pause" : "play")
-                .font(.system(size: 20, weight: .bold))
+                .font(.system(size: 20, weight: .medium))
         })
     }
 
@@ -48,7 +49,7 @@ struct AudioPlayerControls: View {
             audioFilePlayer.stop()
         }, label: {
             Image(systemName: "stop")
-                .font(.system(size: 20, weight: audioFilePlayer.state == .playing ? .bold : .light))
+                .font(.system(size: 20, weight: audioFilePlayer.state == .playing ? .medium : .light))
         })
     }
 
@@ -57,7 +58,16 @@ struct AudioPlayerControls: View {
             audioFilePlayer.loop.toggle()
         }, label: {
             Image(systemName: "repeat")
-                .font(.system(size: 20, weight: audioFilePlayer.loop ? .bold : .light))
+                .font(.system(size: 20, weight: audioFilePlayer.loop ? .medium : .light))
+        })
+    }
+
+    private var ejectButton: some View {
+        Button(action: {
+            audioFilePlayer.unloadPlayer()
+        }, label: {
+            Image(systemName: "eject")
+                .font(.system(size: 20, weight: .light))
         })
     }
 }

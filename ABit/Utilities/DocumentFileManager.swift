@@ -1,6 +1,6 @@
 import Foundation
 
-protocol DocumentFileManagerDelegate: class {
+protocol DocumentFileManagerDelegate: AnyObject {
     func documentFileManager<T: UrlReadable>(_ documentFileManager: DocumentFileManager<T>, didLoadFileAtUrl url: URL)
     func documentFileManager<T: UrlReadable>(_ documentFileManager: DocumentFileManager<T>, failedToLoadFileAtUrl url: URL)
 }
@@ -52,6 +52,12 @@ class DocumentFileManager<T: UrlReadable>: NSObject {
         return Document(file: file, url: url)
     }
 
+    func deleteCurrentDirectory() {
+        if let url = directoryUrl {
+            try? deleteDirectory(url: url)
+        }
+    }
+
     /// Mark: - Helpers
 
     private func storeFileInDocuments(sourceUrl: URL) throws -> URL {
@@ -83,12 +89,6 @@ class DocumentFileManager<T: UrlReadable>: NSObject {
             throw DocumentFileManagerError.bookmarkedUrlStale
         } else {
             return url
-        }
-    }
-
-    func deleteCurrentDirectory() {
-        if let url = directoryUrl {
-            try? deleteDirectory(url: url)
         }
     }
 
