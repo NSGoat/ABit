@@ -100,7 +100,7 @@ extension AudioFilePlayer {
 
         do {
             let document = try audioPlayerConfigurationManager.storeFileAsDocument(sourceUrl: url,
-                                                                            bookmarkedWithKey: bookmarkKey)
+                                                                                   bookmarkedWithKey: bookmarkKey)
             audioFileDuration = document.file.duration
             fileUrl = document.url
 

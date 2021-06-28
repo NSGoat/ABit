@@ -43,7 +43,7 @@ struct AudioPlayerView: View {
         }
     }
 
-    private var documentPickerButton: some View {
+    private var documentPickerButton: Button<Text?> {
         Button(action: {
             self.$showDocumentPicker.wrappedValue.toggle()
         }, label: {

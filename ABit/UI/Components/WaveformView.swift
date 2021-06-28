@@ -24,7 +24,7 @@ struct WaveformView: View {
             GeometryReader { geometry in
                 if let image = audioFilePlayer.image, audioFilePlayer.state != .awaitingFile {
                     loopRangeRectangle(geometry: geometry, sliderThumbWidth: sliderThumbWidth, selectedRange: playtimeRange)
-                    waveformImage(uiImage: image, color: highlightPlayer ? .black : accentColor)
+                    waveformImage(uiImage: image, color: highlightPlayer ? .primary : accentColor)
                         .frame(width: geometry.size.width - sliderThumbWidth * 2)
                         .padding(.horizontal, sliderThumbWidth)
 

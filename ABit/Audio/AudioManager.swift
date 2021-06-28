@@ -39,7 +39,7 @@ final class AudioManager: ObservableObject {
 
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
-            let mixer = audioEngine.mainMixerNode
+            _ = audioEngine.mainMixerNode
 
             try audioEngine.start()
             audioEngine.prepare()
