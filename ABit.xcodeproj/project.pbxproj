@@ -35,6 +35,7 @@
 		64AB2DBA2573184E00C59E6F /* AVAudioFile+TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64F3DD122544BF0600DBC056 /* AVAudioFile+TimeInterval.swift */; };
 		64AB978F2517EA240011D98B /* CaseIterable+Iteration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AB978E2517EA240011D98B /* CaseIterable+Iteration.swift */; };
 		64AB97D3251A934F0011D98B /* UnitInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AB97D2251A934F0011D98B /* UnitInterval.swift */; };
+		64B3EAE9268F875400F9EB69 /* RedundantVolumeIncrementReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B3EAE8268F875400F9EB69 /* RedundantVolumeIncrementReporter.swift */; };
 		64B69427257D3AD70012DEA5 /* AudioPlayerConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B69426257D3AD70012DEA5 /* AudioPlayerConfigurationManager.swift */; };
 		64BA8F73257414300091D525 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645D664C2537655F00BD6DDA /* Logger.swift */; };
 		64C53E36268F6A1300853848 /* AVAudioPlayerNode+PlaySegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C53E35268F6A1300853848 /* AVAudioPlayerNode+PlaySegment.swift */; };
@@ -104,6 +105,7 @@
 		64AB2DA3257302D100C59E6F /* 1, 2, 3, 4.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "1, 2, 3, 4.mp3"; sourceTree = "<group>"; };
 		64AB978E2517EA240011D98B /* CaseIterable+Iteration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CaseIterable+Iteration.swift"; sourceTree = "<group>"; };
 		64AB97D2251A934F0011D98B /* UnitInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitInterval.swift; sourceTree = "<group>"; };
+		64B3EAE8268F875400F9EB69 /* RedundantVolumeIncrementReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedundantVolumeIncrementReporter.swift; sourceTree = "<group>"; };
 		64B69426257D3AD70012DEA5 /* AudioPlayerConfigurationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerConfigurationManager.swift; sourceTree = "<group>"; };
 		64C53E35268F6A1300853848 /* AVAudioPlayerNode+PlaySegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVAudioPlayerNode+PlaySegment.swift"; sourceTree = "<group>"; };
 		64CD0DB12516233A00363F75 /* ABit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ABit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -205,6 +207,7 @@
 				64B69439257D42780012DEA5 /* Protocols */,
 				02484BA5257ACE2300AA8719 /* DocumentFileManager.swift */,
 				0211299E257AAF9100CCA824 /* SystemVolumeChangeObserver.swift */,
+				64B3EAE8268F875400F9EB69 /* RedundantVolumeIncrementReporter.swift */,
 				645D664C2537655F00BD6DDA /* Logger.swift */,
 			);
 			path = Utilities;
@@ -545,6 +548,7 @@
 				64EA274A2576F72F0034B373 /* WaveformImageView.swift in Sources */,
 				64D8DF9925166AE8000D0653 /* AudioManager.swift in Sources */,
 				0211299F257AAF9100CCA824 /* SystemVolumeChangeObserver.swift in Sources */,
+				64B3EAE9268F875400F9EB69 /* RedundantVolumeIncrementReporter.swift in Sources */,
 				64CD0DB72516233A00363F75 /* ContentView.swift in Sources */,
 				64BA8F73257414300091D525 /* Logger.swift in Sources */,
 				6434F5AE268C5B6900A9860E /* AVAudioPlayerNode+StartEngine.swift in Sources */,

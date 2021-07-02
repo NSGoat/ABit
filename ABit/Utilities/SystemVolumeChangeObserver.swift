@@ -7,6 +7,10 @@ class SystemVolumeChangeObserver {
 
     static var shared = SystemVolumeChangeObserver()
 
+    static var maxVolume = Float.one
+
+    lazy var lastAudioLevel = AVAudioSession.sharedInstance().outputVolume
+
     private var mpVolumeView = MPVolumeView(frame: CGRect.zero)
 
     private let name = NSNotification.Name(rawValue: "AVSystemController_SystemVolumeDidChangeNotification")
@@ -19,6 +23,7 @@ class SystemVolumeChangeObserver {
         NotificationCenter.default.addObserver(forName: name, object: nil, queue: nil) { [weak self] notification in
             if let volume = notification.userInfo?["AVSystemController_AudioVolumeNotificationParameter"] as? Float {
                 self?.volumeChangeHandler?(volume)
+                self?.lastAudioLevel = volume
                 Logger.log(.verbose, "Volume level change observed \(volume)")
             }
         }

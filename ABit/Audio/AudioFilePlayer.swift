@@ -236,6 +236,4 @@ extension AudioFilePlayer {
 
         audioPlayerNode.playSegment(fromBuffer: buffer, segmentRange: positionRange, looping: loop)
     }
-        audioPlayerNode.playSegment(fromBuffer: buffer, segmentRange: playPositionRange, looping: loop)
-    }
 }

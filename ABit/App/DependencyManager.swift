@@ -4,6 +4,7 @@ import Foundation
 extension AudioGraphicsRenderer: Injectable { }
 extension AudioManager: Injectable { }
 extension Logger: Injectable { }
+extension RedundantVolumeIncrementReporter: Injectable { }
 
 class DependencyManager {
 
@@ -16,11 +17,13 @@ class DependencyManager {
     lazy var logger = Logger.shared
     lazy var audioFileGraphicsRenderer = AudioGraphicsRenderer.shared
     lazy var audioManager = AudioManager(audioPlayerConfigurationManager: audioPlayerConfigurationManager)
+    lazy var redundantVolumeIncrementReporter = RedundantVolumeIncrementReporter()
 
     init() {
         let resolver = Resolver.shared
         resolver.add(logger)
         resolver.add(audioFileGraphicsRenderer)
         resolver.add(audioManager)
+        resolver.add(redundantVolumeIncrementReporter)
     }
 }
