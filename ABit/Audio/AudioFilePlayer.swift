@@ -56,7 +56,7 @@ final class AudioFilePlayer: ObservableObject {
         }
     }
 
-    var fileUrl: URL?
+    var bookmarkUrl: URL?
     var bookmarkKey: String
     lazy var audioPlayerNode = AVAudioPlayerNode()
     private lazy var playheadUpdater = AudioFilePlayerPlayheadTracker(audioFilePlayer: self)
@@ -79,15 +79,15 @@ final class AudioFilePlayer: ObservableObject {
 extension AudioFilePlayer {
 
     func configure(_ playerConfiguration: AudioPlayerConfiguration) {
-        loadAudioFile(url: playerConfiguration.fileUrl)
+        loadAudioFile(url: playerConfiguration.bookmarkUrl)
         playPositionRange = playerConfiguration.triggers.first?.positionRange ?? 0...1
         loop = playerConfiguration.triggers.first?.loop ?? true
     }
 
     func saveConfiguration() {
-        if let fileUrl = fileUrl {
+        if let url = bookmarkUrl {
             let trigger = AudioPlayerConfiguration.Trigger(mode: .cue, loop: loop, positionRange: playPositionRange)
-            let configuration = AudioPlayerConfiguration(fileUrl: fileUrl, triggers: [trigger])
+            let configuration = AudioPlayerConfiguration(bookmarkUrl: url, triggers: [trigger])
             audioPlayerConfigurationManager.savePlayerConfiguration(configuration, userDefaultsKey: bookmarkKey)
         } else {
             audioPlayerConfigurationManager.clearPlayerConfiguration(forUserDefaultsKey: bookmarkKey)
@@ -103,12 +103,12 @@ extension AudioFilePlayer {
             let document = try audioPlayerConfigurationManager.storeFileAsDocument(sourceUrl: url,
                                                                                    bookmarkedWithKey: bookmarkKey)
             audioFileDuration = document.file.duration
-            fileUrl = document.url
+            bookmarkUrl = document.url
 
-            _ = fileUrl?.startAccessingSecurityScopedResource()
+            _ = bookmarkUrl?.startAccessingSecurityScopedResource()
 
             let width = UIScreen.main.bounds.size.width
-            updateWaveformImage(url: document.url, size: CGSize(width: width, height: width/3))
+            updateWaveformImage(url: url, size: CGSize(width: width, height: width/3))
         } catch {
             logger.log(.error, "Failed to load file \(url.absoluteString)", error: error)
             unloadPlayer()
@@ -117,8 +117,8 @@ extension AudioFilePlayer {
 
     func unloadPlayer() {
         stop()
-        fileUrl?.stopAccessingSecurityScopedResource()
-        fileUrl = nil
+        bookmarkUrl?.stopAccessingSecurityScopedResource()
+        bookmarkUrl = nil
         audioFileDuration = nil
         lastBufferCache = nil
         image = nil
@@ -128,11 +128,11 @@ extension AudioFilePlayer {
     }
 
     func play() {
-        guard let fileUrl = fileUrl else { return }
+        guard let bookmarkUrl = bookmarkUrl else { return }
         guard playPositionRange.size > 0 else { return }
 
         do {
-            let file = try AVAudioFile(forReading: fileUrl)
+            let file = try AVAudioFile(forReading: bookmarkUrl)
             guard file.length > 0, file.fileFormat.channelCount > 0 else { return }
             // TODO: Investigate why we have to load load the audio file from the url here
             // guard let file = audioFile else { return }
@@ -153,14 +153,14 @@ extension AudioFilePlayer {
             }
 
         } catch {
-            logger.log(.error, "Failed to play file \(fileUrl.absoluteString)", error: error)
+            logger.log(.error, "Failed to play file \(bookmarkUrl.absoluteString)", error: error)
         }
     }
 
     func stop() {
         audioPlayerNode.stop()
         saveConfiguration()
-        fileUrl?.stopAccessingSecurityScopedResource()
+        bookmarkUrl?.stopAccessingSecurityScopedResource()
         stopPlayheadUpdates()
         playheadTime = nil
         playheadPosition = nil

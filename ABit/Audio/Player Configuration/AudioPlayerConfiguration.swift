@@ -19,6 +19,6 @@ struct AudioPlayerConfiguration: Codable {
         }
     }
 
-    var fileUrl: URL
+    var bookmarkUrl: URL
     var triggers: [Trigger]
 }
