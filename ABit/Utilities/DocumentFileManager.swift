@@ -28,13 +28,6 @@ class DocumentFileManager<T: UrlReadable>: NSObject {
 
     func storeFileAsDocument(sourceUrl: URL, bookmarkedWithKey userDefaultsKey: String?) throws -> Document {
 
-        // If the source url is a PlayerConfigurationManager bookmark url, return the file and url as they are
-        if sourceUrl.pathComponents.containsAll("Documents", "PlayerConfigurationManager") {
-
-            // For some reason the file is not read correctly here!!!!
-            let file = try T(forReading: sourceUrl)
-            return Document(file: file, url: sourceUrl)
-        }
 
         let url = try storeFileInDocuments(sourceUrl: sourceUrl)
         let file = try T(forReading: url)
