@@ -26,7 +26,9 @@ class AppController: NSObject {
     }
 
     private func handleVolumeChange(_ volume: Float) {
-        if volume == self.maxVolume, self.lastAudioLevel == self.maxVolume, self.audioManager.allPlayersPlaying {
+        if volume == self.maxVolume,
+           self.lastAudioLevel == self.maxVolume,
+           self.audioManager.allPlayersPlaying {
             self.audioManager.selectedChannel?.selectNext()
             Logger.log(.info, changeToChannelMessage(self.audioManager.selectedChannel))
         }
