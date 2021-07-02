@@ -54,7 +54,7 @@ struct AudioPlayerView: View {
     }
 
     private var playTimeText: Text {
-        if [.paused, .playing, .stopped].contains($audioFilePlayer.state.wrappedValue) {
+        if [.paused, .playing, .stopped].contains(audioFilePlayer.state) {
             let playheadTime = $audioFilePlayer.playheadTime.wrappedValue ?? 0
             let minutes = playheadTime/60
             let seconds = playheadTime.truncatingRemainder(dividingBy: 60)
