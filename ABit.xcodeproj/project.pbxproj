@@ -36,6 +36,7 @@
 		64AB978F2517EA240011D98B /* CaseIterable+Iteration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AB978E2517EA240011D98B /* CaseIterable+Iteration.swift */; };
 		64AB97D3251A934F0011D98B /* UnitInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64AB97D2251A934F0011D98B /* UnitInterval.swift */; };
 		64B3EAE9268F875400F9EB69 /* RedundantVolumeIncrementReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B3EAE8268F875400F9EB69 /* RedundantVolumeIncrementReporter.swift */; };
+		64B3EAEB268FB8A400F9EB69 /* LogoToggleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B3EAEA268FB8A400F9EB69 /* LogoToggleButton.swift */; };
 		64B69427257D3AD70012DEA5 /* AudioPlayerConfigurationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B69426257D3AD70012DEA5 /* AudioPlayerConfigurationManager.swift */; };
 		64BA8F73257414300091D525 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 645D664C2537655F00BD6DDA /* Logger.swift */; };
 		64C53E36268F6A1300853848 /* AVAudioPlayerNode+PlaySegment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64C53E35268F6A1300853848 /* AVAudioPlayerNode+PlaySegment.swift */; };
@@ -106,6 +107,7 @@
 		64AB978E2517EA240011D98B /* CaseIterable+Iteration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CaseIterable+Iteration.swift"; sourceTree = "<group>"; };
 		64AB97D2251A934F0011D98B /* UnitInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitInterval.swift; sourceTree = "<group>"; };
 		64B3EAE8268F875400F9EB69 /* RedundantVolumeIncrementReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RedundantVolumeIncrementReporter.swift; sourceTree = "<group>"; };
+		64B3EAEA268FB8A400F9EB69 /* LogoToggleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoToggleButton.swift; sourceTree = "<group>"; };
 		64B69426257D3AD70012DEA5 /* AudioPlayerConfigurationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerConfigurationManager.swift; sourceTree = "<group>"; };
 		64C53E35268F6A1300853848 /* AVAudioPlayerNode+PlaySegment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AVAudioPlayerNode+PlaySegment.swift"; sourceTree = "<group>"; };
 		64CD0DB12516233A00363F75 /* ABit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ABit.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -241,6 +243,7 @@
 				6434F54E2688C6B600A9860E /* AudioPlayerControls.swift */,
 				640AD4312516295100415B7E /* AudioFilePicker.swift */,
 				6434F54C2688C44500A9860E /* WaveformView.swift */,
+				64B3EAEA268FB8A400F9EB69 /* LogoToggleButton.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -556,6 +559,7 @@
 				6434F547268875E200A9860E /* FloatingPoint+UnitIntervalClamped.swift in Sources */,
 				642723092516B6310052D5E6 /* AppDelegate.swift in Sources */,
 				640AD4302516289C00415B7E /* AudioFilePlayer.swift in Sources */,
+				64B3EAEB268FB8A400F9EB69 /* LogoToggleButton.swift in Sources */,
 				64EA276D257834390034B373 /* AudioGraphicsRenderer.swift in Sources */,
 				64EA274B2576F72F0034B373 /* WaveformAnalyzer.swift in Sources */,
 				64AB978F2517EA240011D98B /* CaseIterable+Iteration.swift in Sources */,
