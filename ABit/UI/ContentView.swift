@@ -12,6 +12,7 @@ struct ContentView: View {
             audioPlayerView(channel: .a)
             audioPlayerView(channel: .b)
             AudioMasterControls(audioManager: audioManager)
+            Spacer()
         }
         .padding(.bottom, 16)
     }

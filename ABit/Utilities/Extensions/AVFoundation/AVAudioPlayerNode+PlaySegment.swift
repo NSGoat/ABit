@@ -7,7 +7,6 @@ extension AVAudioPlayerNode {
                      segmentRange: ClosedRange<Double>,
                      looping: Bool) -> (bufferSegment: AVAudioPCMBuffer, timeRange: ClosedRange<TimeInterval>)? {
 
-
         let start = AVAudioFramePosition(segmentRange.lowerBound * Double(buffer.frameLength))
         let end = AVAudioFramePosition(segmentRange.upperBound * Double(buffer.frameLength))
         if let bufferSegment = buffer.segment(from: start, to: end) {
