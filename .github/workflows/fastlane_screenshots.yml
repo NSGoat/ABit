@@ -22,4 +22,5 @@ jobs:
     - name: Run Screenshot Capture 
       run: |
         bundle install
+        brew install fastlane
         bundle exec fastlane app_store_screenshots
