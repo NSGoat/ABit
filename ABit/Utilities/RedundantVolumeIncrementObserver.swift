@@ -1,6 +1,8 @@
 import Foundation
 
-class RedundantVolumeIncrementReporter {
+//TODO: Convert to Combine Publisher
+
+class RedundantVolumeIncrementObserver {
 
     lazy var volumeObserver =  SystemVolumeChangeObserver()
 
