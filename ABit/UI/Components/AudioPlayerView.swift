@@ -43,12 +43,13 @@ struct AudioPlayerView: View {
         }
     }
 
-    private var documentPickerButton: Button<Text?> {
+    private var documentPickerButton: some View {
         Button(action: {
             self.$showDocumentPicker.wrappedValue.toggle()
         }, label: {
-            if let fileName = audioFilePlayer.fileUrl?.lastPathComponent {
+            if let fileName = audioFilePlayer.bookmarkUrl?.lastPathComponent {
                 Text(fileName)
+                    .allowsTightening(true)
             }
         })
     }

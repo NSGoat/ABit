@@ -13,6 +13,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         dependancyManager.logger.showSourceLocation = false
 
+        #if targetEnvironment(simulator)
+        let aUrl = Bundle.main.path(forResource: "1, 2, 3, 4", ofType: "mp3")!
+        let bUrl = Bundle.main.path(forResource: "Winstons - Amen, Brother", ofType: ".aif")!
+        dependancyManager.audioManager.audioFilePlayer(channel: .a).loadAudioFile(url: URL(fileURLWithPath: aUrl))
+        dependancyManager.audioManager.audioFilePlayer(channel: .b).loadAudioFile(url: URL(fileURLWithPath: bUrl))
+        #endif
+
         return true
     }
 
