@@ -3,8 +3,6 @@ import Foundation
 
 class AppController: NSObject {
 
-    static var shared = AppController()
-
     @Inject var audioManager: AudioManager
     @Inject var logger: Logger
     @Inject var redundantVolumeIncrementReporter: RedundantVolumeIncrementReporter

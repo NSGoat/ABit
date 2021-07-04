@@ -9,8 +9,6 @@ public class AudioGraphicsRenderer {
 
     @Inject var logger: Logger
 
-    static let shared = AudioGraphicsRenderer()
-
     public func renderWaveformImage(audioAssetURL: URL,
                                     configuration: WaveformConfiguration,
                                     qos: DispatchQoS.QoSClass = .userInitiated,

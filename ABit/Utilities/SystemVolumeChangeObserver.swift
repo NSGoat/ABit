@@ -5,7 +5,7 @@ typealias VolumeChangeHandler = (_ volume: Float) -> Void
 
 class SystemVolumeChangeObserver {
 
-    static var shared = SystemVolumeChangeObserver()
+    @Inject var logger: Logger
 
     static var maxVolume = Float.one
 
@@ -20,11 +20,11 @@ class SystemVolumeChangeObserver {
     func startObserving(handler: VolumeChangeHandler?) {
         self.volumeChangeHandler = handler
 
-        NotificationCenter.default.addObserver(forName: name, object: nil, queue: nil) { [weak self] notification in
+        _ = NotificationCenter.default.addObserver(forName: name, object: nil, queue: nil) { [weak self] notification in
             if let volume = notification.userInfo?["AVSystemController_AudioVolumeNotificationParameter"] as? Float {
                 self?.volumeChangeHandler?(volume)
                 self?.lastAudioLevel = volume
-                Logger.log(.verbose, "Volume level change observed \(volume)")
+                self?.logger.log(.verbose, "Volume level change observed \(volume)")
             }
         }
     }

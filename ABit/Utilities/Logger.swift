@@ -2,8 +2,6 @@ import Foundation
 
 class Logger {
 
-    static var shared = Logger()
-
     var showTimestamp = true
     var showSourceLocation = true
     var level = LogLevel.info
@@ -17,15 +15,6 @@ class Logger {
         static func < (lhs: Logger.LogLevel, rhs: Logger.LogLevel) -> Bool {
             lhs.rawValue < rhs.rawValue
         }
-    }
-
-    static func log(_ logLevel: LogLevel = .info,
-                    _ message: String,
-                    error: Error? = nil,
-                    file: String = #file,
-                    function: String = #function,
-                    line: Int = #line) {
-        Logger.shared.log(logLevel, message, error: error, file: file, function: function, line: line)
     }
 
     func log(_ logLevel: LogLevel = .info,

@@ -18,6 +18,8 @@ final class AudioManager: ObservableObject {
 
     private let audioEngine = AVAudioEngine()
 
+    @Inject var logger: Logger
+
     var audioFilePlayers = [AudioChannel: AudioFilePlayer]()
 
     @Published var anyPlayerPlaying: Bool = false
@@ -51,7 +53,7 @@ final class AudioManager: ObservableObject {
             setupAnyPlayerPlayingPublisher(playerA: playerA, playerB: playerB)
 
         } catch {
-            Logger.log(.error, "Failed to initialise AudioManager", error: error)
+            logger.log(.error, "Failed to initialise AudioManager", error: error)
         }
     }
 
