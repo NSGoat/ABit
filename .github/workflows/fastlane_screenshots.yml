@@ -13,12 +13,16 @@ jobs:
       with:
         xcode-version: latest-stable
     
-    - name: Setup ruby
+    - name: Setup Ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 2.7.2
         bundler-cache: true
+
+    - name: Install Gems
+      run: |
+        bundle install        
             
-    - name: Run tests 
+    - name: Run Screenshot Capture 
       run: |
         bundle exec fastlane app_store_screenshots
