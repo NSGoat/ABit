@@ -1,0 +1,11 @@
+lane :app_store_screenshots do
+    snapshot
+end
+
+after_all do |lane|
+    print("Successfully ran (#{lane})!")
+end
+
+error do |lane, exception|
+    print("Failled to complete (#{lane}) with exception (#{exception})!")
+end

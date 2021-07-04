@@ -1,10 +1,3 @@
-//
-//  ABitUITests.swift
-//  ABitUITests
-//
-//  Created by Ed Rutter on 19/09/2020.
-//
-
 import XCTest
 
 class ABitUITests: XCTestCase {

@@ -16,6 +16,11 @@
 		64194A3526375A7500F05678 /* 1, 2, 3, 4.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 64AB2DA3257302D100C59E6F /* 1, 2, 3, 4.mp3 */; };
 		642723092516B6310052D5E6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 642723082516B6310052D5E6 /* AppDelegate.swift */; };
 		6427238B2516BCE60052D5E6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6427238A2516BCE60052D5E6 /* SceneDelegate.swift */; };
+		64311CE9269224480047E981 /* ABitScreenshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64311CE8269224480047E981 /* ABitScreenshots.swift */; };
+		64311CF0269226880047E981 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64311CDF269223890047E981 /* SnapshotHelper.swift */; };
+		64311CFC2692323F0047E981 /* ABitScreenshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64311CE8269224480047E981 /* ABitScreenshots.swift */; };
+		64311D03269238040047E981 /* .fastlane in Resources */ = {isa = PBXBuildFile; fileRef = 64311D02269238040047E981 /* .fastlane */; };
+		64311D0826923D8C0047E981 /* Screenshots in Resources */ = {isa = PBXBuildFile; fileRef = 64311D0726923D8C0047E981 /* Screenshots */; };
 		6434F5442688608E00A9860E /* AudioPlayerConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6434F5432688608E00A9860E /* AudioPlayerConfiguration.swift */; };
 		6434F547268875E200A9860E /* FloatingPoint+UnitIntervalClamped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6434F546268875E200A9860E /* FloatingPoint+UnitIntervalClamped.swift */; };
 		6434F5492688761000A9860E /* Comparable+Clamped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6434F5482688761000A9860E /* Comparable+Clamped.swift */; };
@@ -62,6 +67,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		64311CEB269224480047E981 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 64CD0DA92516233A00363F75 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 64CD0DB02516233A00363F75;
+			remoteInfo = ABit;
+		};
 		64CD0DC32516233C00363F75 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 64CD0DA92516233A00363F75 /* Project object */;
@@ -87,6 +99,16 @@
 		641555FF2573D92800F7048F /* AudioFilePlayheadTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFilePlayheadTracker.swift; sourceTree = "<group>"; };
 		642723082516B6310052D5E6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6427238A2516BCE60052D5E6 /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		64311CDF269223890047E981 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = ABitUITests/Utilities/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
+		64311CE6269224480047E981 /* ABitScreenshots.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABitScreenshots.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		64311CE8269224480047E981 /* ABitScreenshots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABitScreenshots.swift; sourceTree = "<group>"; };
+		64311CEA269224480047E981 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		64311CF3269230760047E981 /* Gemfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Gemfile; sourceTree = SOURCE_ROOT; };
+		64311CF4269230760047E981 /* Gemfile.lock */ = {isa = PBXFileReference; lastKnownFileType = file; path = Gemfile.lock; sourceTree = SOURCE_ROOT; };
+		64311D02269238040047E981 /* .fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; path = .fastlane; sourceTree = "<group>"; };
+		64311D04269238120047E981 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		64311D062692381B0047E981 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		64311D0726923D8C0047E981 /* Screenshots */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Screenshots; path = Automation/Screenshots; sourceTree = "<group>"; };
 		6434F5432688608E00A9860E /* AudioPlayerConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlayerConfiguration.swift; sourceTree = "<group>"; };
 		6434F546268875E200A9860E /* FloatingPoint+UnitIntervalClamped.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FloatingPoint+UnitIntervalClamped.swift"; sourceTree = "<group>"; };
 		6434F5482688761000A9860E /* Comparable+Clamped.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comparable+Clamped.swift"; sourceTree = "<group>"; };
@@ -125,7 +147,6 @@
 		64D8DF9825166AE8000D0653 /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		64D8DF9A25166F60000D0653 /* AudioPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioPlayerView.swift; sourceTree = "<group>"; };
 		64D8DF9C25169A17000D0653 /* ABit.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ABit.entitlements; sourceTree = "<group>"; };
-		64D8DFA42516A280000D0653 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		64EA27402576F72F0034B373 /* ColorExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorExtensions.swift; sourceTree = "<group>"; };
 		64EA27412576F72F0034B373 /* AudioGraphicsRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioGraphicsRenderer.swift; sourceTree = "<group>"; };
 		64EA27422576F72F0034B373 /* TempiFFT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempiFFT.swift; sourceTree = "<group>"; };
@@ -140,6 +161,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		64311CE3269224480047E981 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		64CD0DAE2516233A00363F75 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -165,6 +193,36 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		64311CE1269223960047E981 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				64311CDF269223890047E981 /* SnapshotHelper.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		64311CE7269224480047E981 /* ABitScreenshots */ = {
+			isa = PBXGroup;
+			children = (
+				64311CE8269224480047E981 /* ABitScreenshots.swift */,
+				64311CEA269224480047E981 /* Info.plist */,
+			);
+			path = ABitScreenshots;
+			sourceTree = "<group>";
+		};
+		64311D01269237A70047E981 /* Automation */ = {
+			isa = PBXGroup;
+			children = (
+				64311D0726923D8C0047E981 /* Screenshots */,
+				64311D02269238040047E981 /* .fastlane */,
+				64311CF3269230760047E981 /* Gemfile */,
+				64311CF4269230760047E981 /* Gemfile.lock */,
+				64311D062692381B0047E981 /* .gitignore */,
+				64311D04269238120047E981 /* .swiftlint.yml */,
+			);
+			name = Automation;
+			sourceTree = "<group>";
+		};
 		6434F5422688608E00A9860E /* Player Configuration */ = {
 			isa = PBXGroup;
 			children = (
@@ -259,10 +317,11 @@
 		64CD0DA82516233A00363F75 = {
 			isa = PBXGroup;
 			children = (
-				64D8DFA42516A280000D0653 /* .swiftlint.yml */,
+				64311D01269237A70047E981 /* Automation */,
 				64CD0DB32516233A00363F75 /* ABit */,
 				64CD0DC52516233C00363F75 /* ABitTests */,
 				64CD0DD02516233C00363F75 /* ABitUITests */,
+				64311CE7269224480047E981 /* ABitScreenshots */,
 				64CD0DB22516233A00363F75 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -273,6 +332,7 @@
 				64CD0DB12516233A00363F75 /* ABit.app */,
 				64CD0DC22516233C00363F75 /* ABitTests.xctest */,
 				64CD0DCD2516233C00363F75 /* ABitUITests.xctest */,
+				64311CE6269224480047E981 /* ABitScreenshots.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -309,6 +369,7 @@
 		64CD0DD02516233C00363F75 /* ABitUITests */ = {
 			isa = PBXGroup;
 			children = (
+				64311CE1269223960047E981 /* Utilities */,
 				64CD0DD12516233C00363F75 /* ABitUITests.swift */,
 				64CD0DD32516233C00363F75 /* Info.plist */,
 			);
@@ -376,6 +437,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		64311CE5269224480047E981 /* ABitScreenshots */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 64311CED269224480047E981 /* Build configuration list for PBXNativeTarget "ABitScreenshots" */;
+			buildPhases = (
+				64311CE2269224480047E981 /* Sources */,
+				64311CE3269224480047E981 /* Frameworks */,
+				64311CE4269224480047E981 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				64311CEC269224480047E981 /* PBXTargetDependency */,
+			);
+			name = ABitScreenshots;
+			productName = ABitScreenshots;
+			productReference = 64311CE6269224480047E981 /* ABitScreenshots.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		64CD0DB02516233A00363F75 /* ABit */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 64CD0DD62516233C00363F75 /* Build configuration list for PBXNativeTarget "ABit" */;
@@ -439,9 +518,13 @@
 		64CD0DA92516233A00363F75 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1200;
+				LastSwiftUpdateCheck = 1250;
 				LastUpgradeCheck = 1200;
 				TargetAttributes = {
+					64311CE5269224480047E981 = {
+						CreatedOnToolsVersion = 12.5.1;
+						TestTargetID = 64CD0DB02516233A00363F75;
+					};
 					64CD0DB02516233A00363F75 = {
 						CreatedOnToolsVersion = 12.0;
 					};
@@ -474,11 +557,19 @@
 				64CD0DB02516233A00363F75 /* ABit */,
 				64CD0DC12516233C00363F75 /* ABitTests */,
 				64CD0DCC2516233C00363F75 /* ABitUITests */,
+				64311CE5269224480047E981 /* ABitScreenshots */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		64311CE4269224480047E981 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		64CD0DAF2516233A00363F75 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -502,6 +593,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				64311D0826923D8C0047E981 /* Screenshots in Resources */,
+				64311D03269238040047E981 /* .fastlane in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -529,6 +622,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		64311CE2269224480047E981 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				64311CE9269224480047E981 /* ABitScreenshots.swift in Sources */,
+				64311CF0269226880047E981 /* SnapshotHelper.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		64CD0DAD2516233A00363F75 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -593,12 +695,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				64CD0DD22516233C00363F75 /* ABitUITests.swift in Sources */,
+				64311CFC2692323F0047E981 /* ABitScreenshots.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		64311CEC269224480047E981 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 64CD0DB02516233A00363F75 /* ABit */;
+			targetProxy = 64311CEB269224480047E981 /* PBXContainerItemProxy */;
+		};
 		64CD0DC42516233C00363F75 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 64CD0DB02516233A00363F75 /* ABit */;
@@ -612,6 +720,46 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		64311CEE269224480047E981 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = X8G7MMTMU8;
+				INFOPLIST_FILE = ABitScreenshots/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.RutterStudios.ABitScreenshots;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ABit;
+			};
+			name = Debug;
+		};
+		64311CEF269224480047E981 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = X8G7MMTMU8;
+				INFOPLIST_FILE = ABitScreenshots/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.RutterStudios.ABitScreenshots;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ABit;
+			};
+			name = Release;
+		};
 		64CD0DD42516233C00363F75 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -867,6 +1015,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		64311CED269224480047E981 /* Build configuration list for PBXNativeTarget "ABitScreenshots" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				64311CEE269224480047E981 /* Debug */,
+				64311CEF269224480047E981 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		64CD0DAC2516233A00363F75 /* Build configuration list for PBXProject "ABit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
