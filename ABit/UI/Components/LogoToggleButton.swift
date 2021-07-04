@@ -15,11 +15,11 @@ struct LogoToggleButton: View {
                 Semicircle(selected: !audioManager.primarySelected, color: AudioChannel.b.color, rotationAngle: 315)
                     .zIndex(audioManager.primarySelected ? Z.bottom : Z.middle)
             }
+            .animation(.easeInOut(duration: 0.1))
             .onTapGesture {
                 audioManager.selectedChannel?.selectNext()
             }
         }
-        .animation(.default)
     }
 
     // MARK: Constants
