@@ -26,10 +26,13 @@ final class AudioManager: ObservableObject {
 
     var allPlayersPlaying: Bool { audioFilePlayers.values.allSatisfy { $0.state == .playing } }
 
+    @Published var primarySelected: Bool = false
+
     @Published var selectedChannel: AudioChannel? {
         didSet {
             if let selectedChannel = selectedChannel {
                 solo(channel: selectedChannel)
+                primarySelected = selectedChannel == .a
             } else {
                 muteAll()
             }
