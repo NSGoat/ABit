@@ -20,7 +20,7 @@ class SystemVolumeChangeObserver {
     func startObserving(handler: VolumeChangeHandler?) {
         self.volumeChangeHandler = handler
 
-        NotificationCenter.default.addObserver(forName: name, object: nil, queue: nil) { [weak self] notification in
+        _ = NotificationCenter.default.addObserver(forName: name, object: nil, queue: nil) { [weak self] notification in
             if let volume = notification.userInfo?["AVSystemController_AudioVolumeNotificationParameter"] as? Float {
                 self?.volumeChangeHandler?(volume)
                 self?.lastAudioLevel = volume

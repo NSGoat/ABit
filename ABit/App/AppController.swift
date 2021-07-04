@@ -7,18 +7,20 @@ class AppController: NSObject {
 
     @Inject var audioManager: AudioManager
     @Inject var logger: Logger
-    @Inject var redundantVolumeIncrementReporter: RedundantVolumeIncrementReporter
+    @Inject var redundantVolumeIncrementObserver: RedundantVolumeIncrementObserver
 
     func toggleChannelOnRedundantVolumeIncrement(_ enable: Bool) {
         if enable {
             redundantVolumeIncrementReporter.startObservingRedundantVolumeIncrements {
-                self.audioManager.selectedChannel?.selectNext()
+                if self.audioManager.allPlayersPlaying {
+                    self.audioManager.selectedChannel?.selectNext()
 
-                let selectedChannel = String(describing: self.audioManager.selectedChannel?.rawValue)
-                self.logger.log(.info, "Redundant volume increment switched to channel: \(selectedChannel))")
+                    let selectedChannel = String(describing: self.audioManager.selectedChannel?.rawValue)
+                    self.logger.log(.info, "Redundant volume increment switched to channel: \(selectedChannel))")
+                }
             }
         } else {
-            redundantVolumeIncrementReporter.stopObservingRedundantVolumeIncrements()
+            redundantVolumeIncrementObserver.stopObservingRedundantVolumeIncrements()
         }
     }
 }
