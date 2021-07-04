@@ -24,9 +24,9 @@ struct WaveformView: View {
             if audioFilePlayer.renderingImage {
                 loadingView
             } else if let image = audioFilePlayer.image, audioFilePlayer.state != .awaitingFile {
-                audioView(geometry: geometry,
-                          waveformImage: image,
-                          waveformColor: highlightPlayer ? .primary : accentColor)
+                let color = highlightPlayer ? .primary : accentColor
+                audioView(geometry: geometry, waveformImage: image, waveformColor: color)
+                    .animation(.easeInOut(duration: 0.1))
             } else {
                 folderImage
             }
@@ -60,7 +60,7 @@ struct WaveformView: View {
             .fill(accentColor)
             .cornerRadius(4)
             .opacity(loadingAnimation ? 0.2 : 0.0)
-            .animation(Animation.easeInOut(duration: 0.2).repeatForever())
+            .animation(Animation.easeInOut(duration: 0.5).repeatForever())
     }
 
     private var folderImage: some View {
