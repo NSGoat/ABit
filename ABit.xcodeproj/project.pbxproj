@@ -19,8 +19,7 @@
 		64311CE9269224480047E981 /* ABitScreenshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64311CE8269224480047E981 /* ABitScreenshots.swift */; };
 		64311CF0269226880047E981 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64311CDF269223890047E981 /* SnapshotHelper.swift */; };
 		64311CFC2692323F0047E981 /* ABitScreenshots.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64311CE8269224480047E981 /* ABitScreenshots.swift */; };
-		64311D03269238040047E981 /* .fastlane in Resources */ = {isa = PBXBuildFile; fileRef = 64311D02269238040047E981 /* .fastlane */; };
-		64311D0826923D8C0047E981 /* Screenshots in Resources */ = {isa = PBXBuildFile; fileRef = 64311D0726923D8C0047E981 /* Screenshots */; };
+		64311D0826923D8C0047E981 /* screenshots in Resources */ = {isa = PBXBuildFile; fileRef = 64311D0726923D8C0047E981 /* screenshots */; };
 		6434F5442688608E00A9860E /* AudioPlayerConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6434F5432688608E00A9860E /* AudioPlayerConfiguration.swift */; };
 		6434F547268875E200A9860E /* FloatingPoint+UnitIntervalClamped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6434F546268875E200A9860E /* FloatingPoint+UnitIntervalClamped.swift */; };
 		6434F5492688761000A9860E /* Comparable+Clamped.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6434F5482688761000A9860E /* Comparable+Clamped.swift */; };
@@ -104,11 +103,11 @@
 		64311CE8269224480047E981 /* ABitScreenshots.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABitScreenshots.swift; sourceTree = "<group>"; };
 		64311CEA269224480047E981 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		64311CF3269230760047E981 /* Gemfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Gemfile; sourceTree = SOURCE_ROOT; };
-		64311CF4269230760047E981 /* Gemfile.lock */ = {isa = PBXFileReference; lastKnownFileType = file; path = Gemfile.lock; sourceTree = SOURCE_ROOT; };
-		64311D02269238040047E981 /* .fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; path = .fastlane; sourceTree = "<group>"; };
+		64311CF4269230760047E981 /* Gemfile.lock */ = {isa = PBXFileReference; lastKnownFileType = text; path = Gemfile.lock; sourceTree = SOURCE_ROOT; };
 		64311D04269238120047E981 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		64311D062692381B0047E981 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		64311D0726923D8C0047E981 /* Screenshots */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Screenshots; path = Automation/Screenshots; sourceTree = "<group>"; };
+		64311D0726923D8C0047E981 /* screenshots */ = {isa = PBXFileReference; lastKnownFileType = folder; name = screenshots; path = Automation/screenshots; sourceTree = "<group>"; };
+		64311D09269268BE0047E981 /* .fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; path = .fastlane; sourceTree = "<group>"; };
 		6434F5432688608E00A9860E /* AudioPlayerConfiguration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AudioPlayerConfiguration.swift; sourceTree = "<group>"; };
 		6434F546268875E200A9860E /* FloatingPoint+UnitIntervalClamped.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FloatingPoint+UnitIntervalClamped.swift"; sourceTree = "<group>"; };
 		6434F5482688761000A9860E /* Comparable+Clamped.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Comparable+Clamped.swift"; sourceTree = "<group>"; };
@@ -213,8 +212,8 @@
 		64311D01269237A70047E981 /* Automation */ = {
 			isa = PBXGroup;
 			children = (
-				64311D0726923D8C0047E981 /* Screenshots */,
-				64311D02269238040047E981 /* .fastlane */,
+				64311D09269268BE0047E981 /* .fastlane */,
+				64311D0726923D8C0047E981 /* screenshots */,
 				64311CF3269230760047E981 /* Gemfile */,
 				64311CF4269230760047E981 /* Gemfile.lock */,
 				64311D062692381B0047E981 /* .gitignore */,
@@ -593,8 +592,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				64311D0826923D8C0047E981 /* Screenshots in Resources */,
-				64311D03269238040047E981 /* .fastlane in Resources */,
+				64311D0826923D8C0047E981 /* screenshots in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
