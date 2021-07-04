@@ -1,0 +1,42 @@
+name: 'Fastlane action test'
+on: [push, repository_dispatch]
+
+jobs:
+  test_job:
+    continue-on-error: true
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-16.04, ubuntu-18.04, macOS-latest]
+        ruby-version: [2.5.8, 2.6.6, 2.7.2, 3.0.0]
+    name: A job to test the GitHub fastlane action
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-ruby@v1
+      with:
+        ruby-version: "${{ matrix.ruby-version }}"
+    - name: Fastlane step (root directory)
+      uses: maierj/fastlane-action@development
+      with:
+        lane: 'beta'
+        options: '{ "option1": "value1", "option2": "value2" }'
+      env:
+        ENV_VARIABLE_1: VALUE_1
+        ENV_VARIABLE_2: VALUE_2
+    - name: Fastlane step (subdirectory)
+      uses: maierj/fastlane-action@development
+      with:
+        lane: 'beta'
+        subdirectory: 'ios'
+      env:
+        ENV_VARIABLE_1: VALUE_1
+        ENV_VARIABLE_2: VALUE_2
+    - name: Fastlane step (subdirectory + bundle-install-path)
+      uses: maierj/fastlane-action@development
+      with:
+        lane: 'beta'
+        subdirectory: 'ios'
+        bundle-install-path: 'vendor/bundle'
+      env:
+        ENV_VARIABLE_1: VALUE_1
+        ENV_VARIABLE_2: VALUE_2
