@@ -83,7 +83,7 @@ struct LogoToggleButton: View {
 
 struct Logo_Previews: PreviewProvider {
     static var previews: some View {
-        let audioManager = DependencyManager.shared.audioManager
+        let audioManager = DependencyManager().audioManager
         LogoToggleButton(audioManager: audioManager).scaledToFit()
     }
 }

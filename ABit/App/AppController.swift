@@ -9,7 +9,7 @@ class AppController: NSObject {
 
     func toggleChannelOnRedundantVolumeIncrement(_ enable: Bool) {
         if enable {
-            redundantVolumeIncrementReporter.startObservingRedundantVolumeIncrements {
+            redundantVolumeIncrementObserver.startObservingRedundantVolumeIncrements {
                 if self.audioManager.allPlayersPlaying {
                     self.audioManager.selectedChannel?.selectNext()
 
