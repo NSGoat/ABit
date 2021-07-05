@@ -3,7 +3,7 @@ on: [push]
 jobs:
   tests:
     name: Screenshots 
-    runs-on: 'macos-11'
+    runs-on: latest
       
     steps:      
     - name: Checkout
@@ -11,7 +11,7 @@ jobs:
     - name: Select Xcode Version
       uses: maxim-lobanov/setup-xcode@v1
       with:
-        xcode-version: '12.5'
+        xcode-version: latest
     
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
