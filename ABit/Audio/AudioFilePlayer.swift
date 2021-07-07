@@ -137,10 +137,20 @@ extension AudioFilePlayer {
             // TODO: Investigate why we have to load load the audio file from the url here
             // guard let file = audioFile else { return }
 
-            if lastBufferCache?.timeRange == playTimeRange, let buffer = lastBufferCache?.buffer {
-                audioPlayerNode.playSegment(fromBuffer: buffer, segmentRange: playPositionRange, looping: loop)
+            // Reconnect AVAudioPlayerNode setting the AVAudioFormat to ensure playback at correct sampling rate
+            guard let audioEngine = audioPlayerNode.engine else { return }
+            let format = file.processingFormat
+            audioEngine.connect(audioPlayerNode, to: audioEngine.mainMixerNode, format: file.processingFormat)
+
+            let frameCapacity = AVAudioFrameCount(file.length)
+            guard let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: frameCapacity) else { return }
+            try file.read(into: buffer)
+
+            if let buffer = lastBufferCache?.buffer, lastBufferCache?.timeRange == playTimeRange {
+                audioPlayerNode.scheduleSegment(fromBuffer: buffer, range: playPositionRange, looping: loop)
             } else {
-                try play(pcmAudioFile: file, inPositionRange: playPositionRange, loop: loop)
+                let segmentRange = playPositionRange
+                lastBufferCache = audioPlayerNode.scheduleSegment(fromBuffer: buffer, range: segmentRange, looping: loop)
             }
 
             DispatchQueue.main.async { [weak self] in
@@ -217,23 +227,5 @@ extension AudioFilePlayer {
         let endTime = timesBounds.max() ?? duration
 
         return startTime...endTime
-    }
-}
-
-extension AudioFilePlayer {
-
-    private func play(pcmAudioFile file: AVAudioFile,
-                      inPositionRange positionRange: ClosedRange<Double>,
-                      loop: Bool) throws {
-
-        let format = file.processingFormat
-        let frameCapacity = AVAudioFrameCount(file.length)
-
-        guard let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: frameCapacity) else {
-            throw NSError()
-        }
-        try file.read(into: buffer)
-
-        audioPlayerNode.playSegment(fromBuffer: buffer, segmentRange: positionRange, looping: loop)
     }
 }
