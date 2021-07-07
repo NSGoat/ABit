@@ -3,12 +3,12 @@ import AVFoundation
 extension AVAudioPlayerNode {
 
     @discardableResult
-    func playSegment(fromBuffer buffer: AVAudioPCMBuffer,
-                     segmentRange: ClosedRange<Double>,
-                     looping: Bool) -> (bufferSegment: AVAudioPCMBuffer, timeRange: ClosedRange<TimeInterval>)? {
+    func scheduleSegment(fromBuffer buffer: AVAudioPCMBuffer,
+                         range: ClosedRange<Double>,
+                         looping: Bool) -> (buffer: AVAudioPCMBuffer, timeRange: ClosedRange<TimeInterval>)? {
 
-        let start = AVAudioFramePosition(segmentRange.lowerBound * Double(buffer.frameLength))
-        let end = AVAudioFramePosition(segmentRange.upperBound * Double(buffer.frameLength))
+        let start = AVAudioFramePosition(range.lowerBound * Double(buffer.frameLength))
+        let end = AVAudioFramePosition(range.upperBound * Double(buffer.frameLength))
         if let bufferSegment = buffer.segment(from: start, to: end) {
 
             if looping {

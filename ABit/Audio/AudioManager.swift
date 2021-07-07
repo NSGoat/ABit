@@ -71,7 +71,6 @@ final class AudioManager: ObservableObject {
         audioFilePlayers[channel] = audioFilePlayer
 
         audioEngine.attach(audioFilePlayer.audioPlayerNode)
-        audioEngine.connect(audioFilePlayer.audioPlayerNode, to: audioEngine.mainMixerNode, format: nil)
 
         if let playerConfiguration = audioPlayerConfigurationManager.playerConfiguration(userDefaultsKey: key) {
             audioFilePlayer.configure(playerConfiguration)
