@@ -10,8 +10,6 @@ struct AudioMasterControls: View {
             playAllButton
             stopAllButton
             Spacer()
-            channelSwitchButton
-            Spacer()
         }
     }
 
@@ -37,29 +35,6 @@ struct AudioMasterControls: View {
             Image(systemName: "stop")
                 .font(.system(size: 20, weight: audioManager.anyPlayerPlaying ? .bold : .light))
                 .foregroundColor(.primary)
-        })
-    }
-
-    private var channelSwitchButton: some View {
-        let channel = audioManager.selectedChannel
-        let color = channel?.color
-
-        return Button(action: {
-            audioManager.selectedChannel?.selectNext()
-        }, label: {
-            Group {
-                Text("A")
-                    .font(.title)
-                    .fontWeight(channel == .a ? .bold : .light)
-                    .foregroundColor(channel == .a ? color : .secondary) +
-                Text("/")
-                    .font(.title)
-                    .foregroundColor(color) +
-                Text("B")
-                    .font(.title)
-                    .fontWeight(channel == .b ? .bold : .light)
-                    .foregroundColor(channel == .b ? color : .secondary)
-            }
         })
     }
 }
