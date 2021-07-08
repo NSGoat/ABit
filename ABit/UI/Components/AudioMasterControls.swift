@@ -20,7 +20,6 @@ struct AudioMasterControls: View {
             } else {
                 audioManager.playAll()
             }
-
         }, label: {
             Image(systemName: audioManager.anyPlayerPlaying ? "pause" : "play")
                 .font(.system(size: 20, weight: .bold))
@@ -29,7 +28,7 @@ struct AudioMasterControls: View {
     }
 
     private var stopAllButton: some View {
-        return Button(action: {
+        Button(action: {
             audioManager.stopAll()
         }, label: {
             Image(systemName: "stop")

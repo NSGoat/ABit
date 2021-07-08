@@ -24,8 +24,6 @@ struct LogoToggleButton: View {
 
     // MARK: Constants
 
-    let unselectedScale: CGFloat = 0.99
-
     private struct Z {
         static let top = 3.0
         static let middle = 2.0
@@ -76,7 +74,7 @@ struct LogoToggleButton: View {
                 .rotation(.degrees(rotationAngle))
                 .foregroundColor(color)
                 .shadow(color: .black.opacity(0.5), radius: selected ? 5 : 1, x: 0.0, y: 0.0)
-                .scaleEffect(selected ? CGFloat.one : unselectedScale)
+                .scaleEffect(selected ? .one : unselectedScale)
         }
     }
 }
