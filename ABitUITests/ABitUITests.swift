@@ -9,22 +9,31 @@ import XCTest
 
 class ABitUITests: XCTestCase {
 
+    let app = XCUIApplication()
+
     override func setUpWithError() throws {
         continueAfterFailure = true
     }
 
     override func tearDownWithError() throws { }
 
-    func testExample() throws {
-        let app = XCUIApplication()
+    func test_player_switching() throws {
         app.launch()
-    }
 
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
-        }
+        let playPauseAllButton = app.buttons["play_pause_all_button"]
+        let stopAllButton = app.buttons["stop_all_button"]
+        let abToggleButton = app.buttons["ab_logo_toggle"]
+
+        XCTAssert(abToggleButton.value as? String == "Primary selected")
+        XCTAssert(playPauseAllButton.value as? String == "play")
+
+        playPauseAllButton.click()
+        XCTAssert(playPauseAllButton.value as? String == "pause")
+
+        abToggleButton.click()
+        XCTAssert(abToggleButton.value as? String == "Secondary selected")
+
+        stopAllButton.click()
+        XCTAssert(playPauseAllButton.isHittable)
     }
 }

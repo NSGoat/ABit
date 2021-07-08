@@ -20,6 +20,9 @@ struct LogoToggleButton: View {
                 audioManager.selectedChannel?.selectNext()
             }
         }
+        .accessibility(identifier: "ab_logo_toggle")
+        .accessibility(addTraits: .isButton)
+        .accessibility(value: Text(audioManager.primarySelected ? "Primary selected" : "Secondary selected"))
     }
 
     // MARK: Constants

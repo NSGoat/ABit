@@ -42,6 +42,8 @@ struct AudioPlayerControls: View {
             Image(systemName: player.isPlaying ? "pause" : "play")
                 .font(.system(size: 20, weight: .medium))
         })
+        .accessibility(identifier: "play_pause_player_button")
+        .accessibility(value: Text(player.isPlaying ? "play" : "pause"))
     }
 
     private var stopButton: some View {
@@ -51,6 +53,7 @@ struct AudioPlayerControls: View {
             Image(systemName: "stop")
                 .font(.system(size: 20, weight: player.isPlaying ? .medium : .light))
         })
+        .accessibility(identifier: "stop_button")
     }
 
     private var loopButton: some View {
@@ -60,6 +63,7 @@ struct AudioPlayerControls: View {
             Image(systemName: "repeat")
                 .font(.system(size: 20, weight: player.loop ? .medium : .light))
         })
+        .accessibility(identifier: "loop_button")
     }
 
     private var ejectButton: some View {
@@ -69,6 +73,7 @@ struct AudioPlayerControls: View {
             Image(systemName: "eject")
                 .font(.system(size: 20, weight: .light))
         })
+        .accessibility(identifier: "eject_button")
     }
 }
 
