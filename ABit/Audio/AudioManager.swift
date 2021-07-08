@@ -14,7 +14,7 @@ enum AudioChannel: String, CaseIterable {
 
 final class AudioManager: ObservableObject {
 
-    var audioPlayerConfigurationManager: AudioPlayerConfigurationManager
+    var playerConfigurationManager: AudioPlayerConfigurationManager
 
     private let audioEngine = AVAudioEngine()
 
@@ -40,7 +40,7 @@ final class AudioManager: ObservableObject {
     }
 
     init(audioPlayerConfigurationManager: AudioPlayerConfigurationManager) {
-        self.audioPlayerConfigurationManager = audioPlayerConfigurationManager
+        self.playerConfigurationManager = audioPlayerConfigurationManager
 
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
@@ -67,12 +67,12 @@ final class AudioManager: ObservableObject {
     @discardableResult
     private func configureNewAudioFilePlayer(channel: AudioChannel, fallbackUrl: URL? = nil) -> AudioFilePlayer {
         let key = defaultsKey(channel: channel)
-        let audioFilePlayer = AudioFilePlayer(audioFileManager: audioPlayerConfigurationManager, cacheKey: key)
+        let audioFilePlayer = AudioFilePlayer(audioFileManager: playerConfigurationManager, cacheKey: key)
         audioFilePlayers[channel] = audioFilePlayer
 
         audioEngine.attach(audioFilePlayer.audioPlayerNode)
 
-        if let playerConfiguration = audioPlayerConfigurationManager.playerConfiguration(userDefaultsKey: key) {
+        if let playerConfiguration = playerConfigurationManager.recallConfiguration(forKey: key) {
             audioFilePlayer.configure(playerConfiguration)
         }
 
