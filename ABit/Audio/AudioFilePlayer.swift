@@ -66,7 +66,7 @@ final class AudioFilePlayer: ObservableObject {
         self.bookmarkKey = cacheKey
         self.audioPlayerConfigurationManager = audioFileManager
 
-        if let configuration = audioFileManager.playerConfiguration(userDefaultsKey: cacheKey) {
+        if let configuration = audioFileManager.recallConfiguration(forKey: cacheKey) {
             configure(configuration)
         }
     }
@@ -88,7 +88,7 @@ extension AudioFilePlayer {
         if let url = bookmarkUrl {
             let trigger = AudioPlayerConfiguration.Trigger(mode: .cue, loop: loop, positionRange: playPositionRange)
             let configuration = AudioPlayerConfiguration(bookmarkUrl: url, triggers: [trigger])
-            audioPlayerConfigurationManager.savePlayerConfiguration(configuration, userDefaultsKey: bookmarkKey)
+            audioPlayerConfigurationManager.store(configuration: configuration, withKey: bookmarkKey)
         } else {
             audioPlayerConfigurationManager.clearPlayerConfiguration(forUserDefaultsKey: bookmarkKey)
         }

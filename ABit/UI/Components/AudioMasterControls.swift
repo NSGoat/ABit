@@ -20,22 +20,24 @@ struct AudioMasterControls: View {
             } else {
                 audioManager.playAll()
             }
-
         }, label: {
             Image(systemName: audioManager.anyPlayerPlaying ? "pause" : "play")
                 .font(.system(size: 20, weight: .bold))
                 .foregroundColor(.primary)
         })
+        .accessibility(identifier: "play_pause_all_button")
+        .accessibility(value: Text(audioManager.anyPlayerPlaying ? "pause" : "play"))
     }
 
     private var stopAllButton: some View {
-        return Button(action: {
+        Button(action: {
             audioManager.stopAll()
         }, label: {
             Image(systemName: "stop")
                 .font(.system(size: 20, weight: audioManager.anyPlayerPlaying ? .bold : .light))
                 .foregroundColor(.primary)
         })
+        .accessibility(identifier: "stop_all_button")
     }
 }
 

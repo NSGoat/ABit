@@ -2,14 +2,14 @@ import SwiftUI
 
 struct AudioPlayerControls: View {
 
-    @ObservedObject var audioFilePlayer: AudioFilePlayer
+    @ObservedObject var player: AudioFilePlayer
 
     var showDocumentPicker: Binding<Bool>
 
     private let accentColor: Color
 
     init(audioFilePlayer: AudioFilePlayer, accentColor: Color, showDocumentPicker: Binding<Bool>) {
-        self.audioFilePlayer = audioFilePlayer
+        self.player = audioFilePlayer
         self.accentColor = accentColor
         self.showDocumentPicker = showDocumentPicker
     }
@@ -26,49 +26,54 @@ struct AudioPlayerControls: View {
 
     private var playPauseButton: some View {
         Button(action: {
-            switch audioFilePlayer.state {
+            switch player.state {
             case .awaitingFile:
                 self.showDocumentPicker.wrappedValue.toggle()
             case .loading:
                 break
             case .stopped:
-                audioFilePlayer.play()
+                player.play()
             case .paused:
-                audioFilePlayer.unpause()
+                player.unpause()
             case .playing:
-                audioFilePlayer.pause()
+                player.pause()
             }
         }, label: {
-            Image(systemName: audioFilePlayer.state == .playing ? "pause" : "play")
+            Image(systemName: player.isPlaying ? "pause" : "play")
                 .font(.system(size: 20, weight: .medium))
         })
+        .accessibility(identifier: "play_pause_player_button")
+        .accessibility(value: Text(player.isPlaying ? "play" : "pause"))
     }
 
     private var stopButton: some View {
         Button(action: {
-            audioFilePlayer.stop()
+            player.stop()
         }, label: {
             Image(systemName: "stop")
-                .font(.system(size: 20, weight: audioFilePlayer.state == .playing ? .medium : .light))
+                .font(.system(size: 20, weight: player.isPlaying ? .medium : .light))
         })
+        .accessibility(identifier: "stop_button")
     }
 
     private var loopButton: some View {
         Button(action: {
-            audioFilePlayer.loop.toggle()
+            player.loop.toggle()
         }, label: {
             Image(systemName: "repeat")
-                .font(.system(size: 20, weight: audioFilePlayer.loop ? .medium : .light))
+                .font(.system(size: 20, weight: player.loop ? .medium : .light))
         })
+        .accessibility(identifier: "loop_button")
     }
 
     private var ejectButton: some View {
         Button(action: {
-            audioFilePlayer.unloadPlayer()
+            player.unloadPlayer()
         }, label: {
             Image(systemName: "eject")
                 .font(.system(size: 20, weight: .light))
         })
+        .accessibility(identifier: "eject_button")
     }
 }
 
