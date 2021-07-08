@@ -29,15 +29,18 @@ struct AudioPlayerView: View {
                                     showDocumentPicker: $showDocumentPicker)
             }
             WaveformView(audioFilePlayer: audioFilePlayer, accentColor: accentColor, tapAction: tapAction)
+                .simultaneousGesture(
+                    TapGesture()
+                        .onEnded { _ in
+                            print("WaveformView tapped")
+                            if audioFilePlayer.state == .awaitingFile {
+                                self.showDocumentPicker.toggle()
+                            }
+                        }
+                )
             documentPickerButton
         }
         .contentShape(Rectangle())
-        .onTapGesture {
-            tapAction()
-            if audioFilePlayer.state == .awaitingFile {
-                self.showDocumentPicker.toggle()
-            }
-        }
         .sheet(isPresented: self.$showDocumentPicker) {
             AudioFilePicker(delegate: self)
         }

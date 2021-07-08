@@ -49,6 +49,9 @@ struct WaveformView: View {
                 .frame(width: geometry.size.width - sliderThumbWidth * 2)
                 .padding(.horizontal, sliderThumbWidth)
                 .disabled(true)
+                .onTapGesture {
+                    tapAction()
+                }
             playheadView
                 .padding(.horizontal, sliderThumbWidth)
             loopRangeSlider
