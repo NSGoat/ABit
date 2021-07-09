@@ -1,33 +1,57 @@
-//
-//  ABitTests.swift
-//  ABitTests
-//
-//  Created by Ed Rutter on 19/09/2020.
-//
-
 import XCTest
 @testable import ABit
 
 class ABitTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    let url = URL(fileURLWithPath: Bundle.main.path(forResource: "Winstons - Amen, Brother", ofType: "aif")!)
+
+    func test_fileLoading_success() throws {
+        let config = AudioPlayerConfigurationManager()
+        let sut = AudioFilePlayer(audioFileManager: config, cacheKey: "TEST")
+
+        XCTAssertTrue(sut.state == .awaitingFile)
+
+        let loadedFile = expectation(description: "loaded file")
+
+        sut.loadAudioFile(url: url) { success in
+            XCTAssertTrue(success)
+            XCTAssertEqual(sut.state, .stopped)
+            loadedFile.fulfill()
+        }
+        XCTAssertEqual(sut.state, .loading)
+
+        wait(for: [loadedFile], timeout: 3)
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    func test_fileLoading_invalidPath() throws {
+        let config = AudioPlayerConfigurationManager()
+        let sut = AudioFilePlayer(audioFileManager: config, cacheKey: "TEST")
+
+        let invalidUrl = URL(fileURLWithPath: "not/a/path")
+
+        XCTAssertTrue(sut.state == .awaitingFile)
+
+        let loadedFile = expectation(description: "loaded file")
+
+        sut.loadAudioFile(url: invalidUrl) { success in
+            XCTAssertFalse(success)
+            XCTAssertEqual(sut.state, .awaitingFile)
+            loadedFile.fulfill()
+        }
+
+        wait(for: [loadedFile], timeout: 3)
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
+    func testPerformance_waveformRendering_perform() throws {
+        let config = AudioPlayerConfigurationManager()
+        let sut = AudioFilePlayer(audioFileManager: config, cacheKey: "TEST")
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
         self.measure {
-            // Put the code you want to measure the time of here.
+            for _ in 0..<50 {
+                sut.loadAudioFile(url: url) { success in
+                    XCTAssert(success)
+                }
+            }
         }
     }
-
 }

@@ -1,0 +1,14 @@
+lane :tests do
+    clear_derived_data
+    run_tests(workspace: "ABit.xcworkspace",
+              devices: ["iPhone 12 mini"],
+              scheme: "ABit")
+end
+
+after_all do |lane|
+    print("Successfully ran (#{lane})!")
+end
+
+error do |lane, exception|
+    print("Failed to complete (#{lane}) with exception (#{exception})!")
+end

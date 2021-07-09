@@ -32,7 +32,6 @@ struct AudioPlayerView: View {
                 .simultaneousGesture(
                     TapGesture()
                         .onEnded { _ in
-                            print("WaveformView tapped")
                             if audioFilePlayer.state == .awaitingFile {
                                 self.showDocumentPicker.toggle()
                             }
