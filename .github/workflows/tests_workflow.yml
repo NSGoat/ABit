@@ -6,13 +6,18 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - name: Checkout
+    - name: Checkout ABit
       uses: actions/checkout@v2
+
     - name: Select Xcode Version
       uses: maxim-lobanov/setup-xcode@v1
       with:
         xcode-version: latest
 
+    - name: Checkout Fastlane Match Repo
+      uses: actions/checkout@v2
+      with:
+        repository: Fastlane-Match
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
       with:
