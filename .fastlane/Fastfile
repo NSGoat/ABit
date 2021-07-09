@@ -1,8 +1,19 @@
 lane :tests do
-    clear_derived_data
+    ios_tests
+    mac_tests
+end
+
+lane :ios_tests do
     run_tests(workspace: "ABit.xcworkspace",
+              scheme: "ABit",
               devices: ["iPhone 12 mini"],
-              scheme: "ABit")
+              catalyst_platform: "ios")
+end
+
+lane :mac_tests do
+    run_tests(workspace: "ABit.xcworkspace",
+              scheme: "ABit",
+              catalyst_platform: "macos")
 end
 
 after_all do |lane|

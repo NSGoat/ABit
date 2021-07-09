@@ -11,6 +11,8 @@ class ABitUITests: XCTestCase {
     override func tearDownWithError() throws { }
 
     func test_player_switching() throws {
+        app.launchArguments.append("-loadPlayerA")
+        app.launchArguments.append("-loadPlayerB")
         app.launch()
 
         let playPauseAllButton = app.buttons["play_pause_all_button"]

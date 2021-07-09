@@ -20,6 +20,16 @@ or alternatively using `brew install fastlane`
 fastlane tests
 ```
 
+### ios_tests
+```
+fastlane ios_tests
+```
+
+### mac_tests
+```
+fastlane mac_tests
+```
+
 
 ----
 
