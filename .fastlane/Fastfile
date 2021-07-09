@@ -11,6 +11,7 @@ lane :ios_tests do
 end
 
 lane :mac_tests do
+    match(type: "development", readonly: is_ci)
     run_tests(workspace: "ABit.xcworkspace",
               scheme: "ABit",
               catalyst_platform: "macos")

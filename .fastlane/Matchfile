@@ -1,0 +1,10 @@
+git_url("git@github.com:NSGoat/Fastlane-Match.git")
+
+storage_mode("git")
+
+type("development") # The default type, can be: appstore, adhoc, enterprise or development
+
+app_identifier(["com.RutterStudios.AB"])
+username("ed@rutterstudios.co.uk") # Your Apple Developer username
+
+# For all available options run `fastlane match --help`
