@@ -17,7 +17,7 @@ jobs:
     - name: Checkout Fastlane Match Repo
       uses: actions/checkout@v2
       with:
-        repository: Fastlane-Match
+        repository: NSGoat/Fastlane-Match
         ref: main
         token: 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
 
