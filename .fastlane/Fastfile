@@ -1,5 +1,4 @@
 lane :tests do
-    ios_tests
     mac_tests
 end
 
