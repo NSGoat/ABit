@@ -39,11 +39,11 @@ struct AudioPlayerControls: View {
                 player.pause()
             }
         }, label: {
-            Image(systemName: player.isPlaying ? "pause" : "play")
+            Image(systemName: player.state == .playing ? "pause" : "play")
                 .font(.system(size: 20, weight: .medium))
         })
         .accessibility(identifier: "play_pause_player_button")
-        .accessibility(value: Text(player.isPlaying ? "play" : "pause"))
+        .accessibility(value: Text(player.state == .playing ? "play" : "pause"))
     }
 
     private var stopButton: some View {
@@ -51,7 +51,7 @@ struct AudioPlayerControls: View {
             player.stop()
         }, label: {
             Image(systemName: "stop")
-                .font(.system(size: 20, weight: player.isPlaying ? .medium : .light))
+                .font(.system(size: 20, weight: player.state == .playing ? .medium : .light))
         })
         .accessibility(identifier: "stop_button")
     }
