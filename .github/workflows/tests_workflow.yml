@@ -35,7 +35,7 @@ jobs:
         token: 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
 
     - name: Install certificates with Match
-      run: bundle exec fastlane match development
+      run: fastlane match development
 
     - name: Checkout ABit
       uses: actions/checkout@v2
