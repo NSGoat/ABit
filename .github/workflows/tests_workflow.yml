@@ -20,6 +20,7 @@ jobs:
         repository: NSGoat/Fastlane-Match
         ref: main
         token: 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
+        clean: false
 
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1
