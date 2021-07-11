@@ -10,7 +10,11 @@ lane :ios_tests do
 end
 
 lane :mac_tests do
-    match(type: "development", readonly: is_ci)
+    match(type: "development",
+          readonly: is_ci,
+          git_private_key: './Fastlane-Match'
+          )
+
     run_tests(workspace: "ABit.xcworkspace",
               scheme: "ABit",
               catalyst_platform: "macos")

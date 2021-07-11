@@ -1,5 +1,9 @@
 name: AutomatedTests
-on: [push]
+on:
+  pull_request:
+    branches:
+      - main
+
 jobs:
   tests:
     name: UnitTests
@@ -20,6 +24,7 @@ jobs:
         repository: NSGoat/Fastlane-Match
         ref: main
         token: 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
+        path: ./Fastlane-Match
         clean: false
 
     - name: Setup Ruby
