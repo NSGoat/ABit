@@ -21,14 +21,20 @@ jobs:
       with:
         xcode-version: latest
 
+    - run: |
+        mkdir ./Fastlane-Match
+        cd ./Fastlane-Match
+
     - name: Checkout Fastlane Match Repo
       uses: actions/checkout@v2
       with:
         repository: NSGoat/Fastlane-Match
         ref: main
         token: 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
-        path: ./Fastlane-Match
         clean: false
+
+    - run: |
+        cd ../
 
     - name: Setup Ruby
       uses: ruby/setup-ruby@v1

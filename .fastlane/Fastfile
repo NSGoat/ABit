@@ -12,7 +12,7 @@ end
 lane :mac_tests do
     match(type: "development",
           readonly: is_ci,
-          git_private_key: './Fastlane-Match'
+          git_basic_authorization: "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",
           )
 
     run_tests(workspace: "ABit.xcworkspace",
