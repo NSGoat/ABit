@@ -13,9 +13,6 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - name: Checkout ABit
-      uses: actions/checkout@v2
-
     - name: Select Xcode Version
       uses: maxim-lobanov/setup-xcode@v1
       with:
@@ -27,7 +24,22 @@ jobs:
         ruby-version: 2.7.2
         bundler-cache: true
 
+    - name: Install Fastlane
+      run: brew install fastlane
+
+    - name: Checkout Fastlane Match Repo
+      uses: actions/checkout@v2
+      with:
+        repository: Fastlane-Match
+        repository: NSGoat/Fastlane-Match
+        ref: main
+        token: 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
+
+    - name: Install certificates with Match
+      run: bundle exec fastlane match development
+
+    - name: Checkout ABit
+      uses: actions/checkout@v2
+
     - name: Run Tests
-      run: |
-        brew install fastlane
-        bundle exec fastlane tests
+      run: bundle exec fastlane tests
