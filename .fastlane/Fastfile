@@ -12,8 +12,7 @@ end
 lane :mac_tests do
     match(type: "development",
           readonly: is_ci,
-          git_basic_authorization: "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",
-          )
+          git_basic_authorization: "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")
 
     run_tests(workspace: "ABit.xcworkspace",
               scheme: "ABit",
