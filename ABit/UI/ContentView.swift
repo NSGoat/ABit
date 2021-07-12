@@ -11,7 +11,7 @@ struct ContentView: View {
                 .frame(minWidth: 80, maxWidth: 300, minHeight: 80, maxHeight: 300, alignment: .center)
             audioPlayerView(channel: .a)
             audioPlayerView(channel: .b)
-            AudioMasterControls(audioManager: audioManager)
+            AudioMainControls(audioManager: audioManager)
             Spacer()
         }
         .padding(.bottom, 16)

@@ -76,7 +76,7 @@ struct LogoToggleButton: View {
                 .trim(from: 0.0, to: 0.5)
                 .rotation(.degrees(rotationAngle))
                 .foregroundColor(color)
-                .shadow(color: .black.opacity(0.5), radius: selected ? 5 : 1, x: 0.0, y: 0.0)
+                .shadow(color: Color.black.opacity(0.5), radius: selected ? 5 : 1, x: 0.0, y: 0.0)
                 .scaleEffect(selected ? .one : unselectedScale)
         }
     }

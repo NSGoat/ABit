@@ -1,0 +1,14 @@
+lane :ios_tests do
+    run_tests(workspace: "ABit.xcworkspace",
+              scheme: "ABit",
+              devices: ["iPhone 12 mini"],
+              catalyst_platform: "ios")
+end
+
+after_all do |lane|
+    print("Successfully ran (#{lane})!")
+end
+
+error do |lane, exception|
+    print("Failed to complete (#{lane}) with exception (#{exception})!")
+end
