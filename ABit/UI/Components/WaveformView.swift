@@ -21,7 +21,7 @@ struct WaveformView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            if audioFilePlayer.renderingImage {
+            if audioFilePlayer.state == .loading {
                 loadingView
             } else if let image = audioFilePlayer.image, audioFilePlayer.state != .awaitingFile {
                 let color = highlightPlayer ? .primary : accentColor

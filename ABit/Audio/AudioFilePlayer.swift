@@ -10,6 +10,8 @@ enum AudioFilePlayerState {
     case playing
 }
 
+typealias SuccessHandler = (Bool) -> Void
+
 final class AudioFilePlayer: ObservableObject {
 
     @Inject var logger: Logger
@@ -31,6 +33,8 @@ final class AudioFilePlayer: ObservableObject {
             audioPlayerNode.volume = mute ? 0 : 1
         }
     }
+
+    var isPlaying: Bool { state == .playing }
 
     @Published var image: UIImage?
     @Published var renderingImage: Bool = false
@@ -94,12 +98,13 @@ extension AudioFilePlayer {
         }
     }
 
-    func loadAudioFile(url: URL?) {
+    func loadAudioFile(url: URL?, completion: SuccessHandler? = nil) {
         guard let url = url else { return }
         unloadPlayer()
         state = .loading
 
         do {
+            _ = try AVAudioFile(forReading: url)
             let document = try audioPlayerConfigurationManager.storeFileAsDocument(sourceUrl: url,
                                                                                    bookmarkedWithKey: bookmarkKey)
             audioFileDuration = document.file.duration
@@ -108,10 +113,14 @@ extension AudioFilePlayer {
             _ = bookmarkUrl?.startAccessingSecurityScopedResource()
 
             let width = UIScreen.main.bounds.size.width
-            updateWaveformImage(url: url, size: CGSize(width: width, height: width/3))
+            updateWaveformImage(url: url, size: CGSize(width: width, height: width/3)) { _ in
+                self.state = self.audioPlayerNode.isPlaying ? .playing : .stopped
+                completion?(true)
+            }
         } catch {
             logger.log(.error, "Failed to load file \(url.absoluteString)", error: error)
             unloadPlayer()
+            completion?(false)
         }
     }
 
@@ -203,7 +212,7 @@ extension AudioFilePlayer {
         playheadUpdater.stopTracking()
     }
 
-    private func updateWaveformImage(url: URL, size: CGSize) {
+    private func updateWaveformImage(url: URL, size: CGSize, completion: @escaping ImageCompletion) {
         self.image = nil
         renderingImage = true
 
@@ -212,7 +221,7 @@ extension AudioFilePlayer {
                 guard let self = self else { return }
                 self.image = image
                 self.renderingImage = false
-                self.state = self.audioPlayerNode.isPlaying ? .playing : .stopped
+                completion(image)
             }
         }
     }

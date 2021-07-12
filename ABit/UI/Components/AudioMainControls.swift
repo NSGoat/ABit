@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct AudioMasterControls: View {
+struct AudioMainControls: View {
 
     @ObservedObject var audioManager: AudioManager
 
@@ -41,10 +41,10 @@ struct AudioMasterControls: View {
     }
 }
 
-struct AudioMasterControls_Previews: PreviewProvider {
+struct AudioMainControls_Previews: PreviewProvider {
     static var previews: some View {
         let audioPlayerConfigurationManager = DependencyManager().audioPlayerConfigurationManager
         let audioManager = AudioManager(audioPlayerConfigurationManager: audioPlayerConfigurationManager)
-        AudioMasterControls(audioManager: audioManager)
+        AudioMainControls(audioManager: audioManager)
     }
 }

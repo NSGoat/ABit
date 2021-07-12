@@ -1,10 +1,3 @@
-//
-//  ABitUITests.swift
-//  ABitUITests
-//
-//  Created by Ed Rutter on 19/09/2020.
-//
-
 import XCTest
 
 class ABitUITests: XCTestCase {
@@ -18,6 +11,8 @@ class ABitUITests: XCTestCase {
     override func tearDownWithError() throws { }
 
     func test_player_switching() throws {
+        app.launchArguments.append("-loadPlayerA")
+        app.launchArguments.append("-loadPlayerB")
         app.launch()
 
         let playPauseAllButton = app.buttons["play_pause_all_button"]
@@ -27,13 +22,23 @@ class ABitUITests: XCTestCase {
         XCTAssert(abToggleButton.value as? String == "Primary selected")
         XCTAssert(playPauseAllButton.value as? String == "play")
 
-        playPauseAllButton.click()
+        playPauseAllButton.tapOrClick()
         XCTAssert(playPauseAllButton.value as? String == "pause")
 
-        abToggleButton.click()
+        abToggleButton.tapOrClick()
         XCTAssert(abToggleButton.value as? String == "Secondary selected")
 
-        stopAllButton.click()
+        stopAllButton.tapOrClick()
         XCTAssert(playPauseAllButton.isHittable)
+    }
+}
+
+extension XCUIElement {
+    func tapOrClick() {
+        #if targetEnvironment(macOS)
+        click()
+        #else
+        tap()
+        #endif
     }
 }

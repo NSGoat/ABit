@@ -4,8 +4,8 @@ import Foundation
 import SwiftUI
 
 enum AudioChannel: String, CaseIterable {
-    case a = "A"
-    case b = "B"
+    case a
+    case b
 
     mutating func selectNext() {
         self = self.next()
