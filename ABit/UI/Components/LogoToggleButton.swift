@@ -20,11 +20,12 @@ struct LogoToggleButton: View {
                 audioManager.selectedChannel?.selectNext()
             }
         }
+        .accessibility(identifier: "ab_logo_toggle")
+        .accessibility(addTraits: .isButton)
+        .accessibility(value: Text(audioManager.primarySelected ? "Primary selected" : "Secondary selected"))
     }
 
     // MARK: Constants
-
-    let unselectedScale: CGFloat = 0.99
 
     private struct Z {
         static let top = 3.0
@@ -75,8 +76,8 @@ struct LogoToggleButton: View {
                 .trim(from: 0.0, to: 0.5)
                 .rotation(.degrees(rotationAngle))
                 .foregroundColor(color)
-                .shadow(color: .black.opacity(0.5), radius: selected ? 5 : 1, x: 0.0, y: 0.0)
-                .scaleEffect(selected ? CGFloat.one : unselectedScale)
+                .shadow(color: Color.black.opacity(0.5), radius: selected ? 5 : 1, x: 0.0, y: 0.0)
+                .scaleEffect(selected ? .one : unselectedScale)
         }
     }
 }

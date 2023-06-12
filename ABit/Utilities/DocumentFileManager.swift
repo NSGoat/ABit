@@ -28,7 +28,6 @@ class DocumentFileManager<T: UrlReadable>: NSObject {
 
     func storeFileAsDocument(sourceUrl: URL, bookmarkedWithKey userDefaultsKey: String?) throws -> Document {
 
-
         let url = try storeFileInDocuments(sourceUrl: sourceUrl)
         let file = try T(forReading: url)
 

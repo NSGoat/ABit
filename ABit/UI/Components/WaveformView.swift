@@ -21,7 +21,7 @@ struct WaveformView: View {
 
     var body: some View {
         GeometryReader { geometry in
-            if audioFilePlayer.renderingImage {
+            if audioFilePlayer.state == .loading {
                 loadingView
             } else if let image = audioFilePlayer.image, audioFilePlayer.state != .awaitingFile {
                 let color = highlightPlayer ? .primary : accentColor
@@ -49,6 +49,11 @@ struct WaveformView: View {
                 .frame(width: geometry.size.width - sliderThumbWidth * 2)
                 .padding(.horizontal, sliderThumbWidth)
                 .disabled(true)
+                .accessibility(identifier: "audio_waveform_image")
+                .accessibility(addTraits: .isButton)
+                .onTapGesture {
+                    tapAction()
+                }
             playheadView
                 .padding(.horizontal, sliderThumbWidth)
             loopRangeSlider
@@ -75,13 +80,16 @@ struct WaveformView: View {
             }
             Spacer()
         }
+        .accessibility(identifier: "load_folder_image")
     }
 
     private var loopRangeSlider: some View {
         let thumbSize = CGSize(width: sliderThumbWidth, height: waveformHeight)
         let thumb = Rectangle().foregroundColor(accentColor)
         let lowerThumb = thumb.cornerRadius(sliderThumbWidth, corners: [.topLeft, .bottomLeft])
+            .accessibility(identifier: "start_position_slider_thumb")
         let upperThumb = thumb.cornerRadius(sliderThumbWidth, corners: [.topRight, .bottomRight])
+            .accessibility(identifier: "end_position_slider_thumb")
 
         return RangeSlider(range: $audioFilePlayer.playPositionRange)
             .rangeSliderStyle(
@@ -93,6 +101,7 @@ struct WaveformView: View {
                                            options: .forceAdjacentValue
                 )
             )
+            .accessibility(identifier: "play_range_slider")
     }
 
     private func loopRangeRectangle(geometry: GeometryProxy,

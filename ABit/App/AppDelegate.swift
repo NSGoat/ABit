@@ -13,12 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         dependancyManager.logger.showSourceLocation = false
 
-        #if targetEnvironment(simulator)
-        let aUrl = Bundle.main.path(forResource: "OneTwoThreeFour_48000", ofType: "mp3")!
-        let bUrl = Bundle.main.path(forResource: "Winstons - Amen, Brother", ofType: ".aif")!
-        dependancyManager.audioManager.audioFilePlayer(channel: .a).loadAudioFile(url: URL(fileURLWithPath: aUrl))
-        dependancyManager.audioManager.audioFilePlayer(channel: .b).loadAudioFile(url: URL(fileURLWithPath: bUrl))
-        #endif
+        setupDemoTracks()
 
         return true
     }
@@ -36,3 +31,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         dependancyManager.audioManager.saveAllConfigurations()
     }
 }
+
+extension AppDelegate {
+    func setupDemoTracks() {
+        if loadDemoAudioA {
+            let path = Bundle.main.path(forResource: "OneTwoThreeFour_48000", ofType: "mp3")!
+            dependancyManager.audioManager.audioFilePlayer(channel: .a).loadAudioFile(url: URL(fileURLWithPath: path))
+        }
+
+        if loadDemoAudioB {
+            let path = Bundle.main.path(forResource: "Winstons - Amen, Brother", ofType: ".aif")!
+            dependancyManager.audioManager.audioFilePlayer(channel: .b).loadAudioFile(url: URL(fileURLWithPath: path))
+        }
+    }
+
+    var loadDemoAudioA: Bool {
+        #if targetEnvironment(simulator)
+        return true
+        #else
+        return CommandLine.arguments.contains("-loadPlayerA")
+        #endif
+    }
+
+    var loadDemoAudioB: Bool {
+        #if targetEnvironment(simulator)
+        return true
+        #else
+        return CommandLine.arguments.contains("-loadPlayerB")
+        #endif
+    }
+}
+
+

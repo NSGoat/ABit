@@ -6,13 +6,13 @@ extension AVAudioFile: UrlReadable { }
 
 class AudioPlayerConfigurationManager: DocumentFileManager<AVAudioFile> {
 
-    func savePlayerConfiguration(_ configuration: AudioPlayerConfiguration, userDefaultsKey key: String) {
+    func store(configuration: AudioPlayerConfiguration, withKey key: String) {
         if let encoded = try? JSONEncoder().encode(configuration) {
             UserDefaults.standard.set(encoded, forKey: key)
         }
     }
 
-    func playerConfiguration(userDefaultsKey key: String) -> AudioPlayerConfiguration? {
+    func recallConfiguration(forKey key: String) -> AudioPlayerConfiguration?  {
         guard let data = UserDefaults.standard.value(forKey: key) as? Data else { return nil }
 
         return try? JSONDecoder().decode(AudioPlayerConfiguration.self, from: data)
