@@ -1,3 +1,8 @@
+included:
+    - ABit
+    - ABitTests
+    - ABitUITests
+
 force_cast: warning
 
 identifier_name:
@@ -5,9 +10,10 @@ identifier_name:
 
 type_name:
     allowed_symbols: [_]
+    min_length: 1
 
 line_length:
-    warning: 120
+    warning: 122
     ignores_function_declarations: true
     ignores_comments: true
     ignores_interpolated_strings: true
@@ -15,4 +21,3 @@ line_length:
 
 nesting:
     type_level: 3
-

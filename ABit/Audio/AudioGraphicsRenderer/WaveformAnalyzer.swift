@@ -210,12 +210,11 @@ fileprivate extension WaveformAnalyzer {
         return samples.map { $0 / silenceDbThreshold }
     }
 
-    // swiftlint:disable force_cast
     private func totalSamplesOfTrack() -> Int {
         var totalSamples = 0
 
         autoreleasepool {
-            let descriptions = audioAssetTrack.formatDescriptions as! [CMFormatDescription]
+            guard let descriptions = audioAssetTrack.formatDescriptions as? [CMFormatDescription] else { return }
             descriptions.forEach { formatDescription in
                 guard
                     let basicDescription = CMAudioFormatDescriptionGetStreamBasicDescription(formatDescription)
@@ -232,7 +231,6 @@ fileprivate extension WaveformAnalyzer {
 
         return totalSamples
     }
-    // swiftlint:enable force_cast
 }
 
 // MARK: - Configuration

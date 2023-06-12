@@ -1,5 +1,6 @@
 import AVFoundation
 import UIKit
+import CoreMedia
 
 enum AudioFilePlayerState {
     case awaitingFile
@@ -8,6 +9,8 @@ enum AudioFilePlayerState {
     case paused
     case playing
 }
+
+typealias SuccessHandler = (Bool) -> Void
 
 final class AudioFilePlayer: ObservableObject {
 
@@ -30,6 +33,8 @@ final class AudioFilePlayer: ObservableObject {
             audioPlayerNode.volume = mute ? 0 : 1
         }
     }
+
+    var isPlaying: Bool { state == .playing }
 
     @Published var image: UIImage?
     @Published var renderingImage: Bool = false
@@ -55,7 +60,7 @@ final class AudioFilePlayer: ObservableObject {
         }
     }
 
-    var fileUrl: URL?
+    var bookmarkUrl: URL?
     var bookmarkKey: String
     lazy var audioPlayerNode = AVAudioPlayerNode()
     private lazy var playheadUpdater = AudioFilePlayerPlayheadTracker(audioFilePlayer: self)
@@ -65,7 +70,7 @@ final class AudioFilePlayer: ObservableObject {
         self.bookmarkKey = cacheKey
         self.audioPlayerConfigurationManager = audioFileManager
 
-        if let configuration = audioFileManager.playerConfiguration(userDefaultsKey: cacheKey) {
+        if let configuration = audioFileManager.recallConfiguration(forKey: cacheKey) {
             configure(configuration)
         }
     }
@@ -78,46 +83,51 @@ final class AudioFilePlayer: ObservableObject {
 extension AudioFilePlayer {
 
     func configure(_ playerConfiguration: AudioPlayerConfiguration) {
-        loadAudioFile(url: playerConfiguration.fileUrl)
+        loadAudioFile(url: playerConfiguration.bookmarkUrl)
         playPositionRange = playerConfiguration.triggers.first?.positionRange ?? 0...1
         loop = playerConfiguration.triggers.first?.loop ?? true
     }
 
     func saveConfiguration() {
-        if let fileUrl = fileUrl {
+        if let url = bookmarkUrl {
             let trigger = AudioPlayerConfiguration.Trigger(mode: .cue, loop: loop, positionRange: playPositionRange)
-            let configuration = AudioPlayerConfiguration(fileUrl: fileUrl, triggers: [trigger])
-            audioPlayerConfigurationManager.savePlayerConfiguration(configuration, userDefaultsKey: bookmarkKey)
+            let configuration = AudioPlayerConfiguration(bookmarkUrl: url, triggers: [trigger])
+            audioPlayerConfigurationManager.store(configuration: configuration, withKey: bookmarkKey)
         } else {
             audioPlayerConfigurationManager.clearPlayerConfiguration(forUserDefaultsKey: bookmarkKey)
         }
     }
 
-    func loadAudioFile(url: URL?) {
+    func loadAudioFile(url: URL?, completion: SuccessHandler? = nil) {
         guard let url = url else { return }
         unloadPlayer()
         state = .loading
 
         do {
+            _ = try AVAudioFile(forReading: url)
             let document = try audioPlayerConfigurationManager.storeFileAsDocument(sourceUrl: url,
                                                                                    bookmarkedWithKey: bookmarkKey)
             audioFileDuration = document.file.duration
-            fileUrl = document.url
+            bookmarkUrl = document.url
 
-            _ = fileUrl?.startAccessingSecurityScopedResource()
+            _ = bookmarkUrl?.startAccessingSecurityScopedResource()
 
             let width = UIScreen.main.bounds.size.width
-            updateWaveformImage(url: document.url, size: CGSize(width: width, height: width/3))
+            updateWaveformImage(url: url, size: CGSize(width: width, height: width/3)) { _ in
+                self.state = self.audioPlayerNode.isPlaying ? .playing : .stopped
+                completion?(true)
+            }
         } catch {
             logger.log(.error, "Failed to load file \(url.absoluteString)", error: error)
             unloadPlayer()
+            completion?(false)
         }
     }
 
     func unloadPlayer() {
         stop()
-        fileUrl?.stopAccessingSecurityScopedResource()
-        fileUrl = nil
+        bookmarkUrl?.stopAccessingSecurityScopedResource()
+        bookmarkUrl = nil
         audioFileDuration = nil
         lastBufferCache = nil
         image = nil
@@ -127,41 +137,34 @@ extension AudioFilePlayer {
     }
 
     func play() {
-        guard let fileUrl = fileUrl else { return }
+        guard let bookmarkUrl = bookmarkUrl else { return }
         guard playPositionRange.size > 0 else { return }
 
         do {
+            let file = try AVAudioFile(forReading: bookmarkUrl)
+            guard file.length > 0, file.fileFormat.channelCount > 0 else { return }
             // TODO: Investigate why we have to load load the audio file from the url here
             // guard let file = audioFile else { return }
 
-            let file = try AVAudioFile(forReading: fileUrl)
+            // Reconnect AVAudioPlayerNode setting the AVAudioFormat to ensure playback at correct sampling rate
+            guard let audioEngine = audioPlayerNode.engine else { return }
+            let format = file.processingFormat
+            audioEngine.connect(audioPlayerNode, to: audioEngine.mainMixerNode, format: file.processingFormat)
+
             let frameCapacity = AVAudioFrameCount(file.length)
+            guard let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: frameCapacity) else { return }
+            try file.read(into: buffer)
 
-            guard file.length > 0, file.fileFormat.channelCount > 0 else { return }
-
-            if lastBufferCache?.timeRange == playTimeRange, let buffer = lastBufferCache?.buffer {
-                playBuffer(buffer, looping: loop)
-            } else if let buffer = AVAudioPCMBuffer(pcmFormat: file.processingFormat, frameCapacity: frameCapacity) {
-                try file.read(into: buffer)
-
-                let start = AVAudioFramePosition(playPositionRange.lowerBound * Double(file.length))
-                let end = AVAudioFramePosition(playPositionRange.upperBound * Double(file.length))
-                if let segment = buffer.segment(from: start, to: end) {
-                    playBuffer(segment, looping: loop)
-
-                    if let playTimeRange = playTimeRange {
-                        lastBufferCache = (buffer: segment, timeRange: playTimeRange)
-                    } else {
-                        lastBufferCache = nil
-                    }
-                }
+            if let buffer = lastBufferCache?.buffer, lastBufferCache?.timeRange == playTimeRange {
+                audioPlayerNode.scheduleSegment(fromBuffer: buffer, range: playPositionRange, looping: loop)
+            } else {
+                let segmentRange = playPositionRange
+                lastBufferCache = audioPlayerNode.scheduleSegment(fromBuffer: buffer, range: segmentRange, looping: loop)
             }
 
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else { return }
-                guard self.startEngineIfNeeded() else {
-                    return
-                }
+                guard self.audioPlayerNode.startEngineIfNeeded() else { return }
 
                 self.audioPlayerNode.play()
                 self.state = .playing
@@ -169,26 +172,14 @@ extension AudioFilePlayer {
             }
 
         } catch {
-            logger.log(.error, "Failed to play file \(fileUrl.absoluteString)", error: error)
-        }
-    }
-
-    private func playBuffer(_ buffer: AVAudioPCMBuffer, looping: Bool) {
-        if loop {
-            audioPlayerNode.scheduleBuffer(buffer, at: nil, options: [.loops, .interrupts])
-        } else {
-            audioPlayerNode.scheduleBuffer(buffer, at: nil, options: [.interrupts]) {
-                DispatchQueue.main.async { [weak self] in
-                    self?.stop()
-                }
-            }
+            logger.log(.error, "Failed to play file \(bookmarkUrl.absoluteString)", error: error)
         }
     }
 
     func stop() {
         audioPlayerNode.stop()
         saveConfiguration()
-        fileUrl?.stopAccessingSecurityScopedResource()
+        bookmarkUrl?.stopAccessingSecurityScopedResource()
         stopPlayheadUpdates()
         playheadTime = nil
         playheadPosition = nil
@@ -209,20 +200,6 @@ extension AudioFilePlayer {
 
     ///MARK: – Private Functions
 
-    @discardableResult
-    private func startEngineIfNeeded() -> Bool {
-        guard let engine = self.audioPlayerNode.engine else { return false }
-        guard !engine.isRunning else { return true }
-
-        do {
-            try engine.start()
-        } catch {
-            return false
-        }
-
-        return true
-    }
-
     private func startPlayheadUpdates() {
         let updateInterval = 1.0/Double(UIScreen.main.maximumFramesPerSecond)
         playheadUpdater.startTracking(withTimeInterval: updateInterval) { playhead in
@@ -235,14 +212,16 @@ extension AudioFilePlayer {
         playheadUpdater.stopTracking()
     }
 
-    private func updateWaveformImage(url: URL, size: CGSize) {
+    private func updateWaveformImage(url: URL, size: CGSize, completion: @escaping ImageCompletion) {
         self.image = nil
         renderingImage = true
 
         audioGraphicsRenderer.renderWaveformImage(audioFileUrl: url, size: size, style: .striped) { image in
             DispatchQueue.main.async { [weak self] in
-                self?.image = image
-                self?.renderingImage = false
+                guard let self = self else { return }
+                self.image = image
+                self.renderingImage = false
+                completion(image)
             }
         }
     }

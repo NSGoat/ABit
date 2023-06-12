@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct AudioMasterControls: View {
+struct AudioMainControls: View {
 
     @ObservedObject var audioManager: AudioManager
 
@@ -9,8 +9,6 @@ struct AudioMasterControls: View {
             Spacer()
             playAllButton
             stopAllButton
-            Spacer()
-            channelSwitchButton
             Spacer()
         }
     }
@@ -22,52 +20,31 @@ struct AudioMasterControls: View {
             } else {
                 audioManager.playAll()
             }
-
         }, label: {
             Image(systemName: audioManager.anyPlayerPlaying ? "pause" : "play")
                 .font(.system(size: 20, weight: .bold))
                 .foregroundColor(.primary)
         })
+        .accessibility(identifier: "play_pause_all_button")
+        .accessibility(value: Text(audioManager.anyPlayerPlaying ? "pause" : "play"))
     }
 
     private var stopAllButton: some View {
-        return Button(action: {
+        Button(action: {
             audioManager.stopAll()
         }, label: {
             Image(systemName: "stop")
                 .font(.system(size: 20, weight: audioManager.anyPlayerPlaying ? .bold : .light))
                 .foregroundColor(.primary)
         })
-    }
-
-    private var channelSwitchButton: some View {
-        let channel = audioManager.selectedChannel
-        let color = channel?.color
-
-        return Button(action: {
-            audioManager.selectedChannel?.selectNext()
-        }, label: {
-            Group {
-                Text("A")
-                    .font(.title)
-                    .fontWeight(channel == .a ? .bold : .light)
-                    .foregroundColor(channel == .a ? color : .secondary) +
-                Text("/")
-                    .font(.title)
-                    .foregroundColor(color) +
-                Text("B")
-                    .font(.title)
-                    .fontWeight(channel == .b ? .bold : .light)
-                    .foregroundColor(channel == .b ? color : .secondary)
-            }
-        })
+        .accessibility(identifier: "stop_all_button")
     }
 }
 
-struct AudioMasterControls_Previews: PreviewProvider {
+struct AudioMainControls_Previews: PreviewProvider {
     static var previews: some View {
-        let audioPlayerConfigurationManager = DependencyManager.shared.audioPlayerConfigurationManager
+        let audioPlayerConfigurationManager = DependencyManager().audioPlayerConfigurationManager
         let audioManager = AudioManager(audioPlayerConfigurationManager: audioPlayerConfigurationManager)
-        AudioMasterControls(audioManager: audioManager)
+        AudioMainControls(audioManager: audioManager)
     }
 }

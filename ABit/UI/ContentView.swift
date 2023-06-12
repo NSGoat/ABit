@@ -7,16 +7,12 @@ struct ContentView: View {
     var body: some View {
         VStack(spacing: 16) {
             Spacer()
-            Image("HeaderIcon")
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .onTapGesture {
-                    audioManager.selectedChannel?.selectNext()
-                }
-            Spacer()
+            LogoToggleButton(audioManager: audioManager)
+                .frame(minWidth: 80, maxWidth: 300, minHeight: 80, maxHeight: 300, alignment: .center)
             audioPlayerView(channel: .a)
             audioPlayerView(channel: .b)
-            AudioMasterControls(audioManager: audioManager)
+            AudioMainControls(audioManager: audioManager)
+            Spacer()
         }
         .padding(.bottom, 16)
     }
@@ -35,7 +31,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        let audioPlayerConfigurationManager = DependencyManager.shared.audioPlayerConfigurationManager
+        let audioPlayerConfigurationManager = DependencyManager().audioPlayerConfigurationManager
         ContentView(audioManager: AudioManager(audioPlayerConfigurationManager: audioPlayerConfigurationManager))
     }
 }

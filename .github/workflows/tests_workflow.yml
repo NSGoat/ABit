@@ -1,0 +1,23 @@
+name: AutomatedTests
+on:
+  pull_request:
+    branches:
+      - main
+      - release/**
+      - develop
+
+jobs:
+  tests:
+    name: UnitTests
+    runs-on: macos-latest
+
+    steps:
+    - name: Select Xcode Version
+      uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: latest
+    - name: Checkout ABit
+      uses: actions/checkout@v2
+
+    - name: Run Tests
+      run: bundle exec fastlane ios_tests

@@ -29,32 +29,35 @@ struct AudioPlayerView: View {
                                     showDocumentPicker: $showDocumentPicker)
             }
             WaveformView(audioFilePlayer: audioFilePlayer, accentColor: accentColor, tapAction: tapAction)
+                .simultaneousGesture(
+                    TapGesture()
+                        .onEnded { _ in
+                            if audioFilePlayer.state == .awaitingFile {
+                                self.showDocumentPicker.toggle()
+                            }
+                        }
+                )
             documentPickerButton
         }
         .contentShape(Rectangle())
-        .onTapGesture {
-            tapAction()
-            if audioFilePlayer.state == .awaitingFile {
-                self.showDocumentPicker.toggle()
-            }
-        }
         .sheet(isPresented: self.$showDocumentPicker) {
             AudioFilePicker(delegate: self)
         }
     }
 
-    private var documentPickerButton: Button<Text?> {
+    private var documentPickerButton: some View {
         Button(action: {
             self.$showDocumentPicker.wrappedValue.toggle()
         }, label: {
-            if let fileName = audioFilePlayer.fileUrl?.lastPathComponent {
+            if let fileName = audioFilePlayer.bookmarkUrl?.lastPathComponent {
                 Text(fileName)
+                    .allowsTightening(true)
             }
         })
     }
 
     private var playTimeText: Text {
-        if [.paused, .playing, .stopped].contains($audioFilePlayer.state.wrappedValue) {
+        if [.paused, .playing, .stopped].contains(audioFilePlayer.state) {
             let playheadTime = $audioFilePlayer.playheadTime.wrappedValue ?? 0
             let minutes = playheadTime/60
             let seconds = playheadTime.truncatingRemainder(dividingBy: 60)

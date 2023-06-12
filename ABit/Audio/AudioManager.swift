@@ -4,8 +4,8 @@ import Foundation
 import SwiftUI
 
 enum AudioChannel: String, CaseIterable {
-    case a = "A"
-    case b = "B"
+    case a
+    case b
 
     mutating func selectNext() {
         self = self.next()
@@ -14,9 +14,11 @@ enum AudioChannel: String, CaseIterable {
 
 final class AudioManager: ObservableObject {
 
-    var audioPlayerConfigurationManager: AudioPlayerConfigurationManager
+    var playerConfigurationManager: AudioPlayerConfigurationManager
 
     private let audioEngine = AVAudioEngine()
+
+    @Inject var logger: Logger
 
     var audioFilePlayers = [AudioChannel: AudioFilePlayer]()
 
@@ -24,10 +26,13 @@ final class AudioManager: ObservableObject {
 
     var allPlayersPlaying: Bool { audioFilePlayers.values.allSatisfy { $0.state == .playing } }
 
+    @Published var primarySelected: Bool = false
+
     @Published var selectedChannel: AudioChannel? {
         didSet {
             if let selectedChannel = selectedChannel {
                 solo(channel: selectedChannel)
+                primarySelected = selectedChannel == .a
             } else {
                 muteAll()
             }
@@ -35,7 +40,7 @@ final class AudioManager: ObservableObject {
     }
 
     init(audioPlayerConfigurationManager: AudioPlayerConfigurationManager) {
-        self.audioPlayerConfigurationManager = audioPlayerConfigurationManager
+        self.playerConfigurationManager = audioPlayerConfigurationManager
 
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSession.Category.playback)
@@ -51,7 +56,7 @@ final class AudioManager: ObservableObject {
             setupAnyPlayerPlayingPublisher(playerA: playerA, playerB: playerB)
 
         } catch {
-            Logger.log(.error, "Failed to initialise AudioManager", error: error)
+            logger.log(.error, "Failed to initialise AudioManager", error: error)
         }
     }
 
@@ -62,13 +67,12 @@ final class AudioManager: ObservableObject {
     @discardableResult
     private func configureNewAudioFilePlayer(channel: AudioChannel, fallbackUrl: URL? = nil) -> AudioFilePlayer {
         let key = defaultsKey(channel: channel)
-        let audioFilePlayer = AudioFilePlayer(audioFileManager: audioPlayerConfigurationManager, cacheKey: key)
+        let audioFilePlayer = AudioFilePlayer(audioFileManager: playerConfigurationManager, cacheKey: key)
         audioFilePlayers[channel] = audioFilePlayer
 
         audioEngine.attach(audioFilePlayer.audioPlayerNode)
-        audioEngine.connect(audioFilePlayer.audioPlayerNode, to: audioEngine.mainMixerNode, format: nil)
 
-        if let playerConfiguration = audioPlayerConfigurationManager.playerConfiguration(userDefaultsKey: key) {
+        if let playerConfiguration = playerConfigurationManager.recallConfiguration(forKey: key) {
             audioFilePlayer.configure(playerConfiguration)
         }
 

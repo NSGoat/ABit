@@ -1,13 +1,8 @@
-//
-//  ABitUITests.swift
-//  ABitUITests
-//
-//  Created by Ed Rutter on 19/09/2020.
-//
-
 import XCTest
 
 class ABitUITests: XCTestCase {
+
+    let app = XCUIApplication()
 
     override func setUpWithError() throws {
         continueAfterFailure = true
@@ -15,16 +10,35 @@ class ABitUITests: XCTestCase {
 
     override func tearDownWithError() throws { }
 
-    func testExample() throws {
-        let app = XCUIApplication()
+    func test_player_switching() throws {
+        app.launchArguments.append("-loadPlayerA")
+        app.launchArguments.append("-loadPlayerB")
         app.launch()
-    }
 
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
-            }
-        }
+        let playPauseAllButton = app.buttons["play_pause_all_button"]
+        let stopAllButton = app.buttons["stop_all_button"]
+        let abToggleButton = app.buttons["ab_logo_toggle"]
+
+        XCTAssert(abToggleButton.value as? String == "Primary selected")
+        XCTAssert(playPauseAllButton.value as? String == "play")
+
+        playPauseAllButton.tapOrClick()
+        XCTAssert(playPauseAllButton.value as? String == "pause")
+
+        abToggleButton.tapOrClick()
+        XCTAssert(abToggleButton.value as? String == "Secondary selected")
+
+        stopAllButton.tapOrClick()
+        XCTAssert(playPauseAllButton.isHittable)
+    }
+}
+
+extension XCUIElement {
+    func tapOrClick() {
+        #if targetEnvironment(macOS)
+        click()
+        #else
+        tap()
+        #endif
     }
 }
